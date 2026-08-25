@@ -38,15 +38,16 @@ A small serverless service that asks the Spotify Web API what you are listening 
 answers with an **SVG image**. Because the response is an image, it works anywhere a URL
 does — GitHub profile READMEs, Gists, blogs, docs sites.
 
-|                             |                                                                                                                    |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **Live status**             | Shows the current track while you are playing, your last played track (with a relative timestamp) when you are not |
-| **Actually animated**       | CSS keyframes inside the SVG — equalizer bars pulse, long titles scroll                                            |
-| **Survives GitHub's proxy** | Album art is inlined as base64, so nothing is blocked by camo                                                      |
-| **Two layouts**             | A detailed card and a compact widget                                                                               |
-| **Eleven themes**           | Plus six per-token colour overrides for anything custom                                                            |
-| **Zero runtime deps**       | One `fetch` chain and a string of SVG. Cold starts stay in the low hundreds of milliseconds                        |
-| **Tested and typed**        | Strict TypeScript, 24 renderer tests, CI on every push                                                             |
+- **Live status** — shows the current track while you are playing, and your last played
+  track with a relative timestamp when you are not.
+- **Actually animated** — CSS keyframes inside the SVG, so equalizer bars pulse and long
+  titles scroll.
+- **Survives GitHub's proxy** — album art is inlined as base64, so nothing is blocked by camo.
+- **Two layouts** — a detailed card and a compact widget.
+- **Eleven themes** — plus six per-token colour overrides for anything custom.
+- **Zero runtime dependencies** — one `fetch` chain and a string of SVG, so cold starts stay
+  in the low hundreds of milliseconds.
+- **Tested and typed** — strict TypeScript, 24 renderer tests, CI on every push.
 
 ---
 
