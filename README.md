@@ -54,24 +54,19 @@ does — GitHub profile READMEs, Gists, blogs, docs sites.
 
 ### Layouts
 
-<table>
-<thead>
-<tr>
-<th width="55%">Detailed — <code>/</code></th>
-<th width="45%">Compact — <code>/small</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/" alt="Detailed card" width="420" /></td>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small" alt="Compact card" width="340" /></td>
-</tr>
-<tr>
-<td>420 × 142. Blurred album backdrop, artwork, status line, title, artist and album.</td>
-<td>340 × 76. Widget-style strip: artwork, status, title, artist and logo.</td>
-</tr>
-</tbody>
-</table>
+<div align="center">
+
+<img src="https://gautamvhavle-spotify-readme.vercel.app/" alt="Detailed card" width="420" />
+
+<sub><b>Detailed</b> — <code>/</code> — 420 × 142<br/>Blurred album backdrop, artwork, status line, title, artist and album.</sub>
+
+<br/><br/>
+
+<img src="https://gautamvhavle-spotify-readme.vercel.app/small" alt="Compact card" width="340" />
+
+<sub><b>Compact</b> — <code>/small</code> — 340 × 76<br/>Widget-style strip: artwork, status, title, artist and logo.</sub>
+
+</div>
 
 ### Themes
 
@@ -80,59 +75,53 @@ Set with `?theme=`. Every one works on both layouts.
 <table>
 <tbody>
 <tr>
-<td align="center"><code>dark</code><br/><i>default</i></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=dark" alt="dark theme" width="320" /></td>
-<td align="center"><code>light</code></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=light" alt="light theme" width="320" /></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=dark" alt="dark theme" width="340" /><br/><code>dark</code> <sub>default</sub></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=light" alt="light theme" width="340" /><br/><code>light</code></td>
 </tr>
 <tr>
-<td align="center"><code>spotify</code></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=spotify" alt="spotify theme" width="320" /></td>
-<td align="center"><code>dracula</code></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=dracula" alt="dracula theme" width="320" /></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=spotify" alt="spotify theme" width="340" /><br/><code>spotify</code></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=dracula" alt="dracula theme" width="340" /><br/><code>dracula</code></td>
 </tr>
 <tr>
-<td align="center"><code>nord</code></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=nord" alt="nord theme" width="320" /></td>
-<td align="center"><code>catppuccin</code></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=catppuccin" alt="catppuccin theme" width="320" /></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=nord" alt="nord theme" width="340" /><br/><code>nord</code></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=catppuccin" alt="catppuccin theme" width="340" /><br/><code>catppuccin</code></td>
 </tr>
 <tr>
-<td align="center"><code>tokyonight</code></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=tokyonight" alt="tokyonight theme" width="320" /></td>
-<td align="center"><code>gruvbox</code></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=gruvbox" alt="gruvbox theme" width="320" /></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=tokyonight" alt="tokyonight theme" width="340" /><br/><code>tokyonight</code></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=gruvbox" alt="gruvbox theme" width="340" /><br/><code>gruvbox</code></td>
 </tr>
 <tr>
-<td align="center"><code>rosepine</code></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=rosepine" alt="rosepine theme" width="320" /></td>
-<td align="center"><code>synthwave</code></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=synthwave" alt="synthwave theme" width="320" /></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=rosepine" alt="rosepine theme" width="340" /><br/><code>rosepine</code></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=synthwave" alt="synthwave theme" width="340" /><br/><code>synthwave</code></td>
 </tr>
 <tr>
-<td align="center"><code>transparent</code><br/><i>adapts to the page</i></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=transparent" alt="transparent theme" width="320" /></td>
-<td align="center">custom<br/><i>hex overrides</i></td>
-<td><img src="https://gautamvhavle-spotify-readme.vercel.app/small?bg=0f0f0f&accent=ff2d55&text=fafafa&sub=737373&border=1f1f1f" alt="custom palette" width="320" /></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=transparent" alt="transparent theme" width="340" /><br/><code>transparent</code> <sub>adapts to the page</sub></td>
+<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?bg=0f0f0f&accent=ff2d55&text=fafafa&sub=737373&border=1f1f1f" alt="custom palette" width="340" /><br/><sub>custom hex overrides</sub></td>
 </tr>
 </tbody>
 </table>
 
 ### Variations
 
-<table>
-<tbody>
-<tr>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/?width=600&theme=tokyonight" alt="Wide card" width="480" /><br/><sub><code>/?width=600&theme=tokyonight</code></sub></td>
-</tr>
-<tr>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/?theme=dracula&blur=false&radius=4" alt="Flat card without backdrop" width="420" /><br/><sub><code>/?theme=dracula&blur=false&radius=4</code></sub></td>
-</tr>
-<tr>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=catppuccin&width=460&radius=24" alt="Wide compact card" width="460" /><br/><sub><code>/small?theme=catppuccin&width=460&radius=24</code></sub></td>
-</tr>
-</tbody>
-</table>
+<div align="center">
+
+<img src="https://gautamvhavle-spotify-readme.vercel.app/?width=600&theme=tokyonight" alt="Wide card" width="600" />
+
+<sub><code>/?width=600&theme=tokyonight</code></sub>
+
+<br/><br/>
+
+<img src="https://gautamvhavle-spotify-readme.vercel.app/?theme=dracula&blur=false&radius=4" alt="Flat card without backdrop" width="420" />
+
+<sub><code>/?theme=dracula&blur=false&radius=4</code></sub>
+
+<br/><br/>
+
+<img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=catppuccin&width=460&radius=24" alt="Wide compact card" width="460" />
+
+<sub><code>/small?theme=catppuccin&width=460&radius=24</code></sub>
+
+</div>
 
 ---
 
