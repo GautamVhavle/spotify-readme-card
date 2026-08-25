@@ -26,7 +26,7 @@
   <a href="#contributing">Contributing</a>
 </p>
 
-<a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FGautamVhavle%2Fspotify-readme&env=SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,SPOTIFY_REFRESH_TOKEN&envDescription=Spotify%20app%20credentials%20and%20a%20refresh%20token&envLink=https%3A%2F%2Fgithub.com%2FGautamVhavle%2Fspotify-readme%23step-3--generate-a-refresh-token&project-name=spotify-readme&repository-name=spotify-readme"><img src="https://vercel.com/button" alt="Deploy with Vercel" height="32" /></a>
+<a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FGautamVhavle%2Fspotify-readme-card&env=SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET,SPOTIFY_REFRESH_TOKEN&envDescription=Spotify%20app%20credentials%20and%20a%20refresh%20token&envLink=https%3A%2F%2Fgithub.com%2FGautamVhavle%2Fspotify-readme-card%23step-3--generate-a-refresh-token&project-name=spotify-readme-card&repository-name=spotify-readme-card"><img src="https://vercel.com/button" alt="Deploy with Vercel" height="32" /></a>
 
 </div>
 
@@ -149,7 +149,7 @@ Set with `?theme=`. Every one works on both layouts.
 
 ```bash
 git clone https://github.com/GautamVhavle/spotify-readme-card.git
-cd spotify-readme
+cd spotify-readme-card
 npm install
 cp .env.example .env
 ```

@@ -13,8 +13,8 @@ project, so the bar is mostly about keeping it small and readable.
 ## Getting set up
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/spotify-readme.git
-cd spotify-readme
+git clone https://github.com/YOUR-USERNAME/spotify-readme-card.git
+cd spotify-readme-card
 npm install
 cp .env.example .env      # fill in your Spotify app credentials
 npm run authorize         # writes SPOTIFY_REFRESH_TOKEN into .env
