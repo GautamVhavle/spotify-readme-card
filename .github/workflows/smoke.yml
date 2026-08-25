@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 env:
-  BASE_URL: https://gautamvhavle-spotify-readme.vercel.app
+  BASE_URL: https://live-spotify-readme-card.vercel.app
 
 jobs:
   endpoints:
