@@ -4,7 +4,7 @@
 
 <h1>Spotify README Card</h1>
 
-<p><b>Animated “now playing” cards for your GitHub profile — rendered as SVG, served from the edge.</b></p>
+<p><b>Animated “now playing” cards for your GitHub profile - rendered as SVG, served from the edge.</b></p>
 
 <p>
   <a href="https://github.com/GautamVhavle/spotify-readme-card/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/GautamVhavle/spotify-readme-card/actions/workflows/ci.yml/badge.svg" /></a>
@@ -36,18 +36,18 @@
 
 A small serverless service that asks the Spotify Web API what you are listening to and
 answers with an **SVG image**. Because the response is an image, it works anywhere a URL
-does — GitHub profile READMEs, Gists, blogs, docs sites.
+does - GitHub profile READMEs, Gists, blogs, docs sites.
 
-- **Live status** — shows the current track while you are playing, and your last played
+- **Live status** - shows the current track while you are playing, and your last played
   track with a relative timestamp when you are not.
-- **Actually animated** — CSS keyframes inside the SVG, so equalizer bars pulse and long
+- **Actually animated** - CSS keyframes inside the SVG, so equalizer bars pulse and long
   titles scroll.
-- **Survives GitHub's proxy** — album art is inlined as base64, so nothing is blocked by camo.
-- **Two layouts** — a detailed card and a compact widget.
-- **Eleven themes** — plus six per-token colour overrides for anything custom.
-- **Zero runtime dependencies** — one `fetch` chain and a string of SVG, so cold starts stay
+- **Survives GitHub's proxy** - album art is inlined as base64, so nothing is blocked by camo.
+- **Two layouts** - a detailed card and a compact widget.
+- **Eleven themes** - plus six per-token colour overrides for anything custom.
+- **Zero runtime dependencies** - one `fetch` chain and a string of SVG, so cold starts stay
   in the low hundreds of milliseconds.
-- **Tested and typed** — strict TypeScript, 24 renderer tests, CI on every push.
+- **Tested and typed** - strict TypeScript, 24 renderer tests, CI on every push.
 
 ---
 
@@ -59,13 +59,13 @@ does — GitHub profile READMEs, Gists, blogs, docs sites.
 
 <img src="https://live-spotify-readme-card.vercel.app/" alt="Detailed card" width="420" />
 
-<sub><b>Detailed</b> — <code>/</code> — 420 × 142<br/>Blurred album backdrop, artwork, status line, title, artist and album.</sub>
+<sub><b>Detailed</b> - <code>/</code> - 420 × 142<br/>Blurred album backdrop, artwork, status line, title, artist and album.</sub>
 
 <br/><br/>
 
 <img src="https://live-spotify-readme-card.vercel.app/small" alt="Compact card" width="340" />
 
-<sub><b>Compact</b> — <code>/small</code> — 340 × 76<br/>Widget-style strip: artwork, status, title, artist and logo.</sub>
+<sub><b>Compact</b> - <code>/small</code> - 340 × 76<br/>Widget-style strip: artwork, status, title, artist and logo.</sub>
 
 </div>
 
@@ -131,7 +131,7 @@ Set with `?theme=`. Every one works on both layouts.
 > **You need:** a Spotify account, a [Vercel](https://vercel.com) account, and Node.js 20+.
 > The whole thing takes about five minutes and costs nothing.
 
-### Step 1 — Create a Spotify app
+### Step 1 - Create a Spotify app
 
 1. Open the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) → **Create app**.
 2. Give it any name, for example `readme-card`.
@@ -145,7 +145,7 @@ Set with `?theme=`. Every one works on both layouts.
 
 4. Tick **Web API**, save, then open **Settings** and copy the **Client ID** and **Client secret**.
 
-### Step 2 — Get the code
+### Step 2 - Get the code
 
 ```bash
 git clone https://github.com/GautamVhavle/spotify-readme-card.git
@@ -162,7 +162,7 @@ SPOTIFY_CLIENT_SECRET=your_client_secret_here
 SPOTIFY_REFRESH_TOKEN=
 ```
 
-### Step 3 — Generate a refresh token
+### Step 3 - Generate a refresh token
 
 ```bash
 npm run authorize
@@ -179,10 +179,10 @@ npm i -g vercel     # if you do not have it
 npm run dev         # http://localhost:3000
 ```
 
-### Step 4 — Deploy
+### Step 4 - Deploy
 
 <details>
-<summary><b>Option A — one click</b> <i>(fastest)</i></summary>
+<summary><b>Option A - one click</b> <i>(fastest)</i></summary>
 
 <br/>
 
@@ -192,13 +192,13 @@ and prompts for the three environment variables during setup.
 </details>
 
 <details>
-<summary><b>Option B — Vercel dashboard</b> <i>(recommended, gives you auto-deploy)</i></summary>
+<summary><b>Option B - Vercel dashboard</b> <i>(recommended, gives you auto-deploy)</i></summary>
 
 <br/>
 
 1. Push your clone to your own GitHub repository.
 2. Go to [vercel.com/new](https://vercel.com/new) and import it.
-3. Leave the framework preset as **Other** — there is no build step.
+3. Leave the framework preset as **Other** - there is no build step.
 4. Add three environment variables:
 
    | Name                    | Value       |
@@ -212,7 +212,7 @@ and prompts for the three environment variables during setup.
 </details>
 
 <details>
-<summary><b>Option C — Vercel CLI</b></summary>
+<summary><b>Option C - Vercel CLI</b></summary>
 
 <br/>
 
@@ -229,7 +229,7 @@ vercel --prod
 
 </details>
 
-### Step 5 — Put it in your README
+### Step 5 - Put it in your README
 
 ```md
 <img src="https://YOUR-APP.vercel.app/" alt="What I'm listening to" width="420" />
@@ -253,7 +253,7 @@ Make it clickable by wrapping it in a link:
 | ------ | -------- | ------------------ | ---------------------------------------------- |
 | `GET`  | `/`      | `image/svg+xml`    | Detailed card, 420 × 142                       |
 | `GET`  | `/small` | `image/svg+xml`    | Compact card, 340 × 76                         |
-| `GET`  | `/json`  | `application/json` | Raw track data — useful when debugging a setup |
+| `GET`  | `/json`  | `application/json` | Raw track data - useful when debugging a setup |
 
 Anything other than `GET` returns `405`. Errors always return a rendered card rather than a
 broken image, so your README never shows a torn thumbnail.
@@ -350,7 +350,7 @@ Expires:            0
 Opening the URL directly is therefore always live. **Inside a README it is not**, and no
 combination of headers changes that: GitHub routes README images through its `camo` proxy,
 which holds its own cached copy for several minutes and ignores the origin's cache
-directives. You can watch it happen — `age` keeps climbing while the origin says `no-store`:
+directives. You can watch it happen - `age` keeps climbing while the origin says `no-store`:
 
 ```console
 $ curl -sSI "https://camo.githubusercontent.com/<hash>/<hash>" | grep -Ei 'age|x-cache'
@@ -366,7 +366,7 @@ node scripts/purge-camo.mjs https://github.com/your-name/your-name
 ```
 
 The script reads the rendered page, finds every proxied image on it, and sends each one a
-`PURGE`. (The proxy URLs are signed by GitHub, so they can only be discovered this way —
+`PURGE`. (The proxy URLs are signed by GitHub, so they can only be discovered this way -
 they cannot be computed locally.)
 
 [`refresh-card.yml`](.github/workflows/refresh-card.yml) runs that script on a ten minute
@@ -377,7 +377,7 @@ repository and point it at your profile page:
 - run: node scripts/purge-camo.mjs "https://github.com/${{ github.repository_owner }}/${{ github.repository_owner }}"
 ```
 
-Scheduled workflows are best-effort — GitHub delays them under load — so treat ten minutes
+Scheduled workflows are best-effort - GitHub delays them under load - so treat ten minutes
 as a target, not a guarantee.
 
 ---
@@ -457,7 +457,8 @@ leak upstream messages into the card.
 
 Read the full threat model in [SECURITY.md](SECURITY.md). Report vulnerabilities privately
 through [GitHub Security Advisories](https://github.com/GautamVhavle/spotify-readme-card/security/advisories/new)
-— please do not open a public issue.
+
+- please do not open a public issue.
 
 ---
 
@@ -475,7 +476,7 @@ npm run format && npm run typecheck && npm test
 
 ## License
 
-[MIT](LICENSE) — do whatever you like, no attribution required.
+[MIT](LICENSE) - do whatever you like, no attribution required.
 
 <div align="center">
 <br/>
