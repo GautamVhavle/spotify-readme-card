@@ -5,7 +5,7 @@
 Please **do not open a public issue** for security problems.
 
 Report privately through
-[GitHub Security Advisories](https://github.com/GautamVhavle/spotify-readme/security/advisories/new).
+[GitHub Security Advisories](https://github.com/GautamVhavle/spotify-readme-card/security/advisories/new).
 You will get an acknowledgement within a few days, and I will keep you updated as the
 issue is investigated and fixed. Credit is given in the advisory unless you prefer to
 stay anonymous.

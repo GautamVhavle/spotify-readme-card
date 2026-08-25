@@ -7,7 +7,7 @@ project, so the bar is mostly about keeping it small and readable.
 
 - **Add a theme.** The most common and most welcome contribution.
 - **Improve rendering.** Better text measurement, nicer layouts, cleaner animation.
-- **Fix a bug.** See the [open issues](https://github.com/GautamVhavle/spotify-readme/issues).
+- **Fix a bug.** See the [open issues](https://github.com/GautamVhavle/spotify-readme-card/issues).
 - **Improve the docs.** If a setup step confused you, it will confuse someone else.
 
 ## Getting set up

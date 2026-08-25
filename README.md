@@ -7,8 +7,8 @@
 <p><b>Animated “now playing” cards for your GitHub profile — rendered as SVG, served from the edge.</b></p>
 
 <p>
-  <a href="https://github.com/GautamVhavle/spotify-readme/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/GautamVhavle/spotify-readme/actions/workflows/ci.yml/badge.svg" /></a>
-  <a href="https://github.com/GautamVhavle/spotify-readme/actions/workflows/smoke.yml"><img alt="Smoke test" src="https://github.com/GautamVhavle/spotify-readme/actions/workflows/smoke.yml/badge.svg" /></a>
+  <a href="https://github.com/GautamVhavle/spotify-readme-card/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/GautamVhavle/spotify-readme-card/actions/workflows/ci.yml/badge.svg" /></a>
+  <a href="https://github.com/GautamVhavle/spotify-readme-card/actions/workflows/smoke.yml"><img alt="Smoke test" src="https://github.com/GautamVhavle/spotify-readme-card/actions/workflows/smoke.yml/badge.svg" /></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-1db954?style=flat-square" /></a>
   <img alt="Node" src="https://img.shields.io/badge/node-%E2%89%A520-1db954?style=flat-square" />
   <img alt="Runtime dependencies" src="https://img.shields.io/badge/runtime%20deps-0-1db954?style=flat-square" />
@@ -148,7 +148,7 @@ Set with `?theme=`. Every one works on both layouts.
 ### Step 2 — Get the code
 
 ```bash
-git clone https://github.com/GautamVhavle/spotify-readme.git
+git clone https://github.com/GautamVhavle/spotify-readme-card.git
 cd spotify-readme
 npm install
 cp .env.example .env
@@ -402,7 +402,7 @@ and promotes to production, and pull requests get their own preview URL.
 | Everything broke after a password change | Changing your Spotify password revokes refresh tokens. Re-run `npm run authorize` and update the deployment variable. |
 | Artwork missing, everything else fine    | The album has no cover on Spotify's CDN. The card falls back to a placeholder by design.                              |
 
-Still stuck? Open a [discussion](https://github.com/GautamVhavle/spotify-readme/discussions).
+Still stuck? Open a [discussion](https://github.com/GautamVhavle/spotify-readme-card/discussions).
 
 ---
 
@@ -414,7 +414,7 @@ XML-escaped, artwork is only fetched from allow-listed Spotify CDN hosts, and er
 leak upstream messages into the card.
 
 Read the full threat model in [SECURITY.md](SECURITY.md). Report vulnerabilities privately
-through [GitHub Security Advisories](https://github.com/GautamVhavle/spotify-readme/security/advisories/new)
+through [GitHub Security Advisories](https://github.com/GautamVhavle/spotify-readme-card/security/advisories/new)
 — please do not open a public issue.
 
 ---
@@ -442,7 +442,7 @@ npm run format && npm run typecheck && npm test
 
 <br/><br/>
 
-<sub>Built by <a href="https://github.com/GautamVhavle">Gautam Vhavle</a> · <a href="https://spotify-readme.vercel.app/">Live demo</a> · <a href="https://github.com/GautamVhavle/spotify-readme/issues">Issues</a> · <a href="https://github.com/GautamVhavle/spotify-readme/discussions">Discussions</a></sub>
+<sub>Built by <a href="https://github.com/GautamVhavle">Gautam Vhavle</a> · <a href="https://spotify-readme.vercel.app/">Live demo</a> · <a href="https://github.com/GautamVhavle/spotify-readme-card/issues">Issues</a> · <a href="https://github.com/GautamVhavle/spotify-readme-card/discussions">Discussions</a></sub>
 
 <br/>
 
