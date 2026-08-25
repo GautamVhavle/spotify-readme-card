@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://gautamvhavle-spotify-readme.vercel.app/" alt="Spotify now playing card" width="440" />
+<img src="https://spotify-readme.vercel.app/" alt="Spotify now playing card" width="440" />
 
 <h1>Spotify README Card</h1>
 
@@ -15,7 +15,7 @@
 </p>
 
 <p>
-  <a href="https://gautamvhavle-spotify-readme.vercel.app/"><b>Live demo</b></a>
+  <a href="https://spotify-readme.vercel.app/"><b>Live demo</b></a>
   ·
   <a href="#gallery">Gallery</a>
   ·
@@ -57,13 +57,13 @@ does — GitHub profile READMEs, Gists, blogs, docs sites.
 
 <div align="center">
 
-<img src="https://gautamvhavle-spotify-readme.vercel.app/" alt="Detailed card" width="420" />
+<img src="https://spotify-readme.vercel.app/" alt="Detailed card" width="420" />
 
 <sub><b>Detailed</b> — <code>/</code> — 420 × 142<br/>Blurred album backdrop, artwork, status line, title, artist and album.</sub>
 
 <br/><br/>
 
-<img src="https://gautamvhavle-spotify-readme.vercel.app/small" alt="Compact card" width="340" />
+<img src="https://spotify-readme.vercel.app/small" alt="Compact card" width="340" />
 
 <sub><b>Compact</b> — <code>/small</code> — 340 × 76<br/>Widget-style strip: artwork, status, title, artist and logo.</sub>
 
@@ -76,28 +76,28 @@ Set with `?theme=`. Every one works on both layouts.
 <table>
 <tbody>
 <tr>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=dark" alt="dark theme" width="340" /><br/><code>dark</code> <sub>default</sub></td>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=light" alt="light theme" width="340" /><br/><code>light</code></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=dark" alt="dark theme" width="340" /><br/><code>dark</code> <sub>default</sub></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=light" alt="light theme" width="340" /><br/><code>light</code></td>
 </tr>
 <tr>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=spotify" alt="spotify theme" width="340" /><br/><code>spotify</code></td>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=dracula" alt="dracula theme" width="340" /><br/><code>dracula</code></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=spotify" alt="spotify theme" width="340" /><br/><code>spotify</code></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=dracula" alt="dracula theme" width="340" /><br/><code>dracula</code></td>
 </tr>
 <tr>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=nord" alt="nord theme" width="340" /><br/><code>nord</code></td>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=catppuccin" alt="catppuccin theme" width="340" /><br/><code>catppuccin</code></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=nord" alt="nord theme" width="340" /><br/><code>nord</code></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=catppuccin" alt="catppuccin theme" width="340" /><br/><code>catppuccin</code></td>
 </tr>
 <tr>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=tokyonight" alt="tokyonight theme" width="340" /><br/><code>tokyonight</code></td>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=gruvbox" alt="gruvbox theme" width="340" /><br/><code>gruvbox</code></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=tokyonight" alt="tokyonight theme" width="340" /><br/><code>tokyonight</code></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=gruvbox" alt="gruvbox theme" width="340" /><br/><code>gruvbox</code></td>
 </tr>
 <tr>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=rosepine" alt="rosepine theme" width="340" /><br/><code>rosepine</code></td>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=synthwave" alt="synthwave theme" width="340" /><br/><code>synthwave</code></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=rosepine" alt="rosepine theme" width="340" /><br/><code>rosepine</code></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=synthwave" alt="synthwave theme" width="340" /><br/><code>synthwave</code></td>
 </tr>
 <tr>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=transparent" alt="transparent theme" width="340" /><br/><code>transparent</code> <sub>adapts to the page</sub></td>
-<td align="center"><img src="https://gautamvhavle-spotify-readme.vercel.app/small?bg=0f0f0f&accent=ff2d55&text=fafafa&sub=737373&border=1f1f1f" alt="custom palette" width="340" /><br/><sub>custom hex overrides</sub></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?theme=transparent" alt="transparent theme" width="340" /><br/><code>transparent</code> <sub>adapts to the page</sub></td>
+<td align="center"><img src="https://spotify-readme.vercel.app/small?bg=0f0f0f&accent=ff2d55&text=fafafa&sub=737373&border=1f1f1f" alt="custom palette" width="340" /><br/><sub>custom hex overrides</sub></td>
 </tr>
 </tbody>
 </table>
@@ -106,19 +106,19 @@ Set with `?theme=`. Every one works on both layouts.
 
 <div align="center">
 
-<img src="https://gautamvhavle-spotify-readme.vercel.app/?width=600&theme=tokyonight" alt="Wide card" width="600" />
+<img src="https://spotify-readme.vercel.app/?width=600&theme=tokyonight" alt="Wide card" width="600" />
 
 <sub><code>/?width=600&theme=tokyonight</code></sub>
 
 <br/><br/>
 
-<img src="https://gautamvhavle-spotify-readme.vercel.app/?theme=dracula&blur=false&radius=4" alt="Flat card without backdrop" width="420" />
+<img src="https://spotify-readme.vercel.app/?theme=dracula&blur=false&radius=4" alt="Flat card without backdrop" width="420" />
 
 <sub><code>/?theme=dracula&blur=false&radius=4</code></sub>
 
 <br/><br/>
 
-<img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=catppuccin&width=460&radius=24" alt="Wide compact card" width="460" />
+<img src="https://spotify-readme.vercel.app/small?theme=catppuccin&width=460&radius=24" alt="Wide compact card" width="460" />
 
 <sub><code>/small?theme=catppuccin&width=460&radius=24</code></sub>
 
@@ -438,11 +438,11 @@ npm run format && npm run typecheck && npm test
 <div align="center">
 <br/>
 
-<img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=transparent" alt="Now playing" width="340" />
+<img src="https://spotify-readme.vercel.app/small?theme=transparent" alt="Now playing" width="340" />
 
 <br/><br/>
 
-<sub>Built by <a href="https://github.com/GautamVhavle">Gautam Vhavle</a> · <a href="https://gautamvhavle-spotify-readme.vercel.app/">Live demo</a> · <a href="https://github.com/GautamVhavle/spotify-readme/issues">Issues</a> · <a href="https://github.com/GautamVhavle/spotify-readme/discussions">Discussions</a></sub>
+<sub>Built by <a href="https://github.com/GautamVhavle">Gautam Vhavle</a> · <a href="https://spotify-readme.vercel.app/">Live demo</a> · <a href="https://github.com/GautamVhavle/spotify-readme/issues">Issues</a> · <a href="https://github.com/GautamVhavle/spotify-readme/discussions">Discussions</a></sub>
 
 <br/>
 
