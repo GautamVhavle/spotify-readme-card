@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { fetchArtwork } from "./artwork.js";
+import { applyNoCache } from "./cache.js";
 import { parseOptions, type Variant } from "./options.js";
 import { renderMainCard, renderMessageCard, renderSmallCard } from "./render.js";
 import { resolveTrack } from "./spotify.js";
@@ -45,7 +46,7 @@ export function createCardHandler(variant: Variant) {
     }
 
     response.setHeader("Content-Type", "image/svg+xml; charset=utf-8");
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    applyNoCache(response);
     response.status(200).send(svg);
   };
 }

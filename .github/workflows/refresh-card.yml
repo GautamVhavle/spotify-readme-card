@@ -1,0 +1,33 @@
+name: Refresh card
+
+# GitHub's image proxy caches README images for several minutes, so the card can
+# look frozen even though the function itself renders fresh SVG on every hit.
+# Purging the proxy on a schedule keeps the rendered README close to real time.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: refresh-card
+  cancel-in-progress: true
+
+jobs:
+  purge:
+    name: Purge proxied images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Drop the cached README card
+        run: node scripts/purge-camo.mjs "https://github.com/${{ github.repository }}"

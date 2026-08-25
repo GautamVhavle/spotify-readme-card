@@ -336,9 +336,49 @@ Four decisions worth knowing about:
 
 ### Caching and freshness
 
-The function sends `Cache-Control: no-store`, but GitHub's proxy caches images for a few
-minutes regardless of what the origin says. Expect the card to trail reality slightly — that
-is a property of GitHub, not of this service. Opening the URL directly is always live.
+The function renders fresh SVG on every request and asks every layer in front of it not to
+keep a copy:
+
+```http
+Cache-Control:      no-cache, no-store, must-revalidate, max-age=0, s-maxage=0
+CDN-Cache-Control:  no-cache, no-store, must-revalidate, max-age=0, s-maxage=0
+Surrogate-Control:  max-age=0, no-store
+Pragma:             no-cache
+Expires:            0
+```
+
+Opening the URL directly is therefore always live. **Inside a README it is not**, and no
+combination of headers changes that: GitHub routes README images through its `camo` proxy,
+which holds its own cached copy for several minutes and ignores the origin's cache
+directives. You can watch it happen — `age` keeps climbing while the origin says `no-store`:
+
+```console
+$ curl -sSI "https://camo.githubusercontent.com/<hash>/<hash>" | grep -Ei 'age|x-cache'
+age: 849
+x-cache: HIT
+```
+
+The only reliable way to move it along is to ask the proxy to drop the image, which it will
+do on request:
+
+```bash
+node scripts/purge-camo.mjs https://github.com/your-name/your-name
+```
+
+The script reads the rendered page, finds every proxied image on it, and sends each one a
+`PURGE`. (The proxy URLs are signed by GitHub, so they can only be discovered this way —
+they cannot be computed locally.)
+
+[`refresh-card.yml`](.github/workflows/refresh-card.yml) runs that script on a ten minute
+schedule. To keep your own profile card fresh, copy the workflow into your profile
+repository and point it at your profile page:
+
+```yaml
+- run: node scripts/purge-camo.mjs "https://github.com/${{ github.repository_owner }}/${{ github.repository_owner }}"
+```
+
+Scheduled workflows are best-effort — GitHub delays them under load — so treat ten minutes
+as a target, not a guarantee.
 
 ---
 
@@ -356,9 +396,11 @@ api/
     ├── themes.ts         colour presets
     ├── svg.ts            text measurement, marquee, equalizer, icons
     ├── render.ts         card layouts
+    ├── cache.ts          no-cache response headers
     └── handler.ts        shared request handling
 scripts/
-└── authorize.mjs         one-time OAuth helper
+├── authorize.mjs         one-time OAuth helper
+└── purge-camo.mjs        drop GitHub's cached copy of the card
 tests/
 └── render.test.mjs       renderer, escaping and option tests
 ```
@@ -392,15 +434,15 @@ and promotes to production, and pull requests get their own preview URL.
 
 ## Troubleshooting
 
-| Symptom                                  | Cause and fix                                                                                                         |
-| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Card reads **Spotify unavailable**       | One of the three environment variables is missing or wrong on the deployment. Check the function logs in Vercel.      |
-| Card reads **Nothing playing**           | No playback history on the account, or the token was issued without the required scopes. Re-run `npm run authorize`.  |
-| `INVALID_CLIENT: Invalid redirect URI`   | The Spotify dashboard must contain exactly `http://127.0.0.1:5175/callback`. Spotify rejects `localhost`.             |
-| Card never updates                       | GitHub's image proxy is caching it. Open the URL directly to confirm the service is live.                             |
-| Card is blank in a Markdown preview      | Some editors block SVG animation. Test in a browser first.                                                            |
-| Everything broke after a password change | Changing your Spotify password revokes refresh tokens. Re-run `npm run authorize` and update the deployment variable. |
-| Artwork missing, everything else fine    | The album has no cover on Spotify's CDN. The card falls back to a placeholder by design.                              |
+| Symptom                                  | Cause and fix                                                                                                                                                                                                 |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Card reads **Spotify unavailable**       | One of the three environment variables is missing or wrong on the deployment. Check the function logs in Vercel.                                                                                              |
+| Card reads **Nothing playing**           | No playback history on the account, or the token was issued without the required scopes. Re-run `npm run authorize`.                                                                                          |
+| `INVALID_CLIENT: Invalid redirect URI`   | The Spotify dashboard must contain exactly `http://127.0.0.1:5175/callback`. Spotify rejects `localhost`.                                                                                                     |
+| Card never updates                       | GitHub's image proxy is holding a cached copy. Open the URL directly to confirm the service is live, then run `node scripts/purge-camo.mjs <your page>`. See [Caching and freshness](#caching-and-freshness). |
+| Card is blank in a Markdown preview      | Some editors block SVG animation. Test in a browser first.                                                                                                                                                    |
+| Everything broke after a password change | Changing your Spotify password revokes refresh tokens. Re-run `npm run authorize` and update the deployment variable.                                                                                         |
+| Artwork missing, everything else fine    | The album has no cover on Spotify's CDN. The card falls back to a placeholder by design.                                                                                                                      |
 
 Still stuck? Open a [discussion](https://github.com/GautamVhavle/spotify-readme-card/discussions).
 
