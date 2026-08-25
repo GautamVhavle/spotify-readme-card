@@ -9,8 +9,7 @@ export interface Track {
 }
 
 const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
-const NOW_PLAYING_ENDPOINT =
-  "https://api.spotify.com/v1/me/player/currently-playing";
+const NOW_PLAYING_ENDPOINT = "https://api.spotify.com/v1/me/player/currently-playing";
 const RECENTLY_PLAYED_ENDPOINT =
   "https://api.spotify.com/v1/me/player/recently-played?limit=1";
 
@@ -80,9 +79,7 @@ interface SpotifyItem {
 function pickArtwork(item: SpotifyItem): string | null {
   const images = item.album?.images ?? [];
   const usable = images.filter((image) => image.width >= 240);
-  const best = usable.length
-    ? usable[usable.length - 1]
-    : images[0];
+  const best = usable.length ? usable[usable.length - 1] : images[0];
   return best?.url ?? null;
 }
 
@@ -134,7 +131,5 @@ export async function resolveTrack(): Promise<Track | null> {
   }>(RECENTLY_PLAYED_ENDPOINT, accessToken);
 
   const lastPlay = recent?.items?.[0];
-  return (
-    toTrack(lastPlay?.track, false, lastPlay?.played_at ?? null) ?? playing
-  );
+  return toTrack(lastPlay?.track, false, lastPlay?.played_at ?? null) ?? playing;
 }

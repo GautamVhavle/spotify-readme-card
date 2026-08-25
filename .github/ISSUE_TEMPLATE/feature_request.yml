@@ -1,0 +1,37 @@
+name: Feature request
+description: Suggest a new layout, theme or option
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of change is this?
+      options:
+        - A new theme
+        - A new query parameter
+        - A new card layout
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does it solve?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What should it look like?
+      description: For a theme, list all six tokens (bg, surface, text, subtext, accent, border).
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Would you like to work on it?
+      options:
+        - label: I am willing to open a pull request for this.

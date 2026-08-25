@@ -1,0 +1,44 @@
+name: Smoke test
+
+# Vercel deploys the repository natively and reports back as a GitHub deployment.
+# This verifies the live endpoints once that deployment reports success.
+on:
+  deployment_status:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  BASE_URL: https://gautamvhavle-spotify-readme.vercel.app
+
+jobs:
+  endpoints:
+    name: Verify live endpoints
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+      github.event.deployment_status.environment == 'Production')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cards respond with SVG
+        run: |
+          for path in "/" "/small" "/?theme=light" "/small?theme=dracula"; do
+            result=$(curl -sS -o /dev/null -w '%{http_code} %{content_type}' "$BASE_URL$path")
+            echo "$path -> $result"
+            case "$result" in
+              "200 image/svg+xml"*) ;;
+              *) echo "unexpected response"; exit 1 ;;
+            esac
+          done
+
+      - name: JSON endpoint responds
+        run: |
+          code=$(curl -sS -o /dev/null -w '%{http_code}' "$BASE_URL/json")
+          echo "/json -> $code"
+          [ "$code" = "200" ] || exit 1
+
+      - name: Card contains a track
+        run: |
+          curl -sS "$BASE_URL/" | grep -qE 'NOW PLAYING|LAST PLAYED' \
+            || { echo "card did not render a track"; exit 1; }

@@ -138,7 +138,10 @@ export function renderMainCard(
   layer.body.push(spotifyLogo(textX, 33, 15, theme.accent));
 
   if (showBars) {
-    push(layer, equalizer({ id: "m", x: barsX, y: 46, height: 13, color: theme.accent }));
+    push(
+      layer,
+      equalizer({ id: "m", x: barsX, y: 46, height: 13, color: theme.accent }),
+    );
   }
 
   const statusX = textX + 23;
@@ -193,7 +196,11 @@ export function renderMainCard(
     );
   }
 
-  return document(options, `${statusLabel(track)}: ${track.title} by ${track.artist}`, layer);
+  return document(
+    options,
+    `${statusLabel(track)}: ${track.title} by ${track.artist}`,
+    layer,
+  );
 }
 
 export function renderSmallCard(
@@ -221,7 +228,10 @@ export function renderSmallCard(
   layer.body.push(spotifyLogo(railX + 2.5, showBars ? 16 : 30, 16, theme.accent));
 
   if (showBars) {
-    push(layer, equalizer({ id: "s", x: railX, y: 60, height: 12, color: theme.accent }));
+    push(
+      layer,
+      equalizer({ id: "s", x: railX, y: 60, height: 12, color: theme.accent }),
+    );
   }
 
   layer.body.push(
@@ -257,7 +267,11 @@ export function renderSmallCard(
     }),
   );
 
-  return document(options, `${statusLabel(track)}: ${track.title} by ${track.artist}`, layer);
+  return document(
+    options,
+    `${statusLabel(track)}: ${track.title} by ${track.artist}`,
+    layer,
+  );
 }
 
 export function renderMessageCard(

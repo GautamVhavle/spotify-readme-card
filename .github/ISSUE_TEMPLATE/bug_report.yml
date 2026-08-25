@@ -1,0 +1,61 @@
+name: Bug report
+description: Something is not working the way it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to file a report.
+
+  - type: input
+    id: card-url
+    attributes:
+      label: Card URL
+      description: The full URL that reproduces the problem, with query parameters.
+      placeholder: https://your-app.vercel.app/small?theme=nord
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead?
+      description: Screenshots help a lot for rendering issues.
+    validations:
+      required: true
+
+  - type: textarea
+    id: json
+    attributes:
+      label: Output of /json
+      description: Visit `/json` on your deployment and paste the response. Redact anything you would rather not share.
+      render: json
+
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where does it happen?
+      multiple: true
+      options:
+        - GitHub README
+        - Browser (direct URL)
+        - Local development
+        - Somewhere else
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked the Troubleshooting section of the README.
+          required: true
+        - label: This report contains no credentials or tokens.
+          required: true

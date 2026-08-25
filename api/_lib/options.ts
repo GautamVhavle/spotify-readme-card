@@ -17,7 +17,10 @@ export type Query = Partial<Record<string, string | string[]>>;
 
 const HEX = /^([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
 
-const SIZE: Record<Variant, { width: number; min: number; max: number; height: number }> = {
+const SIZE: Record<
+  Variant,
+  { width: number; min: number; max: number; height: number }
+> = {
   main: { width: 420, min: 320, max: 760, height: 142 },
   small: { width: 340, min: 260, max: 560, height: 76 },
 };

@@ -81,7 +81,10 @@ export function textLine(input: TextLineInput): Fragment {
   const width = measureText(text, fontSize, bold);
 
   if (width <= maxWidth) {
-    return { markup: `<text class="${className}" x="${x}" y="${y}">${safe}</text>`, css: "" };
+    return {
+      markup: `<text class="${className}" x="${x}" y="${y}">${safe}</text>`,
+      css: "",
+    };
   }
 
   const shift = round(width + MARQUEE_GAP);
@@ -127,7 +130,9 @@ export function equalizer({ id, x, y, height, color }: EqualizerInput): Fragment
       (timing, index) =>
         `.eq-${id} rect:nth-child(${index + 1}){animation-duration:${timing.duration}s;animation-delay:${timing.delay}s}`,
     )
-    .join("")}@keyframes kf-eq-${id}{0%,100%{transform:scaleY(.2)}50%{transform:scaleY(1)}}`;
+    .join(
+      "",
+    )}@keyframes kf-eq-${id}{0%,100%{transform:scaleY(.2)}50%{transform:scaleY(1)}}`;
 
   return { markup: `<g class="eq-${id}">${bars}</g>`, css };
 }
@@ -140,8 +145,7 @@ export function spotifyLogo(x: number, y: number, size: number, color: string): 
   return `<g transform="translate(${round(x)} ${round(y)}) scale(${scale.toFixed(4)})"><path d="${LOGO_PATH}" fill="${color}"/></g>`;
 }
 
-const NOTE_PATH =
-  "M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z";
+const NOTE_PATH = "M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z";
 
 export function musicNote(x: number, y: number, size: number, color: string): string {
   const scale = size / 24;

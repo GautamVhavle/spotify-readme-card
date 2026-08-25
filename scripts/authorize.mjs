@@ -28,7 +28,10 @@ function loadEnv() {
       const index = line.indexOf("=");
       if (index === -1) return null;
       const key = line.slice(0, index).trim();
-      const value = line.slice(index + 1).trim().replace(/^["']|["']$/g, "");
+      const value = line
+        .slice(index + 1)
+        .trim()
+        .replace(/^["']|["']$/g, "");
       return [key, value];
     })
     .filter(Boolean);
@@ -96,7 +99,9 @@ async function exchangeCode(code) {
   );
 
   if (![200, 204].includes(playback.status)) {
-    throw new Error(`Scope check failed (${playback.status}). Re-run and accept all permissions.`);
+    throw new Error(
+      `Scope check failed (${playback.status}). Re-run and accept all permissions.`,
+    );
   }
 
   return data.refresh_token;
@@ -110,7 +115,8 @@ const server = http.createServer(async (request, response) => {
   }
 
   try {
-    if (url.searchParams.get("state") !== state) throw new Error("OAuth state mismatch");
+    if (url.searchParams.get("state") !== state)
+      throw new Error("OAuth state mismatch");
 
     const error = url.searchParams.get("error");
     if (error) throw new Error(`Spotify denied the request: ${error}`);
@@ -122,7 +128,9 @@ const server = http.createServer(async (request, response) => {
     saveRefreshToken(refreshToken);
 
     response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-    response.end("<h1>Spotify connected</h1><p>Refresh token saved to .env. You can close this tab.</p>");
+    response.end(
+      "<h1>Spotify connected</h1><p>Refresh token saved to .env. You can close this tab.</p>",
+    );
     console.log("\n✅ SPOTIFY_REFRESH_TOKEN saved to .env");
     console.log("   Next: add the three variables to Vercel and deploy.\n");
   } catch (failure) {
@@ -136,7 +144,9 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.listen(PORT, HOST, () => {
-  console.log(`\nMake sure "${REDIRECT_URI}" is listed as a Redirect URI in your Spotify app.`);
+  console.log(
+    `\nMake sure "${REDIRECT_URI}" is listed as a Redirect URI in your Spotify app.`,
+  );
   console.log("\nThen open this URL in your browser:\n");
   console.log(authorizeUrl.toString());
   console.log("");

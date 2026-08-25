@@ -11,11 +11,16 @@
   "scripts": {
     "authorize": "node scripts/authorize.mjs",
     "dev": "vercel dev",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:test": "tsc --outDir .build --noEmit false",
+    "test": "npm run build:test && node --test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@types/node": "^22.10.5",
     "@vercel/node": "^5.1.6",
+    "prettier": "^3.4.2",
     "typescript": "^5.7.3"
   }
 }
