@@ -4,10 +4,11 @@ import { parseOptions } from "../.build/_lib/options.js";
 import {
   renderMainCard,
   renderMessageCard,
+  renderPortraitCard,
   renderSmallCard,
 } from "../.build/_lib/render.js";
 import { measureText, truncate } from "../.build/_lib/svg.js";
-import { themes } from "../.build/_lib/themes.js";
+import { portraitThemes, themes } from "../.build/_lib/themes.js";
 
 const track = {
   isPlaying: true,
@@ -105,6 +106,121 @@ describe("compact card", () => {
   });
 });
 
+describe("portrait card", () => {
+  const art = "data:image/jpeg;base64,AAAA";
+
+  it("renders track metadata", () => {
+    const svg = renderPortraitCard(track, null, parseOptions({}, "portrait"));
+    assertWellFormed(svg);
+    assert.ok(svg.includes(">Cracks<"));
+    assert.ok(svg.includes("Freestylers, Belle Humble"));
+    assert.ok(svg.includes("NOW PLAYING"));
+  });
+
+  it("draws in a fixed coordinate space and scales to the requested width", () => {
+    const svg = renderPortraitCard(track, null, parseOptions({}, "portrait"));
+    assert.ok(svg.includes('width="300" height="420"'));
+    assert.ok(svg.includes('viewBox="0 0 300 420"'));
+
+    const wide = renderPortraitCard(
+      track,
+      null,
+      parseOptions({ width: "360" }, "portrait"),
+    );
+    assert.ok(wide.includes('width="360" height="504"'));
+    assert.ok(wide.includes('viewBox="0 0 300 420"'), "viewBox must stay fixed");
+  });
+
+  it("clamps the requested width", () => {
+    assert.equal(parseOptions({ width: "9999" }, "portrait").displayWidth, 420);
+    assert.equal(parseOptions({ width: "1" }, "portrait").displayWidth, 240);
+  });
+
+  it("takes its colour from the album art", () => {
+    const svg = renderPortraitCard(track, art, parseOptions({}, "portrait"));
+    assertWellFormed(svg);
+    assert.ok(svg.includes("feColorMatrix"), "expected the saturated bloom");
+    assert.ok(svg.includes("url(#bloom)"));
+    assert.ok(svg.includes("url(#scrim)"));
+  });
+
+  it("washes frosted glass over the artwork", () => {
+    const svg = renderPortraitCard(track, art, parseOptions({}, "portrait"));
+    assert.ok(svg.includes("url(#frost)"), "expected backdrop blur behind glass");
+    assert.ok(svg.includes("url(#sheen)"));
+    assert.ok(
+      svg.includes('mask="url(#wash)"'),
+      "glass should dissolve, not sit in a box",
+    );
+  });
+
+  it("leaves the metadata unboxed and fades it into the backdrop", () => {
+    const svg = renderPortraitCard(track, art, parseOptions({}, "portrait"));
+    assert.ok(!svg.includes("url(#panel)"), "metadata should not sit in a box");
+    assert.ok(!svg.includes("url(#badge)"), "logo should not sit in a badge");
+    assert.ok(svg.includes("url(#fade)"), "expected a legibility fade");
+  });
+
+  it("drops the frost when glass is disabled", () => {
+    const svg = renderPortraitCard(
+      track,
+      art,
+      parseOptions({ glass: "false" }, "portrait"),
+    );
+    assertWellFormed(svg);
+    assert.ok(!svg.includes("url(#frost)"));
+    assert.ok(svg.includes("url(#fade)"), "fade should still keep text readable");
+  });
+
+  it("defaults to the dark shell and honours light mode", () => {
+    assert.equal(parseOptions({}, "portrait").mode, "dark");
+    assert.equal(parseOptions({ mode: "light" }, "portrait").mode, "light");
+
+    const dark = parseOptions({}, "portrait");
+    const light = parseOptions({ mode: "light" }, "portrait");
+    assert.equal(dark.theme.text, portraitThemes.dark.text);
+    assert.equal(light.theme.text, portraitThemes.light.text);
+  });
+
+  it("infers a light shell from the light theme", () => {
+    assert.equal(parseOptions({ theme: "light" }, "portrait").mode, "light");
+  });
+
+  it("lets a named theme override the album palette", () => {
+    const options = parseOptions({ theme: "dracula" }, "portrait");
+    assert.equal(options.theme.bg, themes.dracula.bg);
+    assertWellFormed(renderPortraitCard(track, null, options));
+  });
+
+  it("clamps the tint", () => {
+    assert.equal(parseOptions({ tint: "-40" }, "portrait").tint, 0);
+    assert.equal(parseOptions({ tint: "400" }, "portrait").tint, 100);
+    assert.equal(parseOptions({}, "portrait").tint, 55);
+  });
+
+  it("animates the equalizer only while playing", () => {
+    assert.ok(
+      renderPortraitCard(track, null, parseOptions({}, "portrait")).includes("kf-eq-p"),
+    );
+    assert.ok(
+      !renderPortraitCard(stopped, null, parseOptions({}, "portrait")).includes(
+        "kf-eq-p",
+      ),
+    );
+  });
+
+  it("escapes hostile metadata", () => {
+    const hostile = {
+      ...track,
+      title: "</text><script>alert(1)</script>",
+      artist: "AT&T & <b>friends</b>",
+    };
+    const svg = renderPortraitCard(hostile, art, parseOptions({}, "portrait"));
+    assertWellFormed(svg);
+    assert.ok(!svg.includes("<script>"));
+  });
+});
+
 describe("options", () => {
   it("applies a named theme", () => {
     const svg = renderMainCard(track, null, parseOptions({ theme: "dracula" }, "main"));
@@ -187,8 +303,8 @@ describe("text helpers", () => {
 });
 
 describe("message card", () => {
-  it("renders both sizes", () => {
-    for (const variant of ["main", "small"]) {
+  it("renders every size", () => {
+    for (const variant of ["main", "small", "portrait"]) {
       const svg = renderMessageCard(
         parseOptions({}, variant),
         "Spotify unavailable",
@@ -209,13 +325,28 @@ describe("themes", () => {
     }
   });
 
-  it("renders every theme on both layouts", () => {
+  it("renders every theme on every layout", () => {
     for (const name of Object.keys(themes)) {
       assertWellFormed(
         renderMainCard(track, null, parseOptions({ theme: name }, "main")),
       );
       assertWellFormed(
         renderSmallCard(track, null, parseOptions({ theme: name }, "small")),
+      );
+      assertWellFormed(
+        renderPortraitCard(track, null, parseOptions({ theme: name }, "portrait")),
+      );
+    }
+  });
+
+  it("renders both portrait shells over artwork", () => {
+    for (const mode of ["dark", "light"]) {
+      assertWellFormed(
+        renderPortraitCard(
+          track,
+          "data:image/jpeg;base64,AAAA",
+          parseOptions({ mode }, "portrait"),
+        ),
       );
     }
   });

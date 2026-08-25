@@ -4,6 +4,7 @@
   "rewrites": [
     { "source": "/", "destination": "/api/card" },
     { "source": "/small", "destination": "/api/small" },
+    { "source": "/portrait", "destination": "/api/portrait" },
     { "source": "/json", "destination": "/api/json" }
   ]
 }

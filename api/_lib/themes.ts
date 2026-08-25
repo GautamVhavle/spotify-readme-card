@@ -106,3 +106,30 @@ export function resolveTheme(name: string | undefined): Theme {
   const key = (name ?? "").trim().toLowerCase();
   return { ...(themes[key] ?? themes[DEFAULT_THEME]!) };
 }
+
+/** Light and dark shells for the portrait card. */
+export type Mode = "dark" | "light";
+
+/**
+ * The portrait card draws its colour from the album art, so these palettes are
+ * deliberately neutral. `surface` is the glass tint and `border` its edge; both
+ * are used with an opacity rather than as flat fills.
+ */
+export const portraitThemes: Record<Mode, Theme> = {
+  dark: {
+    bg: "#07070b",
+    surface: "#ffffff",
+    text: "#ffffff",
+    subtext: "#d9d9e3",
+    accent: "#1db954",
+    border: "#ffffff",
+  },
+  light: {
+    bg: "#f2f2f6",
+    surface: "#ffffff",
+    text: "#0e0e16",
+    subtext: "#4b4b58",
+    accent: "#1db954",
+    border: "#ffffff",
+  },
+};

@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Cards respond with SVG
         run: |
-          for path in "/" "/small" "/?theme=light" "/small?theme=dracula"; do
+          for path in "/" "/small" "/portrait" "/?theme=light" "/small?theme=dracula" "/portrait?mode=light"; do
             result=$(curl -sS -o /dev/null -w '%{http_code} %{content_type}' "$BASE_URL$path")
             echo "$path -> $result"
             case "$result" in

@@ -43,7 +43,8 @@ does - GitHub profile READMEs, Gists, blogs, docs sites.
 - **Actually animated** - CSS keyframes inside the SVG, so equalizer bars pulse and long
   titles scroll.
 - **Survives GitHub's proxy** - album art is inlined as base64, so nothing is blocked by camo.
-- **Two layouts** - a detailed card and a compact widget.
+- **Three layouts** - a detailed card, a compact widget, and a glass portrait that takes
+  its colour from the album art.
 - **Eleven themes** - plus six per-token colour overrides for anything custom.
 - **Zero runtime dependencies** - one `fetch` chain and a string of SVG, so cold starts stay
   in the low hundreds of milliseconds.
@@ -66,6 +67,12 @@ does - GitHub profile READMEs, Gists, blogs, docs sites.
 <img src="https://live-spotify-readme-card.vercel.app/small" alt="Compact card" width="340" />
 
 <sub><b>Compact</b> - <code>/small</code> - 340 × 76<br/>Widget-style strip: artwork, status, title, artist and logo.</sub>
+
+<br/><br/>
+
+<img src="https://live-spotify-readme-card.vercel.app/portrait" alt="Portrait card" width="300" />
+
+<sub><b>Portrait</b> - <code>/portrait</code> - 300 × 420<br/>Album art on top, frosted glass below, coloured by the record itself.</sub>
 
 </div>
 
@@ -102,6 +109,26 @@ Set with `?theme=`. Every one works on both layouts.
 </tbody>
 </table>
 
+The portrait card accepts the same presets, and `mode` controls the glass shell
+independently of them.
+
+<table>
+<tbody>
+<tr>
+<td align="center"><img src="https://live-spotify-readme-card.vercel.app/portrait" alt="portrait dark" width="260" /><br/><code>/portrait</code> <sub>default</sub></td>
+<td align="center"><img src="https://live-spotify-readme-card.vercel.app/portrait?mode=light" alt="portrait light" width="260" /><br/><code>?mode=light</code></td>
+</tr>
+<tr>
+<td align="center"><img src="https://live-spotify-readme-card.vercel.app/portrait?tint=95" alt="portrait full album colour" width="260" /><br/><code>?tint=95</code> <sub>more album colour</sub></td>
+<td align="center"><img src="https://live-spotify-readme-card.vercel.app/portrait?tint=10" alt="portrait muted" width="260" /><br/><code>?tint=10</code> <sub>muted</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="https://live-spotify-readme-card.vercel.app/portrait?glass=false" alt="portrait without glass" width="260" /><br/><code>?glass=false</code> <sub>solid panels</sub></td>
+<td align="center"><img src="https://live-spotify-readme-card.vercel.app/portrait?theme=synthwave" alt="portrait synthwave" width="260" /><br/><code>?theme=synthwave</code></td>
+</tr>
+</tbody>
+</table>
+
 ### Variations
 
 <div align="center">
@@ -121,6 +148,12 @@ Set with `?theme=`. Every one works on both layouts.
 <img src="https://live-spotify-readme-card.vercel.app/small?theme=catppuccin&width=460&radius=24" alt="Wide compact card" width="460" />
 
 <sub><code>/small?theme=catppuccin&width=460&radius=24</code></sub>
+
+<br/><br/>
+
+<img src="https://live-spotify-readme-card.vercel.app/portrait?width=380&radius=0&tint=85" alt="Large square-cornered portrait" width="380" />
+
+<sub><code>/portrait?width=380&radius=0&tint=85</code></sub>
 
 </div>
 
@@ -249,33 +282,38 @@ Make it clickable by wrapping it in a link:
 
 ### Endpoints
 
-| Method | Path     | Response           | Description                                    |
-| ------ | -------- | ------------------ | ---------------------------------------------- |
-| `GET`  | `/`      | `image/svg+xml`    | Detailed card, 420 × 142                       |
-| `GET`  | `/small` | `image/svg+xml`    | Compact card, 340 × 76                         |
-| `GET`  | `/json`  | `application/json` | Raw track data - useful when debugging a setup |
+| Method | Path        | Response           | Description                                    |
+| ------ | ----------- | ------------------ | ---------------------------------------------- |
+| `GET`  | `/`         | `image/svg+xml`    | Detailed card, 420 × 142                       |
+| `GET`  | `/small`    | `image/svg+xml`    | Compact card, 340 × 76                         |
+| `GET`  | `/portrait` | `image/svg+xml`    | Portrait card, 300 × 420                       |
+| `GET`  | `/json`     | `application/json` | Raw track data - useful when debugging a setup |
 
 Anything other than `GET` returns `405`. Errors always return a rendered card rather than a
 broken image, so your README never shows a torn thumbnail.
 
 ### Query parameters
 
-Both card endpoints accept the same options.
+Every card endpoint accepts the same options. `/portrait` keeps a fixed 300 × 420 aspect
+ratio, so `width` scales the whole card rather than stretching it.
 
-| Parameter     | Values                                | Default                            | Description                      |
-| ------------- | ------------------------------------- | ---------------------------------- | -------------------------------- |
-| `theme`       | see the [gallery](#themes)            | `dark`                             | Colour preset                    |
-| `width`       | `320`–`760` (`260`–`560` on `/small`) | `420` / `340`                      | Card width in pixels             |
-| `radius`      | `0`–`40`                              | `16` / `14`                        | Corner radius                    |
-| `bars`        | `true` / `false`                      | `true`                             | Animated equalizer while playing |
-| `blur`        | `true` / `false`                      | `true` on `/`, `false` on `/small` | Blurred album-art backdrop       |
-| `show_border` | `true` / `false`                      | `true`                             | Outer border                     |
-| `bg`          | hex                                   | theme                              | Card background                  |
-| `surface`     | hex                                   | theme                              | Veil and artwork placeholder     |
-| `text`        | hex                                   | theme                              | Track title                      |
-| `sub`         | hex                                   | theme                              | Artist and album                 |
-| `accent`      | hex                                   | theme                              | Logo, status line and equalizer  |
-| `border`      | hex                                   | theme                              | Border and artwork ring          |
+| Parameter     | Values                                                | Default                            | Description                      |
+| ------------- | ----------------------------------------------------- | ---------------------------------- | -------------------------------- |
+| `theme`       | see the [gallery](#themes)                            | `dark`                             | Colour preset                    |
+| `mode`        | `dark` / `light`                                      | `dark`                             | Glass shell on `/portrait`       |
+| `width`       | `320`–`760` (`260`–`560` small, `240`–`420` portrait) | `420` / `340` / `300`              | Card width in pixels             |
+| `radius`      | `0`–`40`                                              | `16` / `14` / `22`                 | Corner radius                    |
+| `bars`        | `true` / `false`                                      | `true`                             | Animated equalizer while playing |
+| `blur`        | `true` / `false`                                      | `true` on `/`, `false` on `/small` | Blurred album-art backdrop       |
+| `glass`       | `true` / `false`                                      | `true`                             | Frosted glass on `/portrait`     |
+| `tint`        | `0`–`100`                                             | `55`                               | How much album colour bleeds in  |
+| `show_border` | `true` / `false`                                      | `true` (`false` on `/portrait`)    | Outer border                     |
+| `bg`          | hex                                                   | theme                              | Card background                  |
+| `surface`     | hex                                                   | theme                              | Veil and artwork placeholder     |
+| `text`        | hex                                                   | theme                              | Track title                      |
+| `sub`         | hex                                                   | theme                              | Artist and album                 |
+| `accent`      | hex                                                   | theme                              | Logo, status line and equalizer  |
+| `border`      | hex                                                   | theme                              | Border and artwork ring          |
 
 Colours take 3, 4, 6 or 8 hex digits **without** the leading `#` (it is a URL fragment
 character), plus the keyword `transparent`. Anything that does not match is ignored and the
@@ -388,6 +426,7 @@ as a target, not a guarantee.
 api/
 ├── card.ts               GET /        detailed card
 ├── small.ts              GET /small   compact card
+├── portrait.ts           GET /portrait  portrait card
 ├── json.ts               GET /json    raw track data
 └── _lib/
     ├── spotify.ts        token refresh, now-playing, recently-played

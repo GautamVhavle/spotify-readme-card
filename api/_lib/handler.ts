@@ -2,7 +2,12 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { fetchArtwork } from "./artwork.js";
 import { applyNoCache } from "./cache.js";
 import { parseOptions, type Variant } from "./options.js";
-import { renderMainCard, renderMessageCard, renderSmallCard } from "./render.js";
+import {
+  renderMainCard,
+  renderMessageCard,
+  renderPortraitCard,
+  renderSmallCard,
+} from "./render.js";
 import { resolveTrack } from "./spotify.js";
 
 export function createCardHandler(variant: Variant) {
@@ -33,7 +38,9 @@ export function createCardHandler(variant: Variant) {
         svg =
           variant === "main"
             ? renderMainCard(track, artwork, options)
-            : renderSmallCard(track, artwork, options);
+            : variant === "portrait"
+              ? renderPortraitCard(track, artwork, options)
+              : renderSmallCard(track, artwork, options);
       }
     } catch (error) {
       // Details stay in the function logs; the card only shows a generic hint.

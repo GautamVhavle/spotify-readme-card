@@ -1,21 +1,33 @@
-import { resolveTheme, type Theme } from "./themes.js";
+import { type Mode, portraitThemes, resolveTheme, type Theme } from "./themes.js";
 
-export type Variant = "main" | "small";
+export type Variant = "main" | "small" | "portrait";
 
 export interface CardOptions {
   variant: Variant;
+  mode: Mode;
   theme: Theme;
+  /** Coordinate space the card is drawn in. */
   width: number;
   height: number;
+  /** Size the SVG is presented at; the viewBox scales the drawing to fit. */
+  displayWidth: number;
+  displayHeight: number;
   radius: number;
   showBorder: boolean;
   showBars: boolean;
   showArtBackdrop: boolean;
+  /** Frosted panels on the portrait card. */
+  glass: boolean;
+  /** How strongly the album colour shows through, 0 to 100. */
+  tint: number;
 }
 
 export type Query = Partial<Record<string, string | string[]>>;
 
 const HEX = /^([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
+
+/** The portrait card is a fixed 300 x 420 design scaled to the requested width. */
+const PORTRAIT_RATIO = 420 / 300;
 
 const SIZE: Record<
   Variant,
@@ -23,6 +35,7 @@ const SIZE: Record<
 > = {
   main: { width: 420, min: 320, max: 760, height: 142 },
   small: { width: 340, min: 260, max: 560, height: 76 },
+  portrait: { width: 300, min: 240, max: 420, height: 420 },
 };
 
 function first(value: string | string[] | undefined): string | undefined {
@@ -60,8 +73,20 @@ function number(
   return Math.min(max, Math.max(min, parsed));
 }
 
+/** `mode` wins, otherwise the only light preset implies a light shell. */
+function resolveMode(query: Query): Mode {
+  const raw = first(query.mode)?.toLowerCase();
+  if (raw === "light" || raw === "dark") return raw;
+  return first(query.theme)?.toLowerCase() === "light" ? "light" : "dark";
+}
+
 export function parseOptions(query: Query, variant: Variant): CardOptions {
-  const base = resolveTheme(first(query.theme));
+  const portrait = variant === "portrait";
+  const mode = resolveMode(query);
+  const named = first(query.theme);
+
+  // A portrait card with no theme asked for takes its colour from the artwork.
+  const base = portrait && !named ? { ...portraitThemes[mode] } : resolveTheme(named);
   const size = SIZE[variant];
 
   const theme: Theme = {
@@ -73,14 +98,21 @@ export function parseOptions(query: Query, variant: Variant): CardOptions {
     border: color(query.border, base.border),
   };
 
+  const requested = number(query.width, size.width, size.min, size.max);
+
   return {
     variant,
+    mode,
     theme,
-    width: number(query.width, size.width, size.min, size.max),
+    width: portrait ? size.width : requested,
     height: size.height,
-    radius: number(query.radius, variant === "main" ? 16 : 14, 0, 40),
-    showBorder: bool(query.show_border, theme.border !== "none"),
+    displayWidth: requested,
+    displayHeight: portrait ? Math.round(requested * PORTRAIT_RATIO) : size.height,
+    radius: number(query.radius, portrait ? 22 : variant === "main" ? 16 : 14, 0, 40),
+    showBorder: bool(query.show_border, theme.border !== "none" && !portrait),
     showBars: bool(query.bars, true),
-    showArtBackdrop: bool(query.blur, variant === "main") && theme.bg !== "none",
+    showArtBackdrop: bool(query.blur, variant !== "small") && theme.bg !== "none",
+    glass: bool(query.glass, true),
+    tint: number(query.tint, 55, 0, 100),
   };
 }
