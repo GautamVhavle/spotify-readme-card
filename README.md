@@ -36,6 +36,16 @@ into a GitHub profile README, a Gist, a blog, or anywhere else that accepts a UR
 | Compact | `/small` | 340 × 76 | Widget-style strip: artwork, status, title, artist |
 | Raw JSON | `/json` | — | The same data as JSON, for debugging |
 
+<div align="center">
+
+<img src="https://gautamvhavle-spotify-readme.vercel.app/small" alt="Compact card" width="340" />
+
+<img src="https://gautamvhavle-spotify-readme.vercel.app/?theme=dracula" alt="Detailed card, Dracula theme" width="420" />
+
+<img src="https://gautamvhavle-spotify-readme.vercel.app/small?theme=light" alt="Compact card, light theme" width="340" />
+
+</div>
+
 ```md
 <!-- detailed -->
 <img src="https://YOUR-APP.vercel.app/" alt="Spotify" width="420" />
@@ -282,10 +292,6 @@ npm run typecheck  # tsc --noEmit
 
 Issues and pull requests are welcome. If you add a theme, keep all six tokens defined and
 check it against both the detailed and compact layouts.
-
-## Credits
-
-Inspired by [radioactive11/apple-music-readme](https://github.com/radioactive11/apple-music-readme).
 
 ## License
 
