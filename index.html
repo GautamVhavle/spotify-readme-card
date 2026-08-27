@@ -2,16 +2,138 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spotify README Card | Now Playing for your GitHub</title>
-    <meta name="description" content="Animated Spotify now-playing SVG cards for your GitHub README. Three layouts, eleven themes, zero runtime dependencies." />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/index-Clo19E3x.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BGdycBiK.css">
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="canonical" href="https://gautamvhavle.github.io/spotify-readme-card/" />
+    <link rel="manifest" href="./site.webmanifest" />
+
+    <title>Spotify Readme Card — Animated Now Playing SVG for your GitHub README</title>
+    <meta
+      name="description"
+      content="Free, open-source Spotify now-playing cards for your GitHub README. Three layouts, eleven themes, custom hex colours, animated pure SVG rendered at the edge with zero runtime dependencies."
+    />
+    <meta
+      name="keywords"
+      content="spotify github readme, now playing card, spotify readme card, github profile readme, spotify svg, now playing svg, github profile widget, spotify api vercel"
+    />
+    <meta name="author" content="Gautam Vhavle" />
+    <meta name="application-name" content="Spotify Readme Card" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Spotify Readme Card" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://gautamvhavle.github.io/spotify-readme-card/" />
+    <meta property="og:title" content="Spotify Readme Card — Animated Now Playing SVG for your GitHub README" />
+    <meta
+      property="og:description"
+      content="Free, open-source Spotify now-playing cards for your GitHub README. Three layouts, eleven themes, custom hex colours, animated pure SVG with zero runtime dependencies."
+    />
+    <meta
+      property="og:image"
+      content="https://opengraph.githubassets.com/1/GautamVhavle/spotify-readme-card"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="600" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Spotify Readme Card, animated now playing cards for GitHub" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://gautamvhavle.github.io/spotify-readme-card/" />
+    <meta name="twitter:creator" content="@GautamVhavle" />
+    <meta name="twitter:title" content="Spotify Readme Card — Animated Now Playing SVG for your GitHub README" />
+    <meta
+      name="twitter:description"
+      content="Free, open-source Spotify now-playing cards for your GitHub README. Three layouts, eleven themes, animated pure SVG."
+    />
+    <meta
+      name="twitter:image"
+      content="https://opengraph.githubassets.com/1/GautamVhavle/spotify-readme-card"
+    />
+    <meta name="twitter:image:alt" content="Spotify Readme Card, animated now playing cards for GitHub" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://live-spotify-readme-card.vercel.app" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Instrument+Serif:ital@1&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://gautamvhavle.github.io/spotify-readme-card/#app",
+            "name": "Spotify Readme Card",
+            "url": "https://gautamvhavle.github.io/spotify-readme-card/",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Any",
+            "description": "Animated Spotify now-playing SVG cards for your GitHub README. Three layouts, eleven themes, custom hex colours, zero runtime dependencies.",
+            "license": "https://github.com/GautamVhavle/spotify-readme-card/blob/main/LICENSE",
+            "codeRepository": "https://github.com/GautamVhavle/spotify-readme-card",
+            "programmingLanguage": "TypeScript",
+            "image": "https://opengraph.githubassets.com/1/GautamVhavle/spotify-readme-card",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "author": {
+              "@type": "Person",
+              "name": "Gautam Vhavle",
+              "url": "https://gautamvhavle.xyz/"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://gautamvhavle.github.io/spotify-readme-card/#website",
+            "url": "https://gautamvhavle.github.io/spotify-readme-card/",
+            "name": "Spotify Readme Card",
+            "inLanguage": "en",
+            "about": { "@id": "https://gautamvhavle.github.io/spotify-readme-card/#app" }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How do I add a Spotify now playing card to my GitHub README?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Create a Spotify app, authorise it once to get a refresh token, deploy the project to Vercel with your client ID, client secret and refresh token as environment variables, then paste the returned image URL into your README as a Markdown image."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is Spotify Readme Card free?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. It is MIT licensed, self-hosted on a free Vercel account, and has zero runtime dependencies."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Which layouts and themes are available?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Three layouts, detailed, compact and portrait, plus eleven built-in themes and full custom hex colour overrides for background, text, accent and border."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+    <script type="module" crossorigin src="./assets/index-CiuydKXk.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-B2JC8-pE.css">
   </head>
+
   <body>
     <div id="root"></div>
   </body>
