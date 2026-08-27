@@ -1,4 +1,6 @@
 node_modules/
+website/node_modules/
+website/dist/
 .vercel/
 .env
 .env.local
