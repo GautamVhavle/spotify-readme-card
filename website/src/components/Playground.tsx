@@ -140,7 +140,7 @@ export function Playground() {
                 Tweak it. <span className="font-serif italic font-normal">Copy it.</span> Ship it.
               </h2>
               <p className="text-gray-500 text-xs sm:text-sm mt-3 max-w-xl leading-relaxed">
-                Every knob maps to a query parameter. The preview is a real SVG from the live service — what you see is what your README gets.
+                Every knob maps to a query parameter. The preview is a real SVG from the live service, what you see is what your README gets.
               </p>
             </div>
             <button
@@ -278,7 +278,7 @@ export function Playground() {
             {variant === "portrait" && (
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60">Tint — album colour bleed</label>
+                  <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60">Tint: album colour bleed</label>
                   <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded-full">{tint}</span>
                 </div>
                 <input
@@ -311,9 +311,9 @@ export function Playground() {
                     return true;
                   })
                   .map((toggle) => (
-                    <label
+                    <div
                       key={toggle.label}
-                      className="flex items-center justify-between bg-black border border-white/10 rounded-xl px-4 py-3 cursor-pointer hover:border-white/20 transition-colors"
+                      className="flex items-center justify-between bg-black border border-white/10 rounded-xl px-4 py-3 hover:border-white/20 transition-colors"
                     >
                       <div>
                         <p className="text-sm text-[#E1E0CC] leading-none">{toggle.label}</p>
@@ -321,6 +321,7 @@ export function Playground() {
                       </div>
                       <button
                         type="button"
+                        aria-pressed={toggle.value}
                         onClick={() => toggle.setter(!toggle.value)}
                         className={`relative w-10 h-6 rounded-full transition-colors flex-shrink-0 ml-3 ${toggle.value ? "bg-primary" : "bg-white/15"}`}
                       >
@@ -328,7 +329,7 @@ export function Playground() {
                           className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${toggle.value ? "translate-x-4" : "translate-x-0.5"}`}
                         />
                       </button>
-                    </label>
+                    </div>
                   ))}
               </div>
             </div>
@@ -336,7 +337,7 @@ export function Playground() {
             {/* Custom colors */}
             <div>
               <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60 mb-2 block">
-                Custom palette <span className="normal-case tracking-normal text-gray-500">— hex without #, e.g. ff2d55 or transparent</span>
+                Custom palette <span className="normal-case tracking-normal text-gray-500">hex without #, e.g. ff2d55 or transparent</span>
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {[

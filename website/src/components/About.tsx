@@ -36,7 +36,7 @@ export function About() {
 
   // Adapted body for Spotify card context but keeping cinematic tone
   const spotifyBody =
-    "A tiny serverless function asks Spotify what you are listening to and answers with an SVG image. Because the response is an image, it works anywhere a URL does — GitHub READMEs, gists, blogs, docs. Animated with CSS keyframes, inlined artwork to survive GitHub's camo proxy, and zero runtime dependencies.";
+    "A tiny serverless function asks Spotify what you are listening to and answers with an SVG image. Because the response is an image, it works anywhere a URL does: GitHub READMEs, gists, blogs, and docs. Animated with CSS keyframes, inlined artwork to survive GitHub's camo proxy, and zero runtime dependencies.";
 
   const chars = spotifyBody.split("");
 
@@ -62,7 +62,7 @@ export function About() {
         {/* Scroll-linked paragraph */}
         <div
           ref={ref}
-          className="max-w-2xl mx-auto text-[#DEDBC8] text-xs sm:text-sm md:text-base leading-relaxed flex flex-wrap justify-center"
+          className="max-w-2xl mx-auto text-[#DEDBC8] text-sm sm:text-base leading-relaxed text-center"
         >
           {chars.map((char, i) => (
             <AnimatedLetter

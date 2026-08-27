@@ -2,11 +2,11 @@
 
 <img src="https://live-spotify-readme-card.vercel.app/" alt="Spotify now playing" width="440" />
 
-# Spotify README Card — Website
+# Spotify README Card | Website
 
 **The marketing site & live playground for the Spotify README Card.**
 
-*Dark, cinematic, and fully interactive — tweak every parameter and copy a ready-to-paste URL.*
+*Dark, cinematic, and fully interactive. Tweak every parameter and copy a ready-to-paste URL.*
 
 <p>
   <a href="https://gautamvhavle.github.io/spotify-readme-card/"><b>Live Site</b></a>
@@ -26,15 +26,15 @@
 
 ## ✨ What is this?
 
-This `website/` folder is a **standalone React + Vite marketing site** for the [Spotify README Card](https://github.com/GautamVhavle/spotify-readme-card) — the serverless SVG service that shows what you're listening to on Spotify inside any GitHub README.
+This `website/` folder is a **standalone React + Vite marketing site** for the [Spotify README Card](https://github.com/GautamVhavle/spotify-readme-card), the serverless SVG service that shows what you're listening to on Spotify inside any GitHub README.
 
 The site does three jobs:
 
-1. **Explains** the product — what it is, how it works, and why it exists.
-2. **Shows** it — gallery of all 3 layouts × 11 themes with live images from the production API.
-3. **Lets you build** your own card — an interactive playground where every query parameter is a knob, and every knob instantly updates a live preview + copy-ready snippets.
+1. **Explains** the product, what it is, how it works, and why it exists.
+2. **Shows** it, live previews of all 3 layouts with actual cards and 11 themes from the production API.
+3. **Lets you build** your own card, an interactive playground where every query parameter is a knob, and every knob instantly updates a live preview + copy-ready snippets.
 
-> **Design language:** The site is a direct adaptation of the *Prisma* creative-studio template — dark, moody, cinematic, warm cream (`#DEDBC8` / `#E1E0CC`) on pure black, with noise textures, pill navbars, giant display type, and Framer Motion throughout.
+> **Design language:** The site is a direct adaptation of the *Prisma* creative-studio template, dark, moody, cinematic, warm cream (`#DEDBC8` / `#E1E0CC`) on pure black, with noise textures, pill navbars, giant display type, and Framer Motion throughout.
 
 ---
 
@@ -42,19 +42,18 @@ The site does three jobs:
 
 | Section | What it does | Key detail |
 |---------|-------------|------------|
-| **Hero** | Full-viewport inset video with noise + gradient, pill navbar, giant `Spotify*` wordmark | `WordsPullUp` per-word stagger, `ArrowRight` CTA to playground |
-| **About** | Centered `#101010` card, multi-style headline, scroll-linked character fade | `useScroll` + per-character `opacity: 0.2 → 1` |
-| **Features** | 4-column card grid (video + 3 feature cards) with noise bg | `scale 0.95 → 1` stagger, `Check` + rotated `ArrowRight` |
-| **Playground** | **Interactive card builder** — the core tool | Live SVG preview, URL + Markdown + HTML snippets, one-click copy |
-| **Gallery** | All layouts & themes rendered as real images | Direct `live-spotify-readme-card.vercel.app` URLs |
-| **Setup** | 5-step deploy guide + full API reference tables | Copyable code blocks |
-| **Footer** | Links + credits | — |
+| **Hero** | Full viewport inset video with noise and gradient, pill navbar, giant `Spotify*` wordmark | `WordsPullUp` per word stagger, `ArrowRight` CTA to playground |
+| **About** | Centered `#101010` card, multi style headline, scroll linked character fade | `useScroll` plus per character `opacity: 0.2 to 1` |
+| **Features** | Live card showcase plus 4 column detail grid with noise bg | Actual `Detailed`, `Compact`, `Portrait` cards rendered live, plus feature cards |
+| **Playground** | **Interactive card builder**, the core tool | Live SVG preview, URL plus Markdown plus HTML snippets, one click copy |
+| **Setup** | 5 step deploy guide plus full API reference tables | Copyable code blocks |
+| **Footer** | Links and credits | Built with love by Gautam Vhavle |
 
 ---
 
-## 🧪 Playground — The Card Builder
+## 🧪 Playground, The Card Builder
 
-The playground at `#playground` is the most important part of the site. It lets anyone — even without cloning the repo — generate a perfect card URL.
+The playground at `#playground` is the most important part of the site. It lets anyone, even without cloning the repo, generate a perfect card URL.
 
 ### Controls
 
@@ -63,12 +62,12 @@ The playground at `#playground` is the most important part of the site. It lets 
 | **Deployment URL** | base | Defaults to `live-spotify-readme-card.vercel.app`, replace with your own Vercel URL |
 | **Layout** | `variant` | `Detailed` (`/`) · `Compact` (`/small`) · `Portrait` (`/portrait`) |
 | **Theme** | `theme` | 11 presets: `dark` `light` `spotify` `dracula` `nord` `catppuccin` `tokyonight` `gruvbox` `rosepine` `synthwave` `transparent` |
-| **Portrait shell** | `mode` | `dark` / `light` — only for portrait |
+| **Portrait shell** | `mode` | `dark` / `light`, only for portrait |
 | **Width** | `width` | Slider, clamped per variant (320–760 / 260–560 / 240–420) |
 | **Radius** | `radius` | `0–40` |
-| **Tint** | `tint` | `0–100` — portrait only, album colour bleed |
+| **Tint** | `tint` | `0–100`, portrait only, album colour bleed |
 | **Toggles** | `bars` `blur` `glass` `show_border` | Animated equalizer, blurred backdrop, frosted glass, outer border |
-| **Custom palette** | `bg` `surface` `text` `sub` `accent` `border` | Hex without `#` (3/4/6/8 digits) or `transparent` — live colour dot preview |
+| **Custom palette** | `bg` `surface` `text` `sub` `accent` `border` | Hex without `#` (3/4/6/8 digits) or `transparent`, live colour dot preview |
 
 ### Output
 
@@ -81,7 +80,7 @@ Markdown+  → [![Spotify](https://...)](https://open.spotify.com)
 HTML       → <img src="https://..." alt="Spotify now playing" width="460" />
 ```
 
-Each has a **Copy** button (with `Copied!` feedback) and the preview itself is a real `<img>` hitting the live API — *what you see is what your README gets*.
+Each has a **Copy** button (with `Copied!` feedback) and the preview itself is a real `<img>` hitting the live API, *what you see is what your README gets*.
 
 > **Camo tip** shown below the snippets: GitHub caches README images via its `camo` proxy. After pushing, run `node scripts/purge-camo.mjs https://github.com/you/you` to bust it.
 
@@ -98,7 +97,7 @@ Each has a **Copy** button (with `Copied!` feedback) and the preview itself is a
 | **Fonts** | Google Fonts | `Almarai` (300/400/700/800) global · `Instrument Serif` italic for accents |
 | **Deploy** | GitHub Pages (static) | `vite build` → `dist/` → `build/` → `gh-pages` branch |
 
-No backend. No API keys. The playground just constructs URLs — the actual SVG rendering still happens on Vercel.
+No backend. No API keys. The playground just constructs URLs, the actual SVG rendering still happens on Vercel.
 
 ---
 
@@ -117,13 +116,12 @@ website/
 ├── src/
 │   ├── main.tsx
 │   ├── index.css           # Tailwind + .noise-overlay + .bg-noise
-│   ├── App.tsx             # Hero + About + Features + Playground + Gallery + Setup + Footer
+│   ├── App.tsx             # Hero + About + Features + Playground + Setup + Footer
 │   └── components/
 │       ├── Hero.tsx
 │       ├── About.tsx
 │       ├── Features.tsx
 │       ├── Playground.tsx  # ← the interactive builder
-│       ├── Gallery.tsx
 │       ├── Setup.tsx
 │       ├── Footer.tsx
 │       ├── WordsPullUp.tsx
@@ -131,7 +129,7 @@ website/
 └── dist/                   # vite build output (gitignored, copied to ../build)
 ```
 
-`../build/` at the repo root is the **GitHub Pages publish directory** — it is committed and pushed to the `gh-pages` branch.
+`../build/` at the repo root is the **GitHub Pages publish directory**, it is committed and pushed to the `gh-pages` branch.
 
 ---
 
@@ -147,7 +145,7 @@ npm run preview    # preview the production build
 
 ---
 
-## 📦 Deployment — GitHub Pages
+## 📦 Deployment, GitHub Pages
 
 The site is a fully static SPA. Any static host works, but the repo is configured for **GitHub Pages** via the `gh-pages` branch.
 
@@ -166,7 +164,7 @@ git push origin main
 
 # 3. Publish build/ to gh-pages branch
 git subtree push --prefix build origin gh-pages
-# — or, if gh-pages doesn't exist yet:
+#, or, if gh-pages doesn't exist yet:
 # git push origin `git subtree split --prefix build main`:gh-pages --force
 ```
 
@@ -193,7 +191,7 @@ git subtree push --prefix build origin gh-pages
 
 ```js
 // tailwind.config.js
-colors: { primary: "#DEDBC8" }          // warm cream — text, accents, buttons
+colors: { primary: "#DEDBC8" }          // warm cream, text, accents, buttons
 fontFamily: { serif: ['"Instrument Serif"', 'serif'] }
 
 // index.css
@@ -217,15 +215,15 @@ body { background: #000; color: #E1E0CC }
 
 ## 🔗 Links
 
-- **Main README** — [`../README.md`](../README.md) — full API, setup, and architecture docs
-- **Live API** — [live-spotify-readme-card.vercel.app](https://live-spotify-readme-card.vercel.app/)
-- **Live Site** — [gautamvhavle.github.io/spotify-readme-card](https://gautamvhavle.github.io/spotify-readme-card/)
-- **Deploy your own** — [Vercel Deploy Button](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FGautamVhavle%2Fspotify-readme-card)
+- **Main README**, [`../README.md`](../README.md), full API, setup, and architecture docs
+- **Live API**, [live-spotify-readme-card.vercel.app](https://live-spotify-readme-card.vercel.app/)
+- **Live Site**, [gautamvhavle.github.io/spotify-readme-card](https://gautamvhavle.github.io/spotify-readme-card/)
+- **Deploy your own**, [Vercel Deploy Button](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FGautamVhavle%2Fspotify-readme-card)
 
 ---
 
 <div align="center">
 
-*Built with Vite + React + Tailwind + Framer Motion. Dark, moody, and a little noisy — just like a good record.*
+*Built with Vite + React + Tailwind + Framer Motion. Dark, moody, and a little noisy, just like a good record.*
 
 </div>

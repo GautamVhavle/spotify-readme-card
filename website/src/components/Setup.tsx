@@ -59,7 +59,7 @@ export function Setup() {
                 </p>
                 <div className="mt-4">
                   <CodeBlock code="http://127.0.0.1:5175/callback" lang="text" />
-                  <p className="text-[11px] text-gray-500 mt-2">Spotify rejects <code className="bg-white/5 px-1 py-0.5 rounded">localhost</code> — it has to be the loopback IP. Tick <strong className="text-gray-300">Web API</strong>, save, then copy Client ID & Secret from Settings.</p>
+                  <p className="text-[11px] text-gray-500 mt-2">Spotify rejects <code className="bg-white/5 px-1 py-0.5 rounded">localhost</code>, it has to be the loopback IP. Tick <strong className="text-gray-300">Web API</strong>, save, then copy Client ID & Secret from Settings.</p>
                 </div>
               </div>
             </div>
@@ -133,7 +133,7 @@ SPOTIFY_REFRESH_TOKEN=`}
                     <img src="https://vercel.com/button" alt="" className="h-4 hidden" />
                     Deploy with Vercel
                   </a>
-                  <span className="text-gray-500 text-xs self-center">or via dashboard / CLI — see README</span>
+                  <span className="text-gray-500 text-xs self-center">or via dashboard or CLI, see README</span>
                 </div>
                 <p className="text-gray-500 text-xs sm:text-sm mt-4 leading-relaxed">
                   Add three env vars: <code className="bg-white/5 px-1 py-0.5 rounded">SPOTIFY_CLIENT_ID</code>,{" "}
