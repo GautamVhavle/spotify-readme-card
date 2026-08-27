@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gautamvhavle.github.io/spotify-readme-card/sitemap.xml

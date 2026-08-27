@@ -1,47 +1,127 @@
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Copy, Check, ExternalLink, RotateCcw, Sparkles } from "lucide-react";
+import { CardImage } from "./CardImage";
+import {
+  LIVE_URL,
+  THEMES,
+  VARIANTS,
+  VARIANT_BY_ID,
+  type ThemeName,
+  type Variant,
+} from "../lib/site";
 
-type Variant = "main" | "small" | "portrait";
-type ThemeName =
-  | "dark"
-  | "light"
-  | "spotify"
-  | "dracula"
-  | "nord"
-  | "catppuccin"
-  | "tokyonight"
-  | "gruvbox"
-  | "rosepine"
-  | "synthwave"
-  | "transparent";
+const CUSTOM_FIELDS = [
+  { key: "bg", placeholder: "0f0f0f" },
+  { key: "surface", placeholder: "1f1f1f" },
+  { key: "text", placeholder: "fafafa" },
+  { key: "sub", placeholder: "737373" },
+  { key: "accent", placeholder: "1db954" },
+  { key: "border", placeholder: "2a2a2a" },
+] as const;
 
-const THEMES: { value: ThemeName; label: string; dot: string }[] = [
-  { value: "dark", label: "Dark", dot: "#0d1117" },
-  { value: "light", label: "Light", dot: "#ffffff" },
-  { value: "spotify", label: "Spotify", dot: "#121212" },
-  { value: "dracula", label: "Dracula", dot: "#282a36" },
-  { value: "nord", label: "Nord", dot: "#2e3440" },
-  { value: "catppuccin", label: "Catppuccin", dot: "#1e1e2e" },
-  { value: "tokyonight", label: "Tokyo Night", dot: "#1a1b26" },
-  { value: "gruvbox", label: "Gruvbox", dot: "#282828" },
-  { value: "rosepine", label: "Rosé Pine", dot: "#191724" },
-  { value: "synthwave", label: "Synthwave", dot: "#241b2f" },
-  { value: "transparent", label: "Transparent", dot: "transparent" },
-];
-
-const VARIANT_META: Record<Variant, { label: string; path: string; width: { min: number; max: number; def: number }; height: number }> = {
-  main: { label: "Detailed", path: "/", width: { min: 320, max: 760, def: 420 }, height: 142 },
-  small: { label: "Compact", path: "/small", width: { min: 260, max: 560, def: 340 }, height: 76 },
-  portrait: { label: "Portrait", path: "/portrait", width: { min: 240, max: 420, def: 300 }, height: 420 },
-};
+type CustomKey = (typeof CUSTOM_FIELDS)[number]["key"];
 
 function isValidHex(v: string) {
   return /^([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(v);
 }
 
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <p className="eyebrow mb-2.5">{label}</p>
+      {children}
+    </div>
+  );
+}
+
+function Toggle({
+  label,
+  param,
+  value,
+  onChange,
+}: {
+  label: string;
+  param: string;
+  value: boolean;
+  onChange: (v: boolean) => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={value}
+      onClick={() => onChange(!value)}
+      className="flex w-full items-center justify-between gap-4 rounded-2xl border border-white/[0.08] bg-black px-4 py-3.5 text-left transition-colors hover:border-white/20"
+    >
+      <span className="min-w-0">
+        <span className="block text-sm text-cream">{label}</span>
+        <span className="mt-0.5 block font-mono text-[11px] text-gray-500">{param}</span>
+      </span>
+      <span
+        className={`relative h-6 w-11 flex-shrink-0 rounded-full transition-colors duration-200 ${
+          value ? "bg-primary" : "bg-white/15"
+        }`}
+      >
+        <span
+          className={`absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform duration-200 ${
+            value ? "translate-x-5" : "translate-x-0"
+          }`}
+        />
+      </span>
+    </button>
+  );
+}
+
+function Slider({
+  label,
+  value,
+  min,
+  max,
+  suffix = "",
+  minLabel,
+  maxLabel,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  suffix?: string;
+  minLabel?: string;
+  maxLabel?: string;
+  onChange: (v: number) => void;
+}) {
+  return (
+    <div>
+      <div className="mb-2.5 flex items-center justify-between">
+        <label className="eyebrow" htmlFor={`slider-${label}`}>
+          {label}
+        </label>
+        <span className="rounded-full bg-primary/10 px-2.5 py-1 font-mono text-[11px] text-primary">
+          {value}
+          {suffix}
+        </span>
+      </div>
+      <input
+        id={`slider-${label}`}
+        type="range"
+        className="range"
+        min={min}
+        max={max}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+      <div className="mt-1.5 flex justify-between font-mono text-[10px] text-gray-500">
+        <span>{minLabel ?? min}</span>
+        <span>{maxLabel ?? max}</span>
+      </div>
+    </div>
+  );
+}
+
 export function Playground() {
-  const [baseUrl, setBaseUrl] = useState("https://live-spotify-readme-card.vercel.app");
+  const [baseUrl, setBaseUrl] = useState(LIVE_URL);
   const [variant, setVariant] = useState<Variant>("main");
   const [theme, setTheme] = useState<ThemeName>("dark");
   const [mode, setMode] = useState<"dark" | "light">("dark");
@@ -52,19 +132,24 @@ export function Playground() {
   const [glass, setGlass] = useState(true);
   const [tint, setTint] = useState(55);
   const [showBorder, setShowBorder] = useState(true);
-  const [custom, setCustom] = useState({ bg: "", surface: "", text: "", sub: "", accent: "", border: "" });
+  const [custom, setCustom] = useState<Record<CustomKey, string>>({
+    bg: "",
+    surface: "",
+    text: "",
+    sub: "",
+    accent: "",
+    border: "",
+  });
+  const [snippet, setSnippet] = useState("url");
   const [copied, setCopied] = useState<string | null>(null);
 
-  const meta = VARIANT_META[variant];
+  const meta = VARIANT_BY_ID[variant];
 
-  // keep width in range when variant changes
-  const handleVariant = (v: Variant) => {
+  const selectVariant = (v: Variant) => {
+    const next = VARIANT_BY_ID[v];
     setVariant(v);
-    const m = VARIANT_META[v];
-    setWidth((prev) => Math.min(m.width.max, Math.max(m.width.min, prev)));
-    if (v === "portrait") setRadius(22);
-    else if (v === "main") setRadius(16);
-    else setRadius(14);
+    setWidth((prev) => Math.min(next.width.max, Math.max(next.width.min, prev)));
+    setRadius(next.radius);
   };
 
   const query = useMemo(() => {
@@ -72,13 +157,7 @@ export function Playground() {
     if (theme !== "dark") p.set("theme", theme);
     if (variant === "portrait" && mode !== "dark") p.set("mode", mode);
     if (width !== meta.width.def) p.set("width", String(width));
-    if (
-      (variant === "portrait" && radius !== 22) ||
-      (variant === "main" && radius !== 16) ||
-      (variant === "small" && radius !== 14)
-    ) {
-      p.set("radius", String(radius));
-    }
+    if (radius !== meta.radius) p.set("radius", String(radius));
     if (!bars) p.set("bars", "false");
     if (variant !== "small" && !blur) p.set("blur", "false");
     if (variant === "small" && blur) p.set("blur", "true");
@@ -86,38 +165,56 @@ export function Playground() {
     if (variant === "portrait" && tint !== 55) p.set("tint", String(tint));
     if (!showBorder && variant !== "portrait") p.set("show_border", "false");
     if (showBorder && variant === "portrait") p.set("show_border", "true");
-    // custom colors
-    (Object.entries(custom) as [keyof typeof custom, string][]).forEach(([k, v]) => {
-      const key = k === "sub" ? "sub" : k;
-      if (v && isValidHex(v)) p.set(key, v.toLowerCase().replace(/^#/, ""));
-    });
+
+    for (const [key, value] of Object.entries(custom)) {
+      const hex = value.replace(/^#/, "");
+      if (hex && isValidHex(hex)) p.set(key, hex.toLowerCase());
+    }
     return p.toString();
   }, [theme, mode, width, radius, bars, blur, glass, tint, showBorder, custom, variant, meta]);
 
   const imageUrl = useMemo(() => {
-    const cleanBase = baseUrl.replace(/\/$/, "");
-    const path = meta.path;
+    const base = baseUrl.trim().replace(/\/+$/, "");
     const qs = query ? `?${query}` : "";
-    // for main, path is "/" -> avoid double slash
-    if (path === "/") return `${cleanBase}/${qs}`;
-    return `${cleanBase}${path}${qs}`;
+    return meta.path === "/" ? `${base}/${qs}` : `${base}${meta.path}${qs}`;
   }, [baseUrl, meta.path, query]);
 
-  const markdown = `![Spotify](${imageUrl})`;
-  const markdownLink = `[![Spotify](${imageUrl})](https://open.spotify.com)`;
-  const htmlTag = `<img src="${imageUrl}" alt="Spotify now playing" width="${width}" />`;
+  const snippets = useMemo(
+    () => [
+      { id: "url", label: "Image URL", value: imageUrl },
+      { id: "md", label: "Markdown", value: `![Spotify](${imageUrl})` },
+      {
+        id: "mdLink",
+        label: "Clickable",
+        value: `[![Spotify](${imageUrl})](https://open.spotify.com)`,
+      },
+      {
+        id: "html",
+        label: "HTML",
+        value: `<img src="${imageUrl}" alt="Spotify now playing" width="${width}" />`,
+      },
+    ],
+    [imageUrl, width]
+  );
+
+  const activeSnippet = snippets.find((s) => s.id === snippet) ?? snippets[0];
 
   const copy = async (text: string, id: string) => {
-    await navigator.clipboard.writeText(text);
-    setCopied(id);
-    setTimeout(() => setCopied(null), 1800);
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(id);
+      setTimeout(() => setCopied(null), 1800);
+    } catch {
+      setCopied("failed");
+      setTimeout(() => setCopied(null), 1800);
+    }
   };
 
   const reset = () => {
     setTheme("dark");
     setMode("dark");
     setWidth(meta.width.def);
-    setRadius(variant === "portrait" ? 22 : variant === "main" ? 16 : 14);
+    setRadius(meta.radius);
     setBars(true);
     setBlur(true);
     setGlass(true);
@@ -127,249 +224,211 @@ export function Playground() {
   };
 
   return (
-    <section id="playground" className="bg-black px-4 md:px-6 py-8 md:py-12">
-      <div className="bg-[#101010] rounded-2xl md:rounded-[2rem] overflow-hidden max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="px-6 sm:px-8 md:px-10 pt-8 sm:pt-10 md:pt-12 pb-6 border-b border-white/[0.06]">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+    <section id="playground" className="bg-black px-3 py-20 sm:px-4 md:px-6 md:py-28">
+      <div className="mx-auto max-w-shell overflow-hidden rounded-[1.5rem] border border-white/[0.06] bg-ink-800 md:rounded-shell">
+        <div className="border-b border-white/[0.06] px-6 pb-7 pt-8 sm:px-8 md:px-10 md:pt-10">
+          <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
-              <p className="text-primary text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-3 flex items-center gap-2">
-                <Sparkles className="w-3 h-3" /> Playground · Live preview
+              <p className="eyebrow flex items-center gap-2">
+                <Sparkles className="h-3 w-3" aria-hidden /> Playground
               </p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-[#E1E0CC] tracking-tight leading-none">
+              <h2 className="mt-4 text-3xl font-medium leading-none tracking-tight text-cream sm:text-4xl">
                 Tweak it. <span className="font-serif italic font-normal">Copy it.</span> Ship it.
               </h2>
-              <p className="text-gray-500 text-xs sm:text-sm mt-3 max-w-xl leading-relaxed">
-                Every knob maps to a query parameter. The preview is a real SVG from the live service, what you see is what your README gets.
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-gray-400">
+                Every control maps to a query parameter. The preview is a real SVG from the live
+                service, so what you see is exactly what your README gets.
               </p>
             </div>
             <button
+              type="button"
               onClick={reset}
-              className="inline-flex items-center gap-2 text-xs tracking-widest uppercase bg-white/5 hover:bg-white/10 text-primary/70 hover:text-primary border border-white/10 rounded-full px-4 py-2.5 transition-colors self-start lg:self-auto"
+              className="inline-flex items-center gap-2 self-start rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-xs uppercase tracking-widest text-primary/70 transition-colors hover:bg-white/10 hover:text-primary lg:self-auto"
             >
-              <RotateCcw className="w-3.5 h-3.5" /> Reset
+              <RotateCcw className="h-3.5 w-3.5" aria-hidden /> Reset
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-0">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr]">
           {/* Controls */}
-          <div className="p-6 sm:p-8 md:p-10 space-y-7 border-b lg:border-b-0 lg:border-r border-white/[0.06]">
-            {/* Base URL */}
-            <div>
-              <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60 mb-2 block">Deployment URL</label>
+          <div className="min-w-0 space-y-8 border-b border-white/[0.06] p-6 sm:p-8 md:p-10 lg:border-b-0 lg:border-r">
+            <Field label="Deployment URL">
               <input
                 value={baseUrl}
                 onChange={(e) => setBaseUrl(e.target.value)}
                 placeholder="https://your-app.vercel.app"
-                className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm text-[#E1E0CC] placeholder:text-gray-600 focus:outline-none focus:border-primary/30 focus:ring-1 focus:ring-primary/20 transition-colors"
+                aria-label="Deployment URL"
+                className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-sm text-cream transition-colors placeholder:text-gray-600 focus:border-primary/40 focus:outline-none"
               />
-              <p className="text-[11px] text-gray-500 mt-2">Replace with your own Vercel URL after deploying.</p>
-            </div>
+              <p className="mt-2 text-[11px] text-gray-500">
+                Swap in your own Vercel URL once you have deployed.
+              </p>
+            </Field>
 
-            {/* Variant */}
-            <div>
-              <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60 mb-2 block">Layout</label>
+            <Field label="Layout">
               <div className="grid grid-cols-3 gap-2">
-                {(Object.keys(VARIANT_META) as Variant[]).map((v) => (
+                {VARIANTS.map((v) => (
                   <button
-                    key={v}
-                    onClick={() => handleVariant(v)}
-                    className={`rounded-xl px-3 py-3 text-sm font-medium border transition-all ${
-                      variant === v
-                        ? "bg-primary text-black border-primary"
-                        : "bg-black text-primary/70 border-white/10 hover:border-white/20 hover:text-primary"
+                    key={v.id}
+                    type="button"
+                    aria-pressed={variant === v.id}
+                    onClick={() => selectVariant(v.id)}
+                    className={`rounded-xl border px-3 py-3 text-sm font-medium transition-colors ${
+                      variant === v.id
+                        ? "border-primary bg-primary text-black"
+                        : "border-white/10 bg-black text-primary/70 hover:border-white/25 hover:text-primary"
                     }`}
                   >
-                    <span className="block text-xs tracking-widest uppercase opacity-60">{VARIANT_META[v].path}</span>
-                    <span className="block mt-1">{VARIANT_META[v].label}</span>
-                    <span className="block text-[11px] opacity-60 font-normal mt-0.5">
-                      {VARIANT_META[v].width.def} × {VARIANT_META[v].height}
+                    <span className="block font-mono text-[10px] uppercase tracking-widest opacity-60">
+                      {v.path}
+                    </span>
+                    <span className="mt-1 block">{v.label}</span>
+                    <span className="mt-0.5 block font-mono text-[10px] font-normal opacity-60">
+                      {v.width.def} × {v.height}
                     </span>
                   </button>
                 ))}
               </div>
-            </div>
+            </Field>
 
-            {/* Theme */}
-            <div>
-              <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60 mb-2 block">Theme</label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <Field label="Theme">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {THEMES.map((t) => (
                   <button
                     key={t.value}
+                    type="button"
+                    aria-pressed={theme === t.value}
                     onClick={() => setTheme(t.value)}
-                    className={`flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm border text-left transition-colors ${
+                    className={`flex items-center gap-2.5 rounded-xl border px-3 py-2.5 text-left transition-colors ${
                       theme === t.value
-                        ? "bg-primary text-black border-primary"
-                        : "bg-black text-primary/70 border-white/10 hover:border-white/20 hover:text-primary"
+                        ? "border-primary bg-primary text-black"
+                        : "border-white/10 bg-black text-primary/70 hover:border-white/25 hover:text-primary"
                     }`}
                   >
                     <span
-                      className="w-4 h-4 rounded-full border border-black/10 flex-shrink-0"
-                      style={{ background: t.dot === "transparent" ? "repeating-conic-gradient(#333 0% 25%, #111 0% 50%) 0 0 / 8px 8px" : t.dot }}
+                      className="h-3.5 w-3.5 flex-shrink-0 rounded-full ring-1 ring-inset ring-black/20"
+                      style={
+                        t.dot === "transparent"
+                          ? {
+                              backgroundImage:
+                                "repeating-conic-gradient(#3a3a3a 0% 25%, #141414 0% 50%)",
+                              backgroundSize: "7px 7px",
+                            }
+                          : { background: t.dot }
+                      }
                     />
-                    <span className="text-xs sm:text-sm leading-none">{t.label}</span>
+                    <span className="truncate text-xs leading-none">{t.label}</span>
                   </button>
                 ))}
               </div>
-            </div>
+            </Field>
 
-            {/* Mode for portrait */}
             {variant === "portrait" && (
-              <div>
-                <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60 mb-2 block">Portrait shell</label>
+              <Field label="Portrait shell">
                 <div className="flex gap-2">
                   {(["dark", "light"] as const).map((m) => (
                     <button
                       key={m}
+                      type="button"
+                      aria-pressed={mode === m}
                       onClick={() => setMode(m)}
-                      className={`flex-1 rounded-xl px-4 py-2.5 text-sm font-medium border capitalize transition-colors ${
-                        mode === m ? "bg-primary text-black border-primary" : "bg-black text-primary/60 border-white/10 hover:text-primary"
+                      className={`flex-1 rounded-xl border px-4 py-2.5 text-sm font-medium capitalize transition-colors ${
+                        mode === m
+                          ? "border-primary bg-primary text-black"
+                          : "border-white/10 bg-black text-primary/60 hover:text-primary"
                       }`}
                     >
                       {m}
                     </button>
                   ))}
                 </div>
-              </div>
+              </Field>
             )}
 
-            {/* Sliders */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60">Width</label>
-                  <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded-full">{width}px</span>
-                </div>
-                <input
-                  type="range"
-                  min={meta.width.min}
-                  max={meta.width.max}
-                  value={width}
-                  onChange={(e) => setWidth(Number(e.target.value))}
-                  className="w-full accent-[#DEDBC8] h-1 bg-white/10 rounded-full appearance-none cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] text-gray-500 mt-1 font-mono">
-                  <span>{meta.width.min}</span>
-                  <span>{meta.width.max}</span>
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60">Radius</label>
-                  <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded-full">{radius}px</span>
-                </div>
-                <input
-                  type="range"
-                  min={0}
-                  max={40}
-                  value={radius}
-                  onChange={(e) => setRadius(Number(e.target.value))}
-                  className="w-full accent-[#DEDBC8] h-1 bg-white/10 rounded-full appearance-none cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] text-gray-500 mt-1 font-mono">
-                  <span>0</span>
-                  <span>40</span>
-                </div>
-              </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <Slider
+                label="Width"
+                value={width}
+                min={meta.width.min}
+                max={meta.width.max}
+                suffix="px"
+                onChange={setWidth}
+              />
+              <Slider label="Radius" value={radius} min={0} max={40} suffix="px" onChange={setRadius} />
             </div>
 
             {variant === "portrait" && (
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60">Tint: album colour bleed</label>
-                  <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded-full">{tint}</span>
-                </div>
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={tint}
-                  onChange={(e) => setTint(Number(e.target.value))}
-                  className="w-full accent-[#DEDBC8] h-1 bg-white/10 rounded-full appearance-none cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] text-gray-500 mt-1">
-                  <span>muted</span>
-                  <span>vivid</span>
-                </div>
-              </div>
+              <Slider
+                label="Tint"
+                value={tint}
+                min={0}
+                max={100}
+                minLabel="muted"
+                maxLabel="vivid"
+                onChange={setTint}
+              />
             )}
 
-            {/* Toggles */}
-            <div>
-              <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60 mb-3 block">Options</label>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { label: "Equalizer bars", value: bars, setter: setBars, desc: "bars" },
-                  { label: "Blur backdrop", value: blur, setter: setBlur, desc: "blur", hide: variant === "portrait" ? false : variant === "small" ? false : false },
-                  { label: "Frosted glass", value: glass, setter: setGlass, desc: "glass", showOnly: "portrait" },
-                  { label: "Border", value: showBorder, setter: setShowBorder, desc: "show_border" },
-                ]
-                  .filter((t) => {
-                    if ((t as unknown as { showOnly?: string }).showOnly === "portrait" && variant !== "portrait") return false;
-                    return true;
-                  })
-                  .map((toggle) => (
-                    <div
-                      key={toggle.label}
-                      className="flex items-center justify-between bg-black border border-white/10 rounded-xl px-4 py-3 hover:border-white/20 transition-colors"
-                    >
-                      <div>
-                        <p className="text-sm text-[#E1E0CC] leading-none">{toggle.label}</p>
-                        <p className="text-[11px] text-gray-500 font-mono mt-1">{toggle.desc}</p>
-                      </div>
-                      <button
-                        type="button"
-                        aria-pressed={toggle.value}
-                        onClick={() => toggle.setter(!toggle.value)}
-                        className={`relative w-10 h-6 rounded-full transition-colors flex-shrink-0 ml-3 ${toggle.value ? "bg-primary" : "bg-white/15"}`}
-                      >
-                        <span
-                          className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${toggle.value ? "translate-x-4" : "translate-x-0.5"}`}
-                        />
-                      </button>
-                    </div>
-                  ))}
+            <Field label="Options">
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <Toggle label="Equalizer bars" param="bars" value={bars} onChange={setBars} />
+                <Toggle label="Album backdrop" param="blur" value={blur} onChange={setBlur} />
+                {variant === "portrait" && (
+                  <Toggle label="Frosted glass" param="glass" value={glass} onChange={setGlass} />
+                )}
+                <Toggle
+                  label="Outer border"
+                  param="show_border"
+                  value={showBorder}
+                  onChange={setShowBorder}
+                />
               </div>
-            </div>
+            </Field>
 
-            {/* Custom colors */}
             <div>
-              <label className="text-[10px] tracking-[0.15em] uppercase text-primary/60 mb-2 block">
-                Custom palette <span className="normal-case tracking-normal text-gray-500">hex without #, e.g. ff2d55 or transparent</span>
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {[
-                  { key: "bg" as const, label: "bg", placeholder: "0f0f0f" },
-                  { key: "surface" as const, label: "surface", placeholder: "1f1f1f" },
-                  { key: "text" as const, label: "text", placeholder: "fafafa" },
-                  { key: "sub" as const, label: "sub", placeholder: "737373" },
-                  { key: "accent" as const, label: "accent", placeholder: "1db954" },
-                  { key: "border" as const, label: "border", placeholder: "2a2a2a" },
-                ].map((c) => {
-                  const val = custom[c.key];
-                  const valid = !val || val.toLowerCase() === "transparent" || val.toLowerCase() === "none" || isValidHex(val);
+              <div className="mb-2.5 flex flex-wrap items-baseline gap-x-2">
+                <p className="eyebrow">Custom palette</p>
+                <span className="text-[11px] normal-case tracking-normal text-gray-500">
+                  hex without #, e.g. ff2d55
+                </span>
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {CUSTOM_FIELDS.map((f) => {
+                  const raw = custom[f.key];
+                  const invalid = raw.length > 0 && !isValidHex(raw.replace(/^#/, ""));
                   return (
-                    <div key={c.key}>
-                      <label className="text-[11px] font-mono text-gray-400 mb-1 block">{c.label}</label>
+                    <div key={f.key}>
+                      <label
+                        htmlFor={`hex-${f.key}`}
+                        className="mb-1.5 block font-mono text-[11px] text-gray-400"
+                      >
+                        {f.key}
+                      </label>
                       <div className="relative">
                         <input
-                          value={val}
-                          onChange={(e) => setCustom((prev) => ({ ...prev, [c.key]: e.target.value }))}
-                          placeholder={c.placeholder}
-                          className={`w-full bg-black border rounded-xl px-3 py-2.5 text-sm font-mono text-[#E1E0CC] placeholder:text-gray-600 focus:outline-none transition-colors pr-8 ${
-                            valid ? "border-white/10 focus:border-primary/30" : "border-red-500/50 focus:border-red-500"
+                          id={`hex-${f.key}`}
+                          value={raw}
+                          onChange={(e) =>
+                            setCustom((c) => ({ ...c, [f.key]: e.target.value.trim() }))
+                          }
+                          placeholder={f.placeholder}
+                          aria-invalid={invalid}
+                          className={`w-full rounded-xl border bg-black py-2.5 pl-9 pr-3 font-mono text-xs text-cream transition-colors placeholder:text-gray-600 focus:outline-none ${
+                            invalid
+                              ? "border-red-500/50"
+                              : "border-white/10 focus:border-primary/40"
                           }`}
                         />
-                        {val && (
-                          <span
-                            className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full border border-white/20"
-                            style={{
-                              background: valid && val.toLowerCase() !== "transparent" && val.toLowerCase() !== "none" && isValidHex(val) ? `#${val.replace(/^#/, "")}` : "transparent",
-                            }}
-                          />
-                        )}
+                        <span
+                          className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full ring-1 ring-inset ring-white/15"
+                          style={{
+                            background: isValidHex(raw.replace(/^#/, ""))
+                              ? `#${raw.replace(/^#/, "")}`
+                              : "transparent",
+                          }}
+                          aria-hidden
+                        />
                       </div>
                     </div>
                   );
@@ -379,82 +438,101 @@ export function Playground() {
           </div>
 
           {/* Preview */}
-          <div className="p-6 sm:p-8 md:p-10 bg-black/40 flex flex-col">
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-[10px] tracking-[0.15em] uppercase text-primary/60">Preview</p>
-              <a
-                href={imageUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs text-primary/60 hover:text-primary transition-colors"
-              >
-                Open image <ExternalLink className="w-3 h-3" />
-              </a>
-            </div>
+          <div className="flex min-w-0 flex-col bg-black/40 p-6 sm:p-8 md:p-10">
+            <div className="lg:sticky lg:top-24">
+              <div className="mb-4 flex items-center justify-between">
+                <p className="eyebrow">Preview</p>
+                <a
+                  href={imageUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-primary/60 transition-colors hover:text-primary"
+                >
+                  Open image <ExternalLink className="h-3 w-3" aria-hidden />
+                </a>
+              </div>
 
-            {/* Image preview card */}
-            <div className="flex-1 flex flex-col items-center justify-center bg-[#0a0a0a] rounded-2xl border border-white/[0.06] p-6 sm:p-8 min-h-[280px] relative overflow-hidden">
-              <div className="absolute inset-0 bg-noise opacity-[0.07] pointer-events-none" />
-              <motion.div
-                key={imageUrl}
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="relative z-10 w-full flex justify-center"
+              <div
+                className={`relative flex min-h-[280px] flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/[0.06] p-6 sm:p-8 ${
+                  theme === "transparent" ? "checkerboard" : "bg-ink-900"
+                }`}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={imageUrl}
-                  alt="Spotify card preview"
-                  width={width}
-                  style={{ maxWidth: "100%", height: "auto" }}
-                  className="rounded-xl shadow-2xl"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
-                  onLoad={(e) => {
-                    (e.target as HTMLImageElement).style.display = "block";
-                  }}
-                />
-              </motion.div>
-              <p className="relative z-10 text-[11px] text-gray-500 mt-4 font-mono text-center break-all px-2">
-                {width} × {meta.height} · {variant} · {theme}
+                {theme !== "transparent" && (
+                  <div className="bg-noise pointer-events-none absolute inset-0 opacity-[0.06]" />
+                )}
+                <motion.div
+                  key={imageUrl}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative z-10 w-full"
+                >
+                  <CardImage src={imageUrl} alt="Spotify card preview" width={width} />
+                </motion.div>
+              </div>
+
+              <p className="mt-3 text-center font-mono text-[11px] text-gray-500">
+                {width} × {meta.height} · {meta.label.toLowerCase()} · {theme}
               </p>
-            </div>
 
-            {/* URL + snippets */}
-            <div className="mt-6 space-y-4">
-              {[
-                { id: "url", label: "Image URL", value: imageUrl },
-                { id: "md", label: "Markdown", value: markdown },
-                { id: "mdLink", label: "Markdown (clickable)", value: markdownLink },
-                { id: "html", label: "HTML", value: htmlTag },
-              ].map((item) => (
-                <div key={item.id} className="group">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[10px] tracking-[0.15em] uppercase text-primary/50">{item.label}</span>
+              <div className="mt-7">
+                <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Snippet format">
+                  {snippets.map((s) => (
                     <button
-                      onClick={() => copy(item.value, item.id)}
-                      className="inline-flex items-center gap-1.5 text-[11px] font-medium bg-white/5 hover:bg-primary hover:text-black text-primary/70 border border-white/10 rounded-full px-3 py-1 transition-colors"
+                      key={s.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={snippet === s.id}
+                      onClick={() => setSnippet(s.id)}
+                      className={`rounded-full px-3.5 py-1.5 text-[11px] font-medium transition-colors ${
+                        snippet === s.id
+                          ? "bg-primary text-black"
+                          : "bg-white/5 text-primary/60 hover:bg-white/10 hover:text-primary"
+                      }`}
                     >
-                      {copied === item.id ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                      {copied === item.id ? "Copied!" : "Copy"}
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-3 overflow-hidden rounded-xl border border-white/10 bg-black">
+                  <div className="flex items-center justify-between border-b border-white/5 px-4 py-2">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-gray-500">
+                      {activeSnippet.label}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => copy(activeSnippet.value, activeSnippet.id)}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-[11px] font-medium text-primary/70 transition-colors hover:bg-primary hover:text-black"
+                    >
+                      {copied === activeSnippet.id ? (
+                        <Check className="h-3 w-3" aria-hidden />
+                      ) : (
+                        <Copy className="h-3 w-3" aria-hidden />
+                      )}
+                      {copied === activeSnippet.id
+                        ? "Copied"
+                        : copied === "failed"
+                          ? "Failed"
+                          : "Copy"}
                     </button>
                   </div>
-                  <div className="bg-black border border-white/10 rounded-xl px-4 py-3 overflow-hidden">
-                    <code className="text-xs font-mono text-gray-300 break-all leading-relaxed block max-h-20 overflow-auto">
-                      {item.value}
-                    </code>
-                  </div>
+                  <code className="block max-h-32 overflow-auto break-all p-4 font-mono text-xs leading-relaxed text-gray-300">
+                    {activeSnippet.value}
+                  </code>
                 </div>
-              ))}
-            </div>
+              </div>
 
-            <div className="mt-6 bg-primary/5 border border-primary/10 rounded-xl p-4">
-              <p className="text-xs text-primary/80 leading-relaxed">
-                <span className="font-medium text-primary">Tip:</span> GitHub caches README images via its camo proxy. After pushing, run{" "}
-                <code className="bg-black px-1.5 py-0.5 rounded text-[11px] font-mono">node scripts/purge-camo.mjs https://github.com/you/you</code> to bust the cache.
-              </p>
+              <div className="mt-5 rounded-xl border border-primary/10 bg-primary/5 p-4">
+                <p className="text-xs leading-relaxed text-primary/80">
+                  <span className="font-medium text-primary">Tip:</span> GitHub caches README images
+                  through its camo proxy. After pushing, run{" "}
+                  <code className="rounded bg-black px-1.5 py-0.5 text-[11px]">
+                    node scripts/purge-camo.mjs https://github.com/you/you
+                  </code>{" "}
+                  to bust it.
+                </p>
+              </div>
             </div>
           </div>
         </div>

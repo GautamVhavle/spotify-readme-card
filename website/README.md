@@ -11,13 +11,13 @@
 <p>
   <a href="https://gautamvhavle.github.io/spotify-readme-card/"><b>Live Site</b></a>
   ·
-  <a href="#-playground">Playground</a>
+  <a href="#-playground-the-card-builder">Playground</a>
   ·
   <a href="#-tech-stack">Tech Stack</a>
   ·
   <a href="#-project-structure">Structure</a>
   ·
-  <a href="#-deployment">Deployment</a>
+  <a href="#-deployment-github-pages">Deployment</a>
 </p>
 
 </div>
@@ -31,7 +31,7 @@ This `website/` folder is a **standalone React + Vite marketing site** for the [
 The site does three jobs:
 
 1. **Explains** the product, what it is, how it works, and why it exists.
-2. **Shows** it, live previews of all 3 layouts with actual cards and 11 themes from the production API.
+2. **Shows** it, a live layout explorer that renders real cards straight from the production API.
 3. **Lets you build** your own card, an interactive playground where every query parameter is a knob, and every knob instantly updates a live preview + copy-ready snippets.
 
 > **Design language:** The site is a direct adaptation of the *Prisma* creative-studio template, dark, moody, cinematic, warm cream (`#DEDBC8` / `#E1E0CC`) on pure black, with noise textures, pill navbars, giant display type, and Framer Motion throughout.
@@ -42,12 +42,14 @@ The site does three jobs:
 
 | Section | What it does | Key detail |
 |---------|-------------|------------|
-| **Hero** | Full viewport inset video with noise and gradient, pill navbar, giant `Spotify*` wordmark | `WordsPullUp` per word stagger, `ArrowRight` CTA to playground |
-| **About** | Centered `#101010` card, multi style headline, scroll linked character fade | `useScroll` plus per character `opacity: 0.2 to 1` |
-| **Features** | Live card showcase plus 4 column detail grid with noise bg | Actual `Detailed`, `Compact`, `Portrait` cards rendered live, plus feature cards |
-| **Playground** | **Interactive card builder**, the core tool | Live SVG preview, URL plus Markdown plus HTML snippets, one click copy |
+| **Nav** | Centered notch navbar with scroll-spy | `IntersectionObserver` active section, `layoutId` sliding pill, mobile sheet |
+| **Hero** | Full viewport inset video with noise and gradient, product name and feature tags | `WordsPullUp` per word stagger, inline stat row |
+| **Marquee** | Two counter-scrolling strips of themes and capabilities | CSS keyframe marquee with edge mask |
+| **About** | Scroll-linked word fade plus the three-step request pipeline | `useScroll` with per word `opacity: 0.15 to 1` |
+| **Layouts** | Interactive layout explorer, one live card at a time | Tabs drive an `AnimatePresence` swap of a live API preview |
+| **Playground** | **Interactive card builder**, the core tool | Live SVG preview, tabbed URL / Markdown / HTML snippets, one click copy |
 | **Setup** | 5 step deploy guide plus full API reference tables | Copyable code blocks |
-| **Footer** | Links and credits | Built with love by Gautam Vhavle |
+| **Footer** | Link columns, credits and back to top | Built with ❤️ by Gautam Vhavle |
 
 ---
 
@@ -91,9 +93,9 @@ Each has a **Copy** button (with `Copied!` feedback) and the preview itself is a
 | Layer | Choice | Why |
 |-------|--------|-----|
 | **Build** | [Vite 5](https://vitejs.dev) + React 18 + TypeScript 5 | Instant HMR, strict types, zero-config |
-| **Styling** | [Tailwind CSS 3](https://tailwindcss.com) | Utility-first, `primary: #DEDBC8`, `font-serif: Instrument Serif` |
-| **Animation** | [Framer Motion 11](https://www.framer.com/motion/) | `WordsPullUp`, `WordsPullUpMultiStyle`, scroll-linked opacity, card staggers |
-| **Icons** | [lucide-react](https://lucide.dev) | `ArrowRight`, `Check`, `Copy`, `ExternalLink`, `Sparkles` |
+| **Styling** | [Tailwind CSS 3](https://tailwindcss.com) | Utility-first, tokenised `primary` / `cream` / `ink` scale, `font-serif: Instrument Serif` |
+| **Animation** | [Framer Motion 11](https://www.framer.com/motion/) | `WordsPullUp`, `WordsPullUpMultiStyle`, scroll-linked opacity, `useReducedMotion` throughout |
+| **Icons** | [lucide-react](https://lucide.dev) | `ArrowRight`, `Check`, `Copy`, `ExternalLink`, `Sparkles`, `Github` |
 | **Fonts** | Google Fonts | `Almarai` (300/400/700/800) global · `Instrument Serif` italic for accents |
 | **Deploy** | GitHub Pages (static) | `vite build` → `dist/` → `build/` → `gh-pages` branch |
 
@@ -113,17 +115,28 @@ website/
 ├── package.json
 ├── scripts/
 │   └── copy-build.mjs      # dist → ../build + .nojekyll
+├── public/                 # copied verbatim into the build
+│   ├── icon.svg            # favicon + manifest icon
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   └── site.webmanifest
 ├── src/
 │   ├── main.tsx
-│   ├── index.css           # Tailwind + .noise-overlay + .bg-noise
-│   ├── App.tsx             # Hero + About + Features + Playground + Setup + Footer
+│   ├── index.css           # Tailwind base, noise, checkerboard, range sliders
+│   ├── App.tsx             # Nav + Hero + Marquee + About + Layouts + Playground + Setup + Footer
+│   ├── lib/
+│   │   └── site.ts         # Shared URLs, variants, themes, nav sections
 │   └── components/
+│       ├── Nav.tsx
 │       ├── Hero.tsx
+│       ├── Marquee.tsx
 │       ├── About.tsx
-│       ├── Features.tsx
+│       ├── Layouts.tsx
 │       ├── Playground.tsx  # ← the interactive builder
 │       ├── Setup.tsx
 │       ├── Footer.tsx
+│       ├── CardImage.tsx   # Live SVG with skeleton + error fallback
+│       ├── SpotifyMark.tsx # Spotify glyph used in the nav notch
 │       ├── WordsPullUp.tsx
 │       └── WordsPullUpMultiStyle.tsx
 └── dist/                   # vite build output (gitignored, copied to ../build)

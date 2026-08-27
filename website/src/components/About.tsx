@@ -1,127 +1,114 @@
-import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { WordsPullUpMultiStyle } from "./WordsPullUpMultiStyle";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+  type MotionValue,
+} from "framer-motion";
+import { KeyRound, Radio, Code2 } from "lucide-react";
 
-function AnimatedLetter({
-  char,
+const COPY =
+  "It reads your Spotify playback the moment someone opens your profile, then paints it as an SVG that GitHub is happy to render. No build step, no client script, no database. Just a URL you paste once and forget about.";
+
+const STEPS = [
+  {
+    n: "01",
+    icon: KeyRound,
+    title: "Token refresh",
+    body: "Your refresh token is traded for a short lived access token, cached while the function stays warm.",
+  },
+  {
+    n: "02",
+    icon: Radio,
+    title: "Fetch track",
+    body: "Currently playing first. If nothing is on, it quietly falls back to your most recent play.",
+  },
+  {
+    n: "03",
+    icon: Code2,
+    title: "Render SVG",
+    body: "Artwork is inlined as base64 and the markup is streamed back with cache headers tuned for camo.",
+  },
+];
+
+function Word({
+  word,
   progress,
-  total,
   index,
+  total,
 }: {
-  char: string;
-  progress: ReturnType<typeof useTransform<number, number>>;
-  total: number;
+  word: string;
+  progress: MotionValue<number>;
   index: number;
+  total: number;
 }) {
-  const charProgress = index / total;
-  const start = Math.max(0, charProgress - 0.1);
-  const end = Math.min(1, charProgress + 0.05);
-  const opacity = useTransform(progress, [start, end], [0.2, 1]);
+  const start = index / total;
+  const end = start + 1 / total;
+  const opacity = useTransform(progress, [start, end], [0.15, 1]);
   return (
-    <motion.span style={{ opacity }} className="inline">
-      {char === " " ? "\u00A0" : char}
+    <motion.span style={{ opacity }} className="inline-block mr-[0.25em]">
+      {word}
     </motion.span>
   );
 }
 
 export function About() {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLParagraphElement>(null);
+  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.8", "end 0.2"],
+    offset: ["start 0.85", "end 0.45"],
   });
 
-  const bodyText =
-    "Over the last seven years, I have worked with Parallax, a Berlin-based production house that crafts cinema, series, and Noir Studio in Paris. Together, we have created work that has earned international acclaim at several major festivals.";
-
-  // Adapted body for Spotify card context but keeping cinematic tone
-  const spotifyBody =
-    "A tiny serverless function asks Spotify what you are listening to and answers with an SVG image. Because the response is an image, it works anywhere a URL does: GitHub READMEs, gists, blogs, and docs. Animated with CSS keyframes, inlined artwork to survive GitHub's camo proxy, and zero runtime dependencies.";
-
-  const chars = spotifyBody.split("");
+  const words = COPY.split(" ");
 
   return (
-    <section id="about" className="bg-black px-4 md:px-6 py-8 md:py-12">
-      <div className="bg-[#101010] rounded-2xl md:rounded-[2rem] px-6 sm:px-10 md:px-16 lg:px-20 py-16 sm:py-20 md:py-24 lg:py-28 flex flex-col items-center text-center max-w-6xl mx-auto">
-        {/* Label */}
-        <p className="text-primary text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-6 md:mb-8">
-          Now playing · Live
+    <section id="about" className="bg-black px-3 py-20 sm:px-4 md:px-6 md:py-28">
+      <div className="mx-auto max-w-shell">
+        <p className="eyebrow">About</p>
+
+        <h2 className="mt-6 max-w-4xl text-3xl font-medium leading-[1.08] tracking-tight text-cream sm:text-4xl md:text-5xl">
+          A serverless card that <span className="font-serif italic font-normal">listens</span> with
+          you.
+        </h2>
+
+        <p
+          ref={ref}
+          className="mt-8 max-w-4xl text-lg leading-relaxed text-cream sm:text-xl md:text-[26px] md:leading-[1.5]"
+        >
+          {reduce
+            ? COPY
+            : words.map((word, i) => (
+                <Word
+                  key={`${word}-${i}`}
+                  word={word}
+                  index={i}
+                  total={words.length}
+                  progress={scrollYProgress}
+                />
+              ))}
         </p>
 
-        {/* Heading with multi-style */}
-        <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-3xl mx-auto leading-[0.95] sm:leading-[0.9] mb-8 md:mb-10">
-          <WordsPullUpMultiStyle
-            segments={[
-              { text: "A serverless card", className: "font-normal text-[#E1E0CC]" },
-              { text: "that listens", className: "italic font-serif text-[#E1E0CC]" },
-              { text: "with you. Crafted for READMEs, rendered at the edge.", className: "font-normal text-[#E1E0CC]" },
-            ]}
-          />
-        </div>
-
-        {/* Scroll-linked paragraph */}
-        <div
-          ref={ref}
-          className="max-w-2xl mx-auto text-[#DEDBC8] text-sm sm:text-base leading-relaxed text-center"
-        >
-          {chars.map((char, i) => (
-            <AnimatedLetter
-              key={`${char}-${i}`}
-              char={char}
-              progress={scrollYProgress}
-              total={chars.length}
-              index={i}
-            />
-          ))}
-        </div>
-
-        {/* Stats row */}
-        <div className="grid grid-cols-3 gap-6 sm:gap-10 md:gap-16 mt-12 md:mt-16 pt-8 md:pt-10 border-t border-white/10 w-full max-w-2xl">
-          {[
-            { value: "3", label: "layouts" },
-            { value: "11", label: "themes" },
-            { value: "0", label: "runtime deps" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="text-2xl sm:text-3xl md:text-4xl font-light text-[#E1E0CC] tracking-tight">
-                {stat.value}
-              </p>
-              <p className="text-[10px] sm:text-xs tracking-[0.15em] uppercase text-primary/60 mt-1">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* How it works mini */}
-        <div className="mt-10 md:mt-14 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full max-w-3xl text-left">
-          {[
-            {
-              step: "01",
-              title: "Token refresh",
-              desc: "Refresh token → access token, cached while warm.",
-            },
-            {
-              step: "02",
-              title: "Fetch track",
-              desc: "Currently playing, fallback to recently played.",
-            },
-            {
-              step: "03",
-              title: "Render SVG",
-              desc: "Artwork inlined as base64, CSS animation inside.",
-            },
-          ].map((item) => (
-            <div
-              key={item.step}
-              className="bg-black/50 rounded-xl p-4 border border-white/[0.06]"
+        <div className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 md:mt-20">
+          {STEPS.map(({ n, icon: Icon, title, body }, i) => (
+            <motion.div
+              key={n}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: i * 0.1, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              className="group rounded-2xl border border-white/[0.06] bg-ink-800 p-6 transition-colors hover:border-white/[0.14] sm:p-7"
             >
-              <p className="text-[10px] tracking-[0.15em] uppercase text-primary/50 mb-2">
-                {item.step}
-              </p>
-              <p className="text-sm font-medium text-[#E1E0CC] mb-1">{item.title}</p>
-              <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
-            </div>
+              <div className="flex items-center justify-between">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.06] bg-black">
+                  <Icon className="h-4 w-4 text-primary" aria-hidden />
+                </span>
+                <span className="font-mono text-xs text-primary/35">{n}</span>
+              </div>
+              <h3 className="mt-5 font-medium text-cream">{title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-400">{body}</p>
+            </motion.div>
           ))}
         </div>
       </div>

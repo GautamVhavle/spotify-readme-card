@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 
 export interface Segment {
@@ -12,40 +12,33 @@ interface Props {
 }
 
 export function WordsPullUpMultiStyle({ segments, className = "" }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-20px" });
+  const reduce = useReducedMotion();
 
-  // Flatten segments into words preserving per-word className
-  const words: { word: string; className: string }[] = [];
-  for (const seg of segments) {
-    const parts = seg.text.split(" ");
-    for (const w of parts) {
-      if (w.length === 0) continue;
-      words.push({ word: w, className: seg.className ?? "" });
-    }
-  }
+  const words = segments.flatMap((seg) =>
+    seg.text
+      .split(" ")
+      .filter(Boolean)
+      .map((word) => ({ word, className: seg.className ?? "" }))
+  );
+
+  const label = segments.map((s) => s.text).join(" ");
 
   return (
-    <div
-      ref={ref}
-      className={`inline-flex flex-wrap justify-center ${className}`}
-    >
+    <span ref={ref} className={`block ${className}`} aria-label={label}>
       {words.map((w, i) => (
         <motion.span
           key={`${w.word}-${i}`}
-          initial={{ y: 20, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
-          transition={{
-            delay: i * 0.08,
-            duration: 0.5,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className={`inline-block whitespace-pre ${w.className}`}
+          aria-hidden
+          initial={reduce ? false : { y: "0.5em", opacity: 0 }}
+          animate={isInView || reduce ? { y: 0, opacity: 1 } : { y: "0.5em", opacity: 0 }}
+          transition={{ delay: i * 0.06, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className={`inline-block ${i === words.length - 1 ? "" : "mr-[0.22em]"} ${w.className}`}
         >
           {w.word}
-          {i !== words.length - 1 ? "\u00A0" : ""}
         </motion.span>
       ))}
-    </div>
+    </span>
   );
 }

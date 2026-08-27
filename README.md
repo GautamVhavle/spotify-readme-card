@@ -15,6 +15,8 @@
 </p>
 
 <p>
+  <a href="https://gautamvhavle.github.io/spotify-readme-card/"><b>Website</b></a>
+  ·
   <a href="https://live-spotify-readme-card.vercel.app/"><b>Live demo</b></a>
   ·
   <a href="#gallery">Gallery</a>

@@ -1,26 +1,33 @@
-import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, ArrowUpRight, MousePointerClick } from "lucide-react";
 import { WordsPullUp } from "./WordsPullUp";
 
-const NAV_ITEMS = [
-  { label: "About", href: "#about" },
-  { label: "Features", href: "#features" },
-  { label: "Playground", href: "#playground" },
-  { label: "Setup", href: "#setup" },
+const STATS = [
+  { value: "3", label: "layouts" },
+  { value: "11", label: "themes" },
+  { value: "0", label: "runtime deps" },
 ];
 
+const TAGS = ["Now playing", "Pure SVG", "Edge rendered", "Zero deps"];
+
 export function Hero() {
+  const reduce = useReducedMotion();
+  const rise = (delay: number) => ({
+    initial: reduce ? false : { y: 24, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    transition: { delay, duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
+  });
+
   return (
-    <section className="min-h-[100svh] p-3 sm:p-4 md:p-6 bg-black flex flex-col">
-      <div className="relative w-full flex-1 min-h-[600px] rounded-2xl md:rounded-[2rem] overflow-hidden flex flex-col">
-        {/* Background video */}
+    <section id="top" className="flex min-h-[100svh] flex-col bg-black p-3 sm:p-4 md:p-6">
+      <div className="relative flex min-h-[640px] w-full flex-1 flex-col overflow-hidden rounded-[1.5rem] md:rounded-shell">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=80"
+          aria-hidden
+          className="absolute inset-0 h-full w-full bg-black object-cover"
         >
           <source
             src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
@@ -28,102 +35,93 @@ export function Hero() {
           />
         </video>
 
-        {/* Noise overlay */}
-        <div className="noise-overlay absolute inset-0 opacity-[0.35] mix-blend-overlay pointer-events-none" />
+        <div className="noise-overlay pointer-events-none absolute inset-0 opacity-[0.3] mix-blend-overlay" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/70 via-black/25 to-black/90" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/55 via-transparent to-transparent" />
 
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/75 pointer-events-none" />
-
-        {/* Navbar - pill hanging from top */}
-        <nav className="relative z-20 flex justify-center pt-0">
-          <div className="bg-black rounded-b-2xl md:rounded-b-3xl px-4 sm:px-6 md:px-8 py-2.5 md:py-3 flex items-center gap-5 sm:gap-8 md:gap-10">
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-[11px] sm:text-xs md:text-sm whitespace-nowrap transition-colors duration-200 font-medium"
-                style={{ color: "rgba(225, 224, 204, 0.75)" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#E1E0CC")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(225, 224, 204, 0.75)")}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        </nav>
-
-        {/* Hero Content - bottom aligned, not absolute to avoid hiding */}
         <div className="relative z-10 mt-auto p-4 sm:p-6 md:p-8 lg:p-10">
-          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 items-start lg:items-end">
-            {/* Left - Giant heading */}
-            <div className="w-full lg:col-span-7 xl:col-span-8">
-              <div className="overflow-visible">
-                <WordsPullUp
-                  text="Spotify"
-                  showAsterisk
-                  className="text-[22vw] sm:text-[18vw] md:text-[15vw] lg:text-[11vw] xl:text-[10vw] 2xl:text-[9vw] font-medium leading-[0.85] tracking-[-0.04em] text-[#E1E0CC]"
-                />
-              </div>
-              <p className="text-primary/60 text-[10px] sm:text-xs tracking-[0.2em] uppercase font-light mt-3 sm:mt-4">
-                README Card &nbsp;·&nbsp; Live now playing &nbsp;·&nbsp; SVG
-              </p>
+          <motion.div
+            {...rise(0.15)}
+            className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-black/40 px-3.5 py-1.5 backdrop-blur"
+          >
+            <span className="relative flex h-2 w-2" aria-hidden>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-spotify opacity-70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-spotify" />
+            </span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-white/80 sm:text-[11px]">
+              Live from the Spotify Web API
+            </span>
+          </motion.div>
+
+          <div className="flex flex-col gap-8 lg:grid lg:grid-cols-12 lg:items-end lg:gap-10">
+            <div className="w-full lg:col-span-7">
+              <h1 className="text-[13.5vw] font-medium leading-[0.86] tracking-[-0.045em] text-cream sm:text-[11vw] lg:text-[7vw] xl:text-[6.4vw]">
+                <WordsPullUp text="Spotify Readme Card" />
+              </h1>
+              <motion.ul {...rise(0.5)} className="mt-5 flex flex-wrap gap-2">
+                {TAGS.map((tag) => (
+                  <li
+                    key={tag}
+                    className="rounded-full border border-white/15 bg-black/30 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-primary/70 backdrop-blur sm:text-[11px]"
+                  >
+                    {tag}
+                  </li>
+                ))}
+              </motion.ul>
             </div>
 
-            {/* Right - description + CTA */}
-            <div className="w-full lg:col-span-5 xl:col-span-4 flex flex-col gap-4 sm:gap-5 lg:pb-2">
+            <div className="flex w-full flex-col gap-5 lg:col-span-5 lg:pb-2">
               <motion.p
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="text-primary/80 text-sm sm:text-base leading-relaxed max-w-md"
+                {...rise(0.45)}
+                className="max-w-md text-sm leading-relaxed text-primary/80 sm:text-base"
               >
-                A serverless Spotify card for your GitHub profile. Animated, edge rendered, and
-                alive. Shows what you are playing now, or what you played last.
+                A serverless card for your GitHub profile. Animated, rendered at the edge, and
+                genuinely alive. It shows what you are playing right now, or what you played last.
               </motion.p>
 
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.7, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              >
+              <motion.div {...rise(0.6)} className="flex flex-wrap items-center gap-3">
                 <a
                   href="#playground"
-                  className="group inline-flex items-center gap-2 bg-primary rounded-full pl-5 pr-1.5 py-1.5 transition-all duration-300 hover:bg-primary/90"
+                  className="group inline-flex items-center gap-2 rounded-full bg-primary py-1.5 pl-5 pr-1.5 transition-colors duration-300 hover:bg-white"
                 >
-                  <span className="text-black font-medium text-sm sm:text-base">
-                    Open playground
+                  <span className="text-sm font-medium text-black sm:text-base">
+                    Build your card
                   </span>
-                  <span className="bg-black rounded-full w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-black transition-transform duration-300 group-hover:scale-105 sm:h-10 sm:w-10">
+                    <ArrowRight className="h-4 w-4 text-primary sm:h-5 sm:w-5" aria-hidden />
                   </span>
                 </a>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1, duration: 0.6 }}
-                className="flex items-center gap-2 sm:gap-3 pt-1 flex-wrap"
-              >
                 <a
-                  href="https://github.com/GautamVhavle/spotify-readme-card"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[10px] sm:text-xs tracking-widest uppercase text-white/70 hover:text-white hover:bg-white/10 transition-colors border border-white/15 hover:border-white/25 rounded-full px-3 sm:px-4 py-2 bg-black/20 backdrop-blur"
+                  href="#layouts"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/25 px-5 py-3 text-xs uppercase tracking-widest text-white/75 backdrop-blur transition-colors hover:border-white/30 hover:bg-white/10 hover:text-white"
                 >
-                  GitHub
-                </a>
-                <a
-                  href="https://live-spotify-readme-card.vercel.app/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[10px] sm:text-xs tracking-widest uppercase text-white/70 hover:text-white hover:bg-white/10 transition-colors border border-white/15 hover:border-white/25 rounded-full px-3 sm:px-4 py-2 bg-black/20 backdrop-blur"
-                >
-                  Live demo
+                  See layouts
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
                 </a>
               </motion.div>
             </div>
           </div>
+
+          <motion.div
+            {...rise(0.9)}
+            className="mt-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-white/10 pt-6"
+          >
+            <dl className="flex flex-wrap items-center gap-x-8 gap-y-3">
+              {STATS.map((s) => (
+                <div key={s.label} className="flex items-baseline gap-1.5">
+                  <dt className="sr-only">{s.label}</dt>
+                  <dd className="text-xl font-medium text-cream sm:text-2xl">{s.value}</dd>
+                  <span className="text-[10px] uppercase tracking-[0.16em] text-white/45">
+                    {s.label}
+                  </span>
+                </div>
+              ))}
+            </dl>
+            <p className="hidden items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-white/35 sm:flex">
+              <MousePointerClick className="h-3.5 w-3.5" aria-hidden />
+              Scroll to explore
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>
