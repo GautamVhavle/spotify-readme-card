@@ -64,7 +64,10 @@ export function About() {
   const words = COPY.split(" ");
 
   return (
-    <section id="about" className="bg-black px-3 py-20 sm:px-4 md:px-6 md:py-28">
+    <section
+      id="about"
+      className="bg-black px-3 py-16 sm:px-4 sm:py-20 md:px-6 md:py-28"
+    >
       <div className="mx-auto max-w-shell">
         <p className="eyebrow">About</p>
 

@@ -29,18 +29,45 @@ function CodeBlock({ code, lang = "bash" }: { code: string; lang?: string }) {
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <pre className="p-4 overflow-x-auto text-xs sm:text-sm font-mono text-gray-300 leading-relaxed whitespace-pre-wrap break-all">
+      <pre className="p-4 overflow-x-auto text-xs sm:text-sm font-mono text-gray-300 leading-relaxed whitespace-pre">
         <code>{code}</code>
       </pre>
     </div>
   );
 }
 
+function Step({
+  n,
+  title,
+  children,
+}: {
+  n: number;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="bg-black rounded-2xl p-5 sm:p-8 border border-white/[0.06]">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
+        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-black flex items-center justify-center text-sm font-bold">
+          {n}
+        </span>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-cream font-medium">{title}</h3>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Setup() {
   return (
-    <section id="setup" className="bg-black px-3 sm:px-4 md:px-6 py-20 md:py-28">
-      <div className="bg-ink-800 border border-white/[0.06] rounded-[1.5rem] md:rounded-shell px-6 sm:px-8 md:px-10 lg:px-12 py-12 md:py-16 max-w-shell mx-auto">
-        <div className="max-w-3xl mx-auto mb-12 md:mb-16">
+    <section
+      id="setup"
+      className="bg-black px-3 sm:px-4 md:px-6 py-16 sm:py-20 md:py-28"
+    >
+      <div className="bg-ink-800 border border-white/[0.06] rounded-[1.5rem] md:rounded-shell px-4 sm:px-8 md:px-10 lg:px-12 py-10 sm:py-12 md:py-16 max-w-shell mx-auto">
+        <div className="max-w-3xl mx-auto mb-10 sm:mb-12 md:mb-16">
           <p className="eyebrow">Setup</p>
           <h2 className="mt-5 text-3xl sm:text-4xl md:text-5xl font-medium text-cream tracking-tight leading-[1.08]">
             Five minutes.{" "}
@@ -51,173 +78,124 @@ export function Setup() {
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-8">
-          {/* Step 1 */}
-          <div className="bg-black rounded-2xl p-6 sm:p-8 border border-white/[0.06]">
-            <div className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-black flex items-center justify-center text-sm font-bold">
-                1
-              </span>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-cream font-medium">Create a Spotify app</h3>
-                <p className="text-gray-400 text-sm mt-1 leading-relaxed">
-                  Open the{" "}
-                  <a
-                    href="https://developer.spotify.com/dashboard"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-primary hover:underline inline-flex items-center gap-1"
-                  >
-                    Spotify Developer Dashboard <ExternalLink className="w-3 h-3" />
-                  </a>{" "}
-                  → <strong className="text-gray-300">Create app</strong>. Add this
-                  exact redirect URI:
-                </p>
-                <div className="mt-4">
-                  <CodeBlock code="http://127.0.0.1:5175/callback" lang="text" />
-                  <p className="text-[11px] text-gray-500 mt-2">
-                    Spotify rejects{" "}
-                    <code className="bg-white/5 px-1 py-0.5 rounded">localhost</code>,
-                    it has to be the loopback IP. Tick{" "}
-                    <strong className="text-gray-300">Web API</strong>, save, then copy
-                    Client ID & Secret from Settings.
-                  </p>
-                </div>
-              </div>
+        <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
+          <Step n={1} title="Create a Spotify app">
+            <p className="text-gray-400 text-sm mt-1 leading-relaxed">
+              Open the{" "}
+              <a
+                href="https://developer.spotify.com/dashboard"
+                target="_blank"
+                rel="noreferrer"
+                className="text-primary hover:underline inline-flex items-center gap-1"
+              >
+                Spotify Developer Dashboard <ExternalLink className="w-3 h-3" />
+              </a>{" "}
+              → <strong className="text-gray-300">Create app</strong>. Add this exact
+              redirect URI:
+            </p>
+            <div className="mt-4">
+              <CodeBlock code="http://127.0.0.1:5175/callback" lang="text" />
+              <p className="text-[11px] text-gray-500 mt-2">
+                Spotify rejects{" "}
+                <code className="bg-white/5 px-1 py-0.5 rounded">localhost</code>, it
+                has to be the loopback IP. Tick{" "}
+                <strong className="text-gray-300">Web API</strong>, save, then copy
+                Client ID & Secret from Settings.
+              </p>
             </div>
-          </div>
+          </Step>
 
-          {/* Step 2 */}
-          <div className="bg-black rounded-2xl p-6 sm:p-8 border border-white/[0.06]">
-            <div className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-black flex items-center justify-center text-sm font-bold">
-                2
-              </span>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-cream font-medium">Get the code</h3>
-                <div className="mt-4">
-                  <CodeBlock
-                    code={`git clone ${REPO_URL}.git
+          <Step n={2} title="Get the code">
+            <div className="mt-4">
+              <CodeBlock
+                code={`git clone ${REPO_URL}.git
 cd spotify-readme-card
 npm install
 cp .env.example .env`}
-                  />
-                  <p className="text-gray-400 text-sm mt-3">
-                    Put the two values from step 1 into{" "}
-                    <code className="bg-white/5 px-1.5 py-0.5 rounded text-primary/80">
-                      .env
-                    </code>
-                    :
-                  </p>
-                  <div className="mt-3">
-                    <CodeBlock
-                      code={`SPOTIFY_CLIENT_ID=your_client_id_here
+              />
+              <p className="text-gray-400 text-sm mt-3">
+                Put the two values from step 1 into{" "}
+                <code className="bg-white/5 px-1.5 py-0.5 rounded text-primary/80">
+                  .env
+                </code>
+                :
+              </p>
+              <div className="mt-3">
+                <CodeBlock
+                  code={`SPOTIFY_CLIENT_ID=your_client_id_here
 SPOTIFY_CLIENT_SECRET=your_client_secret_here
 SPOTIFY_REFRESH_TOKEN=`}
-                      lang="ini"
-                    />
-                  </div>
-                </div>
+                  lang="ini"
+                />
               </div>
             </div>
-          </div>
+          </Step>
 
-          {/* Step 3 */}
-          <div className="bg-black rounded-2xl p-6 sm:p-8 border border-white/[0.06]">
-            <div className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-black flex items-center justify-center text-sm font-bold">
-                3
-              </span>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-cream font-medium">Generate a refresh token</h3>
-                <div className="mt-4">
-                  <CodeBlock code="npm run authorize" />
-                  <p className="text-gray-400 text-sm mt-3 leading-relaxed">
-                    The script prints an authorization URL. Open it, approve, and your
-                    refresh token is written back into{" "}
-                    <code className="bg-white/5 px-1.5 py-0.5 rounded">.env</code>{" "}
-                    automatically. Check locally:
-                  </p>
-                  <div className="mt-3">
-                    <CodeBlock
-                      code={`npm i -g vercel   # if you don't have it\nnpm run dev       # http://localhost:3000`}
-                    />
-                  </div>
-                </div>
+          <Step n={3} title="Generate a refresh token">
+            <div className="mt-4">
+              <CodeBlock code="npm run authorize" />
+              <p className="text-gray-400 text-sm mt-3 leading-relaxed">
+                The script prints an authorization URL. Open it, approve, and your
+                refresh token is written back into{" "}
+                <code className="bg-white/5 px-1.5 py-0.5 rounded">.env</code>{" "}
+                automatically. Check locally:
+              </p>
+              <div className="mt-3">
+                <CodeBlock
+                  code={`npm i -g vercel   # if you don't have it\nnpm run dev       # http://localhost:3000`}
+                />
               </div>
             </div>
-          </div>
+          </Step>
 
-          {/* Step 4 */}
-          <div className="bg-black rounded-2xl p-6 sm:p-8 border border-white/[0.06]">
-            <div className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-black flex items-center justify-center text-sm font-bold">
-                4
+          <Step n={4} title="Deploy">
+            <div className="mt-4 flex flex-wrap gap-2">
+              <a
+                href={DEPLOY_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 bg-primary text-black rounded-full px-5 py-2.5 text-sm font-medium hover:bg-white transition-colors"
+              >
+                Deploy with Vercel
+              </a>
+              <span className="text-gray-500 text-xs self-center">
+                or via dashboard or CLI, see README
               </span>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-cream font-medium">Deploy</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <a
-                    href={DEPLOY_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 bg-primary text-black rounded-full px-5 py-2.5 text-sm font-medium hover:bg-white transition-colors"
-                  >
-                    Deploy with Vercel
-                  </a>
-                  <span className="text-gray-500 text-xs self-center">
-                    or via dashboard or CLI, see README
-                  </span>
-                </div>
-                <p className="text-gray-400 text-sm mt-4 leading-relaxed">
-                  Add three env vars:{" "}
-                  <code className="bg-white/5 px-1 py-0.5 rounded">
-                    SPOTIFY_CLIENT_ID
-                  </code>
-                  ,{" "}
-                  <code className="bg-white/5 px-1 py-0.5 rounded">
-                    SPOTIFY_CLIENT_SECRET
-                  </code>
-                  ,{" "}
-                  <code className="bg-white/5 px-1 py-0.5 rounded">
-                    SPOTIFY_REFRESH_TOKEN
-                  </code>
-                  . Every push to{" "}
-                  <code className="bg-white/5 px-1 py-0.5 rounded">main</code>{" "}
-                  redeploys.
-                </p>
-              </div>
             </div>
-          </div>
+            <p className="text-gray-400 text-sm mt-4 leading-relaxed">
+              Add three env vars:{" "}
+              <code className="bg-white/5 px-1 py-0.5 rounded">SPOTIFY_CLIENT_ID</code>,{" "}
+              <code className="bg-white/5 px-1 py-0.5 rounded">
+                SPOTIFY_CLIENT_SECRET
+              </code>
+              ,{" "}
+              <code className="bg-white/5 px-1 py-0.5 rounded">
+                SPOTIFY_REFRESH_TOKEN
+              </code>
+              . Every push to{" "}
+              <code className="bg-white/5 px-1 py-0.5 rounded">main</code> redeploys.
+            </p>
+          </Step>
 
-          {/* Step 5 */}
-          <div className="bg-black rounded-2xl p-6 sm:p-8 border border-white/[0.06]">
-            <div className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-black flex items-center justify-center text-sm font-bold">
-                5
-              </span>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-cream font-medium">Put it in your README</h3>
-                <div className="mt-4">
-                  <CodeBlock
-                    code={`<img src="https://YOUR-APP.vercel.app/" alt="What I'm listening to" width="420" />`}
-                    lang="md"
-                  />
-                  <p className="text-gray-400 text-sm mt-3">Make it clickable:</p>
-                  <div className="mt-3">
-                    <CodeBlock
-                      code={`[![Spotify](https://YOUR-APP.vercel.app/)](https://open.spotify.com/user/YOUR_USER_ID)`}
-                      lang="md"
-                    />
-                  </div>
-                </div>
+          <Step n={5} title="Put it in your README">
+            <div className="mt-4">
+              <CodeBlock
+                code={`<img src="https://YOUR-APP.vercel.app/" alt="What I'm listening to" width="420" />`}
+                lang="md"
+              />
+              <p className="text-gray-400 text-sm mt-3">Make it clickable:</p>
+              <div className="mt-3">
+                <CodeBlock
+                  code={`[![Spotify](https://YOUR-APP.vercel.app/)](https://open.spotify.com/user/YOUR_USER_ID)`}
+                  lang="md"
+                />
               </div>
             </div>
-          </div>
+          </Step>
         </div>
 
         {/* API reference */}
-        <div className="max-w-3xl mx-auto mt-16 md:mt-20">
+        <div className="max-w-3xl mx-auto mt-14 sm:mt-16 md:mt-20">
           <h3 className="text-cream font-medium text-lg mb-4">API reference</h3>
           <div className="bg-black rounded-2xl border border-white/[0.06] overflow-hidden">
             <div className="overflow-x-auto">

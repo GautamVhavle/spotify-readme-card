@@ -30,7 +30,7 @@ export function Layouts() {
   return (
     <section
       id="layouts"
-      className="relative overflow-hidden bg-black px-3 py-20 sm:px-4 md:px-6 md:py-28"
+      className="relative overflow-hidden bg-black px-3 py-16 sm:px-4 sm:py-20 md:px-6 md:py-28"
     >
       <div className="bg-noise pointer-events-none absolute inset-0 opacity-[0.06]" />
 
@@ -65,7 +65,7 @@ export function Layouts() {
                 type="button"
                 aria-selected={isActive}
                 onClick={() => setActive(v.id)}
-                className={`rounded-2xl border px-5 py-4 text-left transition-all duration-300 ${
+                className={`rounded-2xl border px-4 py-3 text-left transition-all duration-300 sm:px-5 sm:py-4 ${
                   isActive
                     ? "border-primary bg-primary text-black"
                     : "border-white/[0.08] bg-ink-800 text-cream/70 hover:border-white/20 hover:text-cream"
@@ -78,13 +78,15 @@ export function Layouts() {
                 >
                   {v.path}
                 </span>
-                <span className="mt-1.5 block text-base font-medium">{v.label}</span>
-                <span
-                  className={`mt-0.5 block font-mono text-[11px] ${
-                    isActive ? "text-black/55" : "text-gray-500"
-                  }`}
-                >
-                  {v.width.def} × {v.height}
+                <span className="mt-1 flex items-baseline gap-2 sm:mt-1.5 sm:block">
+                  <span className="text-base font-medium">{v.label}</span>
+                  <span
+                    className={`font-mono text-[11px] sm:mt-0.5 sm:block ${
+                      isActive ? "text-black/55" : "text-gray-500"
+                    }`}
+                  >
+                    {v.width.def} × {v.height}
+                  </span>
                 </span>
               </button>
             );
@@ -92,7 +94,7 @@ export function Layouts() {
         </div>
 
         <div className="mt-4 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="flex min-h-[340px] min-w-0 items-center justify-center rounded-shell border border-white/[0.06] bg-ink-900 p-6 sm:min-h-[420px] sm:p-10">
+          <div className="flex min-h-[260px] min-w-0 items-center justify-center rounded-shell border border-white/[0.06] bg-ink-900 p-4 sm:min-h-[420px] sm:p-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={current.id}

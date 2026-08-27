@@ -239,7 +239,10 @@ export function Playground() {
   };
 
   return (
-    <section id="playground" className="bg-black px-3 py-20 sm:px-4 md:px-6 md:py-28">
+    <section
+      id="playground"
+      className="bg-black px-3 py-16 sm:px-4 sm:py-20 md:px-6 md:py-28"
+    >
       <div className="mx-auto max-w-shell overflow-hidden rounded-[1.5rem] border border-white/[0.06] bg-ink-800 md:rounded-shell">
         <div className="border-b border-white/[0.06] px-6 pb-7 pt-8 sm:px-8 md:px-10 md:pt-10">
           <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">

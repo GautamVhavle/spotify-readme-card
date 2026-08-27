@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, MousePointerClick } from "lucide-react";
 import { WordsPullUp } from "./WordsPullUp";
@@ -12,6 +13,38 @@ const TAGS = ["Now playing", "Pure SVG", "Edge rendered", "Zero deps"];
 
 export function Hero() {
   const reduce = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // React renders `muted` as a property only, so autoplay is blocked without setting the attribute.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.setAttribute("muted", "");
+
+    const start = () => {
+      video.play().catch(() => {});
+    };
+
+    const startWhenVisible = () => {
+      if (document.visibilityState === "visible") start();
+    };
+
+    start();
+    video.addEventListener("loadeddata", start);
+    document.addEventListener("visibilitychange", startWhenVisible);
+    document.addEventListener("touchstart", start, { once: true });
+    document.addEventListener("click", start, { once: true });
+
+    return () => {
+      video.removeEventListener("loadeddata", start);
+      document.removeEventListener("visibilitychange", startWhenVisible);
+      document.removeEventListener("touchstart", start);
+      document.removeEventListener("click", start);
+    };
+  }, []);
+
   const rise = (delay: number) => ({
     initial: reduce ? false : { y: 24, opacity: 0 },
     animate: { y: 0, opacity: 1 },
@@ -25,10 +58,12 @@ export function Hero() {
     >
       <div className="relative flex min-h-[640px] w-full flex-1 flex-col overflow-hidden rounded-[1.5rem] md:rounded-shell">
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
+          preload="auto"
           aria-hidden
           className="absolute inset-0 h-full w-full bg-black object-cover"
         >
