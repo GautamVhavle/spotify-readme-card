@@ -56,7 +56,9 @@ function Toggle({
     >
       <span className="min-w-0">
         <span className="block text-sm text-cream">{label}</span>
-        <span className="mt-0.5 block font-mono text-[11px] text-gray-500">{param}</span>
+        <span className="mt-0.5 block font-mono text-[11px] text-gray-500">
+          {param}
+        </span>
       </span>
       <span
         className={`relative h-6 w-11 flex-shrink-0 rounded-full transition-colors duration-200 ${
@@ -171,7 +173,20 @@ export function Playground() {
       if (hex && isValidHex(hex)) p.set(key, hex.toLowerCase());
     }
     return p.toString();
-  }, [theme, mode, width, radius, bars, blur, glass, tint, showBorder, custom, variant, meta]);
+  }, [
+    theme,
+    mode,
+    width,
+    radius,
+    bars,
+    blur,
+    glass,
+    tint,
+    showBorder,
+    custom,
+    variant,
+    meta,
+  ]);
 
   const imageUrl = useMemo(() => {
     const base = baseUrl.trim().replace(/\/+$/, "");
@@ -194,7 +209,7 @@ export function Playground() {
         value: `<img src="${imageUrl}" alt="Spotify now playing" width="${width}" />`,
       },
     ],
-    [imageUrl, width]
+    [imageUrl, width],
   );
 
   const activeSnippet = snippets.find((s) => s.id === snippet) ?? snippets[0];
@@ -233,11 +248,12 @@ export function Playground() {
                 <Sparkles className="h-3 w-3" aria-hidden /> Playground
               </p>
               <h2 className="mt-4 text-3xl font-medium leading-none tracking-tight text-cream sm:text-4xl">
-                Tweak it. <span className="font-serif italic font-normal">Copy it.</span> Ship it.
+                Tweak it.{" "}
+                <span className="font-serif italic font-normal">Copy it.</span> Ship it.
               </h2>
               <p className="mt-4 max-w-xl text-sm leading-relaxed text-gray-400">
-                Every control maps to a query parameter. The preview is a real SVG from the live
-                service, so what you see is exactly what your README gets.
+                Every control maps to a query parameter. The preview is a real SVG from
+                the live service, so what you see is exactly what your README gets.
               </p>
             </div>
             <button
@@ -355,7 +371,14 @@ export function Playground() {
                 suffix="px"
                 onChange={setWidth}
               />
-              <Slider label="Radius" value={radius} min={0} max={40} suffix="px" onChange={setRadius} />
+              <Slider
+                label="Radius"
+                value={radius}
+                min={0}
+                max={40}
+                suffix="px"
+                onChange={setRadius}
+              />
             </div>
 
             {variant === "portrait" && (
@@ -372,10 +395,25 @@ export function Playground() {
 
             <Field label="Options">
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                <Toggle label="Equalizer bars" param="bars" value={bars} onChange={setBars} />
-                <Toggle label="Album backdrop" param="blur" value={blur} onChange={setBlur} />
+                <Toggle
+                  label="Equalizer bars"
+                  param="bars"
+                  value={bars}
+                  onChange={setBars}
+                />
+                <Toggle
+                  label="Album backdrop"
+                  param="blur"
+                  value={blur}
+                  onChange={setBlur}
+                />
                 {variant === "portrait" && (
-                  <Toggle label="Frosted glass" param="glass" value={glass} onChange={setGlass} />
+                  <Toggle
+                    label="Frosted glass"
+                    param="glass"
+                    value={glass}
+                    onChange={setGlass}
+                  />
                 )}
                 <Toggle
                   label="Outer border"
@@ -476,7 +514,11 @@ export function Playground() {
               </p>
 
               <div className="mt-7">
-                <div className="flex flex-wrap gap-1.5" role="tablist" aria-label="Snippet format">
+                <div
+                  className="flex flex-wrap gap-1.5"
+                  role="tablist"
+                  aria-label="Snippet format"
+                >
                   {snippets.map((s) => (
                     <button
                       key={s.id}
@@ -525,8 +567,8 @@ export function Playground() {
 
               <div className="mt-5 rounded-xl border border-primary/10 bg-primary/5 p-4">
                 <p className="text-xs leading-relaxed text-primary/80">
-                  <span className="font-medium text-primary">Tip:</span> GitHub caches README images
-                  through its camo proxy. After pushing, run{" "}
+                  <span className="font-medium text-primary">Tip:</span> GitHub caches
+                  README images through its camo proxy. After pushing, run{" "}
                   <code className="rounded bg-black px-1.5 py-0.5 text-[11px]">
                     node scripts/purge-camo.mjs https://github.com/you/you
                   </code>{" "}

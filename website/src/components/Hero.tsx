@@ -19,7 +19,10 @@ export function Hero() {
   });
 
   return (
-    <section id="top" className="flex min-h-[100svh] flex-col bg-black p-3 sm:p-4 md:p-6">
+    <section
+      id="top"
+      className="flex min-h-[100svh] flex-col bg-black p-3 sm:p-4 md:p-6"
+    >
       <div className="relative flex min-h-[640px] w-full flex-1 flex-col overflow-hidden rounded-[1.5rem] md:rounded-shell">
         <video
           autoPlay
@@ -75,8 +78,9 @@ export function Hero() {
                 {...rise(0.45)}
                 className="max-w-md text-sm leading-relaxed text-primary/80 sm:text-base"
               >
-                A serverless card for your GitHub profile. Animated, rendered at the edge, and
-                genuinely alive. It shows what you are playing right now, or what you played last.
+                A serverless card for your GitHub profile. Animated, rendered at the
+                edge, and genuinely alive. It shows what you are playing right now, or
+                what you played last.
               </motion.p>
 
               <motion.div {...rise(0.6)} className="flex flex-wrap items-center gap-3">
@@ -88,7 +92,10 @@ export function Hero() {
                     Build your card
                   </span>
                   <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-black transition-transform duration-300 group-hover:scale-105 sm:h-10 sm:w-10">
-                    <ArrowRight className="h-4 w-4 text-primary sm:h-5 sm:w-5" aria-hidden />
+                    <ArrowRight
+                      className="h-4 w-4 text-primary sm:h-5 sm:w-5"
+                      aria-hidden
+                    />
                   </span>
                 </a>
                 <a
@@ -110,7 +117,9 @@ export function Hero() {
               {STATS.map((s) => (
                 <div key={s.label} className="flex items-baseline gap-1.5">
                   <dt className="sr-only">{s.label}</dt>
-                  <dd className="text-xl font-medium text-cream sm:text-2xl">{s.value}</dd>
+                  <dd className="text-xl font-medium text-cream sm:text-2xl">
+                    {s.value}
+                  </dd>
                   <span className="text-[10px] uppercase tracking-[0.16em] text-white/45">
                     {s.label}
                   </span>

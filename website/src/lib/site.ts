@@ -63,10 +63,9 @@ export const VARIANTS: {
   },
 ];
 
-export const VARIANT_BY_ID = Object.fromEntries(VARIANTS.map((v) => [v.id, v])) as Record<
-  Variant,
-  (typeof VARIANTS)[number]
->;
+export const VARIANT_BY_ID = Object.fromEntries(
+  VARIANTS.map((v) => [v.id, v]),
+) as Record<Variant, (typeof VARIANTS)[number]>;
 
 export type ThemeName =
   | "dark"

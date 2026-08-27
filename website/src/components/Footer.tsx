@@ -80,7 +80,11 @@ export function Footer() {
           <p>© {new Date().getFullYear()} Spotify README Card · MIT License</p>
           <div className="flex items-center gap-5">
             <p className="flex items-center gap-1.5">
-              Built with <span className="text-spotify" aria-hidden="true">❤️</span> by{" "}
+              Built with{" "}
+              <span className="text-spotify" aria-hidden="true">
+                ❤️
+              </span>{" "}
+              by{" "}
               <a
                 href={AUTHOR_URL}
                 target="_blank"

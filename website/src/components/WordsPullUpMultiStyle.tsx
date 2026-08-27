@@ -20,7 +20,7 @@ export function WordsPullUpMultiStyle({ segments, className = "" }: Props) {
     seg.text
       .split(" ")
       .filter(Boolean)
-      .map((word) => ({ word, className: seg.className ?? "" }))
+      .map((word) => ({ word, className: seg.className ?? "" })),
   );
 
   const label = segments.map((s) => s.text).join(" ");
@@ -32,7 +32,9 @@ export function WordsPullUpMultiStyle({ segments, className = "" }: Props) {
           key={`${w.word}-${i}`}
           aria-hidden
           initial={reduce ? false : { y: "0.5em", opacity: 0 }}
-          animate={isInView || reduce ? { y: 0, opacity: 1 } : { y: "0.5em", opacity: 0 }}
+          animate={
+            isInView || reduce ? { y: 0, opacity: 1 } : { y: "0.5em", opacity: 0 }
+          }
           transition={{ delay: i * 0.06, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           className={`inline-block ${i === words.length - 1 ? "" : "mr-[0.22em]"} ${w.className}`}
         >

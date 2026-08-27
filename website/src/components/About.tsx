@@ -69,8 +69,8 @@ export function About() {
         <p className="eyebrow">About</p>
 
         <h2 className="mt-6 max-w-4xl text-3xl font-medium leading-[1.08] tracking-tight text-cream sm:text-4xl md:text-5xl">
-          A serverless card that <span className="font-serif italic font-normal">listens</span> with
-          you.
+          A serverless card that{" "}
+          <span className="font-serif italic font-normal">listens</span> with you.
         </h2>
 
         <p

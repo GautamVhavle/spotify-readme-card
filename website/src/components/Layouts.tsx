@@ -46,7 +46,8 @@ export function Layouts() {
             />
           </h2>
           <p className="mt-5 text-sm leading-relaxed text-primary/50 sm:text-base">
-            Every preview below is a live request to the production service. Pick a shape to see it.
+            Every preview below is a live request to the production service. Pick a
+            shape to see it.
           </p>
         </div>
 
@@ -121,15 +122,23 @@ export function Layouts() {
                 className="flex flex-1 flex-col"
               >
                 <h3 className="text-2xl font-medium text-cream">{current.label}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-gray-400">{current.tagline}</p>
+                <p className="mt-3 text-sm leading-relaxed text-gray-400">
+                  {current.tagline}
+                </p>
 
                 <ul className="mt-7 flex-1 space-y-3.5">
                   {current.points.map((point) => (
                     <li key={point} className="flex items-start gap-3">
                       <span className="mt-0.5 flex h-[18px] w-[18px] flex-shrink-0 items-center justify-center rounded-full bg-primary/15">
-                        <Check className="h-2.5 w-2.5 text-primary" strokeWidth={3} aria-hidden />
+                        <Check
+                          className="h-2.5 w-2.5 text-primary"
+                          strokeWidth={3}
+                          aria-hidden
+                        />
                       </span>
-                      <span className="text-[13px] leading-relaxed text-gray-300">{point}</span>
+                      <span className="text-[13px] leading-relaxed text-gray-300">
+                        {point}
+                      </span>
                     </li>
                   ))}
                 </ul>

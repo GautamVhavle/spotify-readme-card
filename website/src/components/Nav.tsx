@@ -10,7 +10,7 @@ export function Nav() {
 
   useEffect(() => {
     const elements = NAV_SECTIONS.map((s) => document.getElementById(s.id)).filter(
-      (el): el is HTMLElement => Boolean(el)
+      (el): el is HTMLElement => Boolean(el),
     );
     if (!elements.length) return;
 
@@ -21,7 +21,7 @@ export function Nav() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
         if (visible[0]) setActive(visible[0].target.id);
       },
-      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.2, 0.6, 1] }
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.2, 0.6, 1] },
     );
 
     elements.forEach((el) => observer.observe(el));
@@ -43,8 +43,12 @@ export function Nav() {
           className="flex flex-shrink-0 items-center gap-2 font-medium text-cream transition-opacity hover:opacity-80"
         >
           <SpotifyMark className="h-[18px] w-[18px] text-spotify md:h-5 md:w-5" />
-          <span className="hidden whitespace-nowrap text-sm lg:inline">Spotify Readme Card</span>
-          <span className="whitespace-nowrap text-xs sm:text-sm lg:hidden">Readme Card</span>
+          <span className="hidden whitespace-nowrap text-sm lg:inline">
+            Spotify Readme Card
+          </span>
+          <span className="whitespace-nowrap text-xs sm:text-sm lg:hidden">
+            Readme Card
+          </span>
         </a>
 
         <span className="hidden h-5 w-px bg-white/10 md:block" aria-hidden />

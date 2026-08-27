@@ -16,9 +16,22 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Almarai"', "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        sans: [
+          '"Almarai"',
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "sans-serif",
+        ],
         serif: ['"Instrument Serif"', "serif"],
-        mono: ["ui-monospace", "SFMono-Regular", '"SF Mono"', "Menlo", "Consolas", "monospace"],
+        mono: [
+          "ui-monospace",
+          "SFMono-Regular",
+          '"SF Mono"',
+          "Menlo",
+          "Consolas",
+          "monospace",
+        ],
       },
       maxWidth: {
         shell: "80rem",

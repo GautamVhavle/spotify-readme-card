@@ -13,7 +13,13 @@ interface Props {
  * The card is a live SVG from the API, so it can be slow or briefly unavailable.
  * Render a skeleton while it loads and a readable message if it never arrives.
  */
-export function CardImage({ src, alt, width, className = "", transparent = false }: Props) {
+export function CardImage({
+  src,
+  alt,
+  width,
+  className = "",
+  transparent = false,
+}: Props) {
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
 
   useEffect(() => setState("loading"), [src]);

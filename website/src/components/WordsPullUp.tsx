@@ -22,8 +22,14 @@ export function WordsPullUp({ text, className = "", delayStep = 0.08 }: Props) {
             key={`${word}-${i}`}
             aria-hidden
             initial={reduce ? false : { y: "0.5em", opacity: 0 }}
-            animate={isInView || reduce ? { y: 0, opacity: 1 } : { y: "0.5em", opacity: 0 }}
-            transition={{ delay: i * delayStep, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            animate={
+              isInView || reduce ? { y: 0, opacity: 1 } : { y: "0.5em", opacity: 0 }
+            }
+            transition={{
+              delay: i * delayStep,
+              duration: 0.55,
+              ease: [0.16, 1, 0.3, 1],
+            }}
             className={`inline-block ${isLast ? "" : "mr-[0.22em]"}`}
           >
             {word}

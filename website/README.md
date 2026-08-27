@@ -6,7 +6,7 @@
 
 **The marketing site & live playground for the Spotify README Card.**
 
-*Dark, cinematic, and fully interactive. Tweak every parameter and copy a ready-to-paste URL.*
+_Dark, cinematic, and fully interactive. Tweak every parameter and copy a ready-to-paste URL._
 
 <p>
   <a href="https://gautamvhavle.github.io/spotify-readme-card/"><b>Live Site</b></a>
@@ -34,22 +34,22 @@ The site does three jobs:
 2. **Shows** it, a live layout explorer that renders real cards straight from the production API.
 3. **Lets you build** your own card, an interactive playground where every query parameter is a knob, and every knob instantly updates a live preview + copy-ready snippets.
 
-> **Design language:** The site is a direct adaptation of the *Prisma* creative-studio template, dark, moody, cinematic, warm cream (`#DEDBC8` / `#E1E0CC`) on pure black, with noise textures, pill navbars, giant display type, and Framer Motion throughout.
+> **Design language:** The site is a direct adaptation of the _Prisma_ creative-studio template, dark, moody, cinematic, warm cream (`#DEDBC8` / `#E1E0CC`) on pure black, with noise textures, pill navbars, giant display type, and Framer Motion throughout.
 
 ---
 
 ## 🎨 Sections
 
-| Section | What it does | Key detail |
-|---------|-------------|------------|
-| **Nav** | Centered notch navbar with scroll-spy | `IntersectionObserver` active section, `layoutId` sliding pill, mobile sheet |
-| **Hero** | Full viewport inset video with noise and gradient, product name and feature tags | `WordsPullUp` per word stagger, inline stat row |
-| **Marquee** | Two counter-scrolling strips of themes and capabilities | CSS keyframe marquee with edge mask |
-| **About** | Scroll-linked word fade plus the three-step request pipeline | `useScroll` with per word `opacity: 0.15 to 1` |
-| **Layouts** | Interactive layout explorer, one live card at a time | Tabs drive an `AnimatePresence` swap of a live API preview |
-| **Playground** | **Interactive card builder**, the core tool | Live SVG preview, tabbed URL / Markdown / HTML snippets, one click copy |
-| **Setup** | 5 step deploy guide plus full API reference tables | Copyable code blocks |
-| **Footer** | Link columns, credits and back to top | Built with ❤️ by Gautam Vhavle |
+| Section        | What it does                                                                     | Key detail                                                                   |
+| -------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **Nav**        | Centered notch navbar with scroll-spy                                            | `IntersectionObserver` active section, `layoutId` sliding pill, mobile sheet |
+| **Hero**       | Full viewport inset video with noise and gradient, product name and feature tags | `WordsPullUp` per word stagger, inline stat row                              |
+| **Marquee**    | Two counter-scrolling strips of themes and capabilities                          | CSS keyframe marquee with edge mask                                          |
+| **About**      | Scroll-linked word fade plus the three-step request pipeline                     | `useScroll` with per word `opacity: 0.15 to 1`                               |
+| **Layouts**    | Interactive layout explorer, one live card at a time                             | Tabs drive an `AnimatePresence` swap of a live API preview                   |
+| **Playground** | **Interactive card builder**, the core tool                                      | Live SVG preview, tabbed URL / Markdown / HTML snippets, one click copy      |
+| **Setup**      | 5 step deploy guide plus full API reference tables                               | Copyable code blocks                                                         |
+| **Footer**     | Link columns, credits and back to top                                            | Built with ❤️ by Gautam Vhavle                                               |
 
 ---
 
@@ -59,17 +59,17 @@ The playground at `#playground` is the most important part of the site. It lets 
 
 ### Controls
 
-| Control | Param | Notes |
-|---------|-------|-------|
-| **Deployment URL** | base | Defaults to `live-spotify-readme-card.vercel.app`, replace with your own Vercel URL |
-| **Layout** | `variant` | `Detailed` (`/`) · `Compact` (`/small`) · `Portrait` (`/portrait`) |
-| **Theme** | `theme` | 11 presets: `dark` `light` `spotify` `dracula` `nord` `catppuccin` `tokyonight` `gruvbox` `rosepine` `synthwave` `transparent` |
-| **Portrait shell** | `mode` | `dark` / `light`, only for portrait |
-| **Width** | `width` | Slider, clamped per variant (320–760 / 260–560 / 240–420) |
-| **Radius** | `radius` | `0–40` |
-| **Tint** | `tint` | `0–100`, portrait only, album colour bleed |
-| **Toggles** | `bars` `blur` `glass` `show_border` | Animated equalizer, blurred backdrop, frosted glass, outer border |
-| **Custom palette** | `bg` `surface` `text` `sub` `accent` `border` | Hex without `#` (3/4/6/8 digits) or `transparent`, live colour dot preview |
+| Control            | Param                                         | Notes                                                                                                                          |
+| ------------------ | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **Deployment URL** | base                                          | Defaults to `live-spotify-readme-card.vercel.app`, replace with your own Vercel URL                                            |
+| **Layout**         | `variant`                                     | `Detailed` (`/`) · `Compact` (`/small`) · `Portrait` (`/portrait`)                                                             |
+| **Theme**          | `theme`                                       | 11 presets: `dark` `light` `spotify` `dracula` `nord` `catppuccin` `tokyonight` `gruvbox` `rosepine` `synthwave` `transparent` |
+| **Portrait shell** | `mode`                                        | `dark` / `light`, only for portrait                                                                                            |
+| **Width**          | `width`                                       | Slider, clamped per variant (320–760 / 260–560 / 240–420)                                                                      |
+| **Radius**         | `radius`                                      | `0–40`                                                                                                                         |
+| **Tint**           | `tint`                                        | `0–100`, portrait only, album colour bleed                                                                                     |
+| **Toggles**        | `bars` `blur` `glass` `show_border`           | Animated equalizer, blurred backdrop, frosted glass, outer border                                                              |
+| **Custom palette** | `bg` `surface` `text` `sub` `accent` `border` | Hex without `#` (3/4/6/8 digits) or `transparent`, live colour dot preview                                                     |
 
 ### Output
 
@@ -82,7 +82,7 @@ Markdown+  → [![Spotify](https://...)](https://open.spotify.com)
 HTML       → <img src="https://..." alt="Spotify now playing" width="460" />
 ```
 
-Each has a **Copy** button (with `Copied!` feedback) and the preview itself is a real `<img>` hitting the live API, *what you see is what your README gets*.
+Each has a **Copy** button (with `Copied!` feedback) and the preview itself is a real `<img>` hitting the live API, _what you see is what your README gets_.
 
 > **Camo tip** shown below the snippets: GitHub caches README images via its `camo` proxy. After pushing, run `node scripts/purge-camo.mjs https://github.com/you/you` to bust it.
 
@@ -90,14 +90,14 @@ Each has a **Copy** button (with `Copied!` feedback) and the preview itself is a
 
 ## 🛠 Tech Stack
 
-| Layer | Choice | Why |
-|-------|--------|-----|
-| **Build** | [Vite 5](https://vitejs.dev) + React 18 + TypeScript 5 | Instant HMR, strict types, zero-config |
-| **Styling** | [Tailwind CSS 3](https://tailwindcss.com) | Utility-first, tokenised `primary` / `cream` / `ink` scale, `font-serif: Instrument Serif` |
-| **Animation** | [Framer Motion 11](https://www.framer.com/motion/) | `WordsPullUp`, `WordsPullUpMultiStyle`, scroll-linked opacity, `useReducedMotion` throughout |
-| **Icons** | [lucide-react](https://lucide.dev) | `ArrowRight`, `Check`, `Copy`, `ExternalLink`, `Sparkles`, `Github` |
-| **Fonts** | Google Fonts | `Almarai` (300/400/700/800) global · `Instrument Serif` italic for accents |
-| **Deploy** | GitHub Pages (static) | `vite build` → `dist/` → `build/` → `gh-pages` branch |
+| Layer         | Choice                                                 | Why                                                                                          |
+| ------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| **Build**     | [Vite 5](https://vitejs.dev) + React 18 + TypeScript 5 | Instant HMR, strict types, zero-config                                                       |
+| **Styling**   | [Tailwind CSS 3](https://tailwindcss.com)              | Utility-first, tokenised `primary` / `cream` / `ink` scale, `font-serif: Instrument Serif`   |
+| **Animation** | [Framer Motion 11](https://www.framer.com/motion/)     | `WordsPullUp`, `WordsPullUpMultiStyle`, scroll-linked opacity, `useReducedMotion` throughout |
+| **Icons**     | [lucide-react](https://lucide.dev)                     | `ArrowRight`, `Check`, `Copy`, `ExternalLink`, `Sparkles`, `Github`                          |
+| **Fonts**     | Google Fonts                                           | `Almarai` (300/400/700/800) global · `Instrument Serif` italic for accents                   |
+| **Deploy**    | GitHub Pages (static)                                  | `vite build` → `dist/` → `build/` → `gh-pages` branch                                        |
 
 No backend. No API keys. The playground just constructs URLs, the actual SVG rendering still happens on Vercel.
 
@@ -214,15 +214,15 @@ body { background: #000; color: #E1E0CC }
 .bg-noise      { baseFrequency: 0.9,  numOctaves: 4 }  // features bg
 ```
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `bg` | `#000000` | Page background |
-| `card` | `#101010` | About card |
-| `feature` | `#212121` | Feature cards |
-| `primary` | `#DEDBC8` | Tailwind `text-primary`, buttons |
-| `text` | `#E1E0CC` | Inline primary text |
-| `muted` | `text-gray-400/500` | Secondary text |
-| `nav` | `rgba(225,224,204,0.8)` | Navbar links |
+| Token     | Value                   | Usage                            |
+| --------- | ----------------------- | -------------------------------- |
+| `bg`      | `#000000`               | Page background                  |
+| `card`    | `#101010`               | About card                       |
+| `feature` | `#212121`               | Feature cards                    |
+| `primary` | `#DEDBC8`               | Tailwind `text-primary`, buttons |
+| `text`    | `#E1E0CC`               | Inline primary text              |
+| `muted`   | `text-gray-400/500`     | Secondary text                   |
+| `nav`     | `rgba(225,224,204,0.8)` | Navbar links                     |
 
 ---
 
@@ -237,6 +237,6 @@ body { background: #000; color: #E1E0CC }
 
 <div align="center">
 
-*Built with Vite + React + Tailwind + Framer Motion. Dark, moody, and a little noisy, just like a good record.*
+_Built with Vite + React + Tailwind + Framer Motion. Dark, moody, and a little noisy, just like a good record._
 
 </div>
