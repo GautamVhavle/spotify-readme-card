@@ -10,6 +10,17 @@ import {
 } from "./render.js";
 import { resolveTrack } from "./spotify.js";
 
+function unavailableDetail(error: unknown): string {
+  const message = error instanceof Error ? error.message : "";
+  if (
+    message.startsWith("Missing SPOTIFY_") ||
+    message.startsWith("Spotify token request failed")
+  ) {
+    return "Check the deployment environment variables";
+  }
+  return "Playback could not be loaded";
+}
+
 export function createCardHandler(variant: Variant) {
   return async function handler(
     request: VercelRequest,
@@ -45,11 +56,7 @@ export function createCardHandler(variant: Variant) {
     } catch (error) {
       // Details stay in the function logs; the card only shows a generic hint.
       console.error("Failed to render Spotify card:", error);
-      svg = renderMessageCard(
-        options,
-        "Spotify unavailable",
-        "Check the deployment environment variables",
-      );
+      svg = renderMessageCard(options, "Spotify unavailable", unavailableDetail(error));
     }
 
     response.setHeader("Content-Type", "image/svg+xml; charset=utf-8");

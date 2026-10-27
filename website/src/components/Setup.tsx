@@ -268,13 +268,28 @@ SPOTIFY_REFRESH_TOKEN=`}
                   {[
                     ["theme", "dark / light / spotify …", "dark", "Colour preset"],
                     ["mode", "dark / light", "dark", "Glass shell on /portrait"],
-                    ["width", "320–760", "420/340/300", "Card width"],
+                    [
+                      "width",
+                      "320–760 · 260–560 · 240–420",
+                      "420 / 340 / 300",
+                      "Card width",
+                    ],
                     ["radius", "0–40", "16/14/22", "Corner radius"],
                     ["bars", "true/false", "true", "Equalizer"],
-                    ["blur", "true/false", "true", "Album backdrop"],
+                    [
+                      "blur",
+                      "true / false",
+                      "true · false on /small",
+                      "Album backdrop",
+                    ],
                     ["glass", "true/false", "true", "Frosted glass"],
                     ["tint", "0–100", "55", "Album colour bleed"],
-                    ["show_border", "true/false", "true", "Outer border"],
+                    [
+                      "show_border",
+                      "true / false",
+                      "true · false on /portrait",
+                      "Outer border",
+                    ],
                     [
                       "bg/surface/text/sub/accent/border",
                       "hex",

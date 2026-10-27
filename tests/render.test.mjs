@@ -51,6 +51,17 @@ describe("main card", () => {
     assert.ok(svg.includes("LAST PLAYED"));
   });
 
+  it("labels a paused current track as paused", () => {
+    const svg = renderMainCard(
+      { ...track, isPlaying: false, paused: true, playedAt: null },
+      null,
+      parseOptions({}, "main"),
+    );
+    assert.ok(svg.includes("PAUSED"));
+    assert.ok(!svg.includes("LAST PLAYED"));
+    assert.ok(!svg.includes("kf-eq-m"));
+  });
+
   it("animates the equalizer only while playing", () => {
     assert.ok(
       renderMainCard(track, null, parseOptions({}, "main")).includes("kf-eq-m"),

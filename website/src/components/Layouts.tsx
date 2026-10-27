@@ -108,6 +108,10 @@ export function Layouts() {
                   src={`${LIVE_URL}${current.path === "/" ? "/" : current.path}`}
                   alt={`${current.label} layout, live preview`}
                   width={current.id === "portrait" ? 300 : 520}
+                  height={Math.round(
+                    ((current.id === "portrait" ? 300 : 520) * current.height) /
+                      current.width.def,
+                  )}
                 />
               </motion.div>
             </AnimatePresence>

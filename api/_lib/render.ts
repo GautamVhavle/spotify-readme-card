@@ -35,6 +35,7 @@ function push(layer: Layer, fragment: Fragment): void {
 
 function statusLabel(track: Track): string {
   if (track.isPlaying) return "Now playing";
+  if (track.paused) return "Paused";
   const ago = relativeTime(track.playedAt);
   return ago ? `Last played · ${ago}` : "Last played";
 }

@@ -146,18 +146,24 @@ export function Playground() {
   const [copied, setCopied] = useState<string | null>(null);
 
   const meta = VARIANT_BY_ID[variant];
+  const displayHeight =
+    variant === "portrait" ? Math.round((width * 420) / 300) : meta.height;
 
   const selectVariant = (v: Variant) => {
     const next = VARIANT_BY_ID[v];
     setVariant(v);
-    setWidth((prev) => Math.min(next.width.max, Math.max(next.width.min, prev)));
+    setWidth(next.width.def);
     setRadius(next.radius);
+    setBlur(v !== "small");
+    setShowBorder(v !== "portrait");
   };
 
   const query = useMemo(() => {
     const p = new URLSearchParams();
     if (theme !== "dark") p.set("theme", theme);
-    if (variant === "portrait" && mode !== "dark") p.set("mode", mode);
+    // Light theme implies a light shell, so an explicit dark shell has to be sent.
+    const shellDefault = theme === "light" ? "light" : "dark";
+    if (variant === "portrait" && mode !== shellDefault) p.set("mode", mode);
     if (width !== meta.width.def) p.set("width", String(width));
     if (radius !== meta.radius) p.set("radius", String(radius));
     if (!bars) p.set("bars", "false");
@@ -231,10 +237,10 @@ export function Playground() {
     setWidth(meta.width.def);
     setRadius(meta.radius);
     setBars(true);
-    setBlur(true);
+    setBlur(variant !== "small");
     setGlass(true);
     setTint(55);
-    setShowBorder(true);
+    setShowBorder(variant !== "portrait");
     setCustom({ bg: "", surface: "", text: "", sub: "", accent: "", border: "" });
   };
 
@@ -508,12 +514,17 @@ export function Playground() {
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   className="relative z-10 w-full"
                 >
-                  <CardImage src={imageUrl} alt="Spotify card preview" width={width} />
+                  <CardImage
+                    src={imageUrl}
+                    alt="Spotify card preview"
+                    width={width}
+                    height={displayHeight}
+                  />
                 </motion.div>
               </div>
 
               <p className="mt-3 text-center font-mono text-[11px] text-gray-500">
-                {width} × {meta.height} · {meta.label.toLowerCase()} · {theme}
+                {width} × {displayHeight} · {meta.label.toLowerCase()} · {theme}
               </p>
 
               <div className="mt-7">
