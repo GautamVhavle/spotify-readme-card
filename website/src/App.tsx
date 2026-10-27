@@ -5,6 +5,7 @@ import { About } from "./components/About";
 import { Layouts } from "./components/Layouts";
 import { Playground } from "./components/Playground";
 import { Setup } from "./components/Setup";
+import { Faq } from "./components/Faq";
 import { Footer } from "./components/Footer";
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
         <Layouts />
         <Playground />
         <Setup />
+        <Faq />
       </main>
       <Footer />
     </div>

@@ -2,9 +2,9 @@
 
 <img src="https://live-spotify-readme-card.vercel.app/" alt="Spotify now playing card" width="440" />
 
-<h1>Spotify README Card</h1>
+<h1>Spotify README Card for GitHub</h1>
 
-<p><b>Animated “now playing” cards for your GitHub profile - rendered as SVG, served from the edge.</b></p>
+<p><b>An SVG image that shows the song you are playing on your GitHub profile.</b></p>
 
 <p>
   <a href="https://github.com/GautamVhavle/spotify-readme-card/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/GautamVhavle/spotify-readme-card/actions/workflows/ci.yml/badge.svg" /></a>
@@ -36,9 +36,9 @@
 
 ## Overview
 
-A small serverless service that asks the Spotify Web API what you are listening to and
-answers with an **SVG image**. Because the response is an image, it works anywhere a URL
-does - GitHub profile READMEs, Gists, blogs, docs sites.
+A Spotify README card is an SVG image that shows the song you are playing on your GitHub profile. You deploy it once, then paste the image URL into your README.
+
+The service asks the Spotify Web API what you are listening to and answers with that image, so the same URL also works in Gists, blogs, and docs. The crawlable setup is [Add a Spotify now playing card to your GitHub README](https://gautamvhavle.github.io/spotify-readme-card/add-spotify-to-github-readme/).
 
 - **Live status** - shows the current track while you are playing, and your last played
   track with a relative timestamp when you are not.

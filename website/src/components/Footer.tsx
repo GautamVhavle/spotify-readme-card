@@ -1,11 +1,19 @@
 import { ArrowUpRight, ArrowUp, Github } from "lucide-react";
-import { AUTHOR_URL, DEPLOY_URL, LIVE_URL, NAV_SECTIONS, REPO_URL } from "../lib/site";
+import {
+  AUTHOR_URL,
+  DEPLOY_URL,
+  GUIDE_PATH,
+  LIVE_URL,
+  NAV_SECTIONS,
+  REPO_URL,
+} from "../lib/site";
 
 const RESOURCES = [
-  { label: "Live demo", href: LIVE_URL },
-  { label: "Raw JSON", href: `${LIVE_URL}/json` },
-  { label: "Deploy to Vercel", href: DEPLOY_URL },
-  { label: "Report an issue", href: `${REPO_URL}/issues` },
+  { label: "Setup guide", href: GUIDE_PATH, external: false },
+  { label: "Live demo", href: LIVE_URL, external: true },
+  { label: "Raw JSON", href: `${LIVE_URL}/json`, external: true },
+  { label: "Deploy to Vercel", href: DEPLOY_URL, external: true },
+  { label: "Report an issue", href: `${REPO_URL}/issues`, external: true },
 ];
 
 export function Footer() {
@@ -60,15 +68,16 @@ export function Footer() {
                 <li key={r.label}>
                   <a
                     href={r.href}
-                    target="_blank"
-                    rel="noreferrer"
+                    {...(r.external ? { target: "_blank", rel: "noreferrer" } : {})}
                     className="group inline-flex items-center gap-1.5 text-sm text-gray-400 transition-colors hover:text-cream"
                   >
                     {r.label}
-                    <ArrowUpRight
-                      className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100"
-                      aria-hidden
-                    />
+                    {r.external && (
+                      <ArrowUpRight
+                        className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100"
+                        aria-hidden
+                      />
+                    )}
                   </a>
                 </li>
               ))}

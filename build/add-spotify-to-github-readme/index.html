@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add a Spotify now playing card to your GitHub README</title>
+    <meta
+      name="description"
+      content="Add a Spotify now playing card to your GitHub README in five steps. Create a Spotify app, deploy to Vercel, and paste one SVG image URL into your profile."
+    />
+    <link rel="canonical" href="https://gautamvhavle.github.io/spotify-readme-card/add-spotify-to-github-readme/" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/svg+xml" href="../icon.svg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Add a Spotify now playing card to your GitHub README" />
+    <meta
+      property="og:description"
+      content="Five steps from a Spotify app to an SVG image URL you paste into your GitHub profile README."
+    />
+    <meta property="og:url" content="https://gautamvhavle.github.io/spotify-readme-card/add-spotify-to-github-readme/" />
+    <meta property="og:image" content="https://gautamvhavle.github.io/spotify-readme-card/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Instrument+Serif:ital@1&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "HowTo",
+            "name": "Add a Spotify now playing card to your GitHub README",
+            "description": "Deploy Spotify Readme Card once, then paste the image URL into your GitHub profile README.",
+            "totalTime": "PT5M",
+            "tool": [
+              { "@type": "HowToTool", "name": "Spotify account" },
+              { "@type": "HowToTool", "name": "Vercel account" },
+              { "@type": "HowToTool", "name": "Node.js 20 or newer" }
+            ],
+            "step": [
+              {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Create a Spotify app",
+                "text": "Open the Spotify Developer Dashboard and create an app. Add the redirect URI http://127.0.0.1:5175/callback. Spotify rejects localhost, so the URI has to be the loopback IP. Enable the Web API, then copy the client ID and client secret."
+              },
+              {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Add the credentials locally",
+                "text": "Clone the repository, run npm install, and copy .env.example to .env. Put the client ID and client secret in that file."
+              },
+              {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Generate a refresh token",
+                "text": "Run npm run authorize, open the printed URL, and approve access. The script writes SPOTIFY_REFRESH_TOKEN into .env."
+              },
+              {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Deploy to Vercel",
+                "text": "Deploy the project and set SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, and SPOTIFY_REFRESH_TOKEN. The free Vercel plan is enough."
+              },
+              {
+                "@type": "HowToStep",
+                "position": 5,
+                "name": "Paste the image into your README",
+                "text": "Add a Markdown image whose address is your Vercel URL. GitHub renders that URL as your now-playing card. Use /small for the compact card and /portrait for the portrait card."
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is a Spotify README card?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A Spotify README card is an SVG image that shows the song you are playing on your GitHub profile. You deploy it once, then paste the image URL into your README."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do I add a Spotify now playing card to my GitHub README?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Create a Spotify app, authorise it once to get a refresh token, deploy the project to Vercel with your client ID, client secret and refresh token as environment variables, then paste the returned image URL into your README as a Markdown image."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is Spotify Readme Card free?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. It is MIT licensed, self-hosted on a free Vercel account, and has zero runtime dependencies."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Which layouts and themes are available?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Three layouts: detailed, compact, and portrait. Eleven built-in themes, plus hex colour overrides for background, text, accent, and border. The portrait card takes its colour from the album art."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+    <style>
+      :root {
+        color-scheme: dark;
+        --cream: #e1e0cc;
+        --primary: #dedbc8;
+        --muted: #8d8d80;
+        --line: rgba(255, 255, 255, 0.08);
+        --panel: #101010;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: #000;
+        color: var(--cream);
+        font-family: Almarai, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+      a { color: var(--primary); }
+      a:hover { color: #fff; }
+      :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+      .wrap { width: min(1080px, calc(100% - 2rem)); margin: 0 auto; }
+      header, footer { padding: 1.25rem 0; }
+      header a, footer a { color: var(--muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; }
+      header a:hover, footer a:hover { color: var(--cream); }
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 2rem;
+        padding: clamp(1.5rem, 4vw, 3.5rem);
+      }
+      .eyebrow {
+        margin: 0;
+        color: rgba(222, 219, 200, 0.55);
+        font-size: 0.68rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 0.8rem 0 0;
+        max-width: 16ch;
+        font-size: clamp(2.6rem, 6vw, 4.6rem);
+        font-weight: 400;
+        letter-spacing: -0.045em;
+        line-height: 0.92;
+      }
+      h1 em { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; }
+      .lede { max-width: 38rem; margin: 1.25rem 0 0; color: rgba(222, 219, 200, 0.82); font-size: 1.05rem; }
+      .cards {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 1rem;
+        margin-top: 2.25rem;
+      }
+      .cards img { display: block; height: auto; max-width: 100%; border-radius: 12px; }
+      .cards .portrait { width: min(100%, 220px); }
+      .cards .stack { display: grid; gap: 0.75rem; width: min(100%, 420px); }
+      h2 { margin: 3rem 0 0; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 400; letter-spacing: -0.03em; }
+      h2 em { font-family: "Instrument Serif", Georgia, serif; font-style: italic; }
+      ol.steps { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; gap: 0.75rem; }
+      ol.steps li {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.9rem 1rem;
+        padding: 1.1rem 1.15rem;
+        border: 1px solid var(--line);
+        border-radius: 1.25rem;
+        background: #000;
+      }
+      ol.steps b { display: block; font-weight: 700; }
+      ol.steps p { margin: 0.3rem 0 0; color: var(--muted); }
+      .n {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 999px;
+        background: var(--primary);
+        color: #000;
+        display: grid;
+        place-items: center;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+      pre {
+        margin: 0.8rem 0 0;
+        padding: 0.85rem 1rem;
+        overflow-x: auto;
+        border-radius: 0.8rem;
+        background: #000;
+        border: 1px solid var(--line);
+        color: #cfcab4;
+        font-size: 0.82rem;
+      }
+      .faq { margin-top: 1.25rem; }
+      .faq dt { margin-top: 1.4rem; font-weight: 700; }
+      .faq dd { margin: 0.35rem 0 0; color: var(--muted); }
+      footer { color: var(--muted); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    </style>
+  </head>
+  <body>
+    <header class="wrap">
+      <a href="../">Spotify README Card</a>
+    </header>
+    <main class="wrap">
+      <article class="panel">
+        <p class="eyebrow">Guide</p>
+        <h1>Add Spotify to your <em>GitHub README.</em></h1>
+        <p class="lede">
+          A Spotify README card is an SVG image that shows the song you are playing on your GitHub profile. You deploy it once, then paste the image URL into your README.
+        </p>
+        <div class="cards">
+          <div class="stack">
+            <img
+              src="https://live-spotify-readme-card.vercel.app/"
+              width="420"
+              height="142"
+              alt="Detailed Spotify now playing card, 420 by 142"
+            />
+            <img
+              src="https://live-spotify-readme-card.vercel.app/small"
+              width="340"
+              height="76"
+              alt="Compact Spotify now playing card, 340 by 76"
+            />
+          </div>
+          <img
+            class="portrait"
+            src="https://live-spotify-readme-card.vercel.app/portrait"
+            width="220"
+            height="308"
+            alt="Portrait Spotify card coloured by the album art"
+          />
+        </div>
+
+        <h2>Five steps, <em>then one line of Markdown.</em></h2>
+        <ol class="steps">
+          <li>
+            <span class="n">1</span>
+            <div>
+              <b>Create a Spotify app</b>
+              <p>
+                Open the <a href="https://developer.spotify.com/dashboard">Spotify Developer Dashboard</a> and create an app. Add this redirect URI exactly. Spotify rejects <code>localhost</code>, so it has to be the loopback IP. Enable the Web API, then copy the client ID and client secret.
+              </p>
+              <pre>http://127.0.0.1:5175/callback</pre>
+            </div>
+          </li>
+          <li>
+            <span class="n">2</span>
+            <div>
+              <b>Add the credentials locally</b>
+              <p>Clone the repository, install dependencies, and copy the example env file. Put the client ID and client secret in <code>.env</code>.</p>
+              <pre>git clone https://github.com/GautamVhavle/spotify-readme-card.git
+cd spotify-readme-card
+npm install
+cp .env.example .env</pre>
+            </div>
+          </li>
+          <li>
+            <span class="n">3</span>
+            <div>
+              <b>Generate a refresh token</b>
+              <p>Run the authorise script, open the printed URL, and approve access. The script writes <code>SPOTIFY_REFRESH_TOKEN</code> into <code>.env</code>.</p>
+              <pre>npm run authorize</pre>
+            </div>
+          </li>
+          <li>
+            <span class="n">4</span>
+            <div>
+              <b>Deploy to Vercel</b>
+              <p>Deploy the project and set three environment variables: <code>SPOTIFY_CLIENT_ID</code>, <code>SPOTIFY_CLIENT_SECRET</code>, and <code>SPOTIFY_REFRESH_TOKEN</code>. The free Vercel plan is enough. You can also use the Deploy button on the homepage.</p>
+            </div>
+          </li>
+          <li>
+            <span class="n">5</span>
+            <div>
+              <b>Paste the image into your README</b>
+              <p>GitHub renders the URL as your now-playing card. <code>/small</code> is the compact card. <code>/portrait</code> is the portrait card, coloured by the album art.</p>
+              <pre>&lt;img src="https://YOUR-APP.vercel.app/" alt="What I'm listening to" width="420" /&gt;</pre>
+            </div>
+          </li>
+        </ol>
+
+        <h2>Straight <em>answers.</em></h2>
+        <dl class="faq">
+          <dt>What is a Spotify README card?</dt>
+          <dd>A Spotify README card is an SVG image that shows the song you are playing on your GitHub profile. You deploy it once, then paste the image URL into your README.</dd>
+          <dt>How do I add a Spotify now playing card to my GitHub README?</dt>
+          <dd>Create a Spotify app, authorise it once to get a refresh token, deploy the project to Vercel with your client ID, client secret and refresh token as environment variables, then paste the returned image URL into your README as a Markdown image.</dd>
+          <dt>Is Spotify Readme Card free?</dt>
+          <dd>Yes. It is MIT licensed, self-hosted on a free Vercel account, and has zero runtime dependencies.</dd>
+          <dt>Which layouts and themes are available?</dt>
+          <dd>Three layouts: detailed, compact, and portrait. Eleven built-in themes, plus hex colour overrides for background, text, accent, and border. The portrait card takes its colour from the album art.</dd>
+        </dl>
+      </article>
+    </main>
+    <footer class="wrap">
+      <a href="../">Back to the homepage</a>
+      <a href="https://github.com/GautamVhavle/spotify-readme-card">GitHub</a>
+    </footer>
+  </body>
+</html>

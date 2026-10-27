@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, MousePointerClick } from "lucide-react";
 import { WordsPullUp } from "./WordsPullUp";
+import { ANSWER, GUIDE_PATH } from "../lib/site";
 
 const STATS = [
   { value: "3", label: "layouts" },
@@ -113,9 +114,14 @@ export function Hero() {
                 {...rise(0.45)}
                 className="max-w-md text-sm leading-relaxed text-primary/80 sm:text-base"
               >
-                A serverless card for your GitHub profile. Animated, rendered at the
-                edge, and genuinely alive. It shows what you are playing right now, or
-                what you played last.
+                {ANSWER}{" "}
+                <a
+                  href={GUIDE_PATH}
+                  className="underline decoration-primary/30 underline-offset-4 hover:decoration-primary"
+                >
+                  The setup guide
+                </a>{" "}
+                walks through the five steps.
               </motion.p>
 
               <motion.div {...rise(0.6)} className="flex flex-wrap items-center gap-3">
