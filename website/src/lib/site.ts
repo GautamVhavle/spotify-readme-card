@@ -1,4 +1,5 @@
 export const REPO_URL = "https://github.com/GautamVhavle/spotify-readme-card";
+export const PROFILE_URL = "https://github.com/GautamVhavle";
 export const LIVE_URL = "https://live-spotify-readme-card.vercel.app";
 export const AUTHOR_URL = "https://gautamvhavle.xyz/";
 export const SITE_URL = "https://gautamvhavle.github.io/spotify-readme-card/";
