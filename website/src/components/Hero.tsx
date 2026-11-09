@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, MousePointerClick } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Github, MousePointerClick } from "lucide-react";
 import { WordsPullUp } from "./WordsPullUp";
-import { ANSWER, GUIDE_PATH } from "../lib/site";
+import { ANSWER, GUIDE_PATH, PROFILE_URL } from "../lib/site";
 
 const STATS = [
   { value: "3", label: "layouts" },
@@ -145,6 +145,16 @@ export function Hero() {
                 >
                   See layouts
                   <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+                </a>
+                <a
+                  href={PROFILE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="View Spotify card on my GitHub profile"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/25 px-5 py-3 text-xs uppercase tracking-widest text-white/75 backdrop-blur transition-colors hover:border-white/30 hover:bg-white/10 hover:text-white"
+                >
+                  <Github className="h-3.5 w-3.5" aria-hidden />
+                  View on my profile
                 </a>
               </motion.div>
             </div>
